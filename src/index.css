@@ -1,69 +1,193 @@
+/* ------------------------------- 1. Global Styles -------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    /*Primitives*/
+    --size-xxs: 0.25em;
+    --size-xs: 0.5em;
+    --size-s: 0.75em;
+    --size-m: 1em;
+    --size-l: 1.5em;
+    --size-xl: 2em;
+    --size-xxl: 4em;
+    --color-gray-50: #F2F2F2;
+    --color-gray-100: #D9D9D9;
+    --color-gray-200: #BFBFBF;
+    --color-gray-300: #A6A6A6;
+    --color-gray-400: #8C8C8C;
+    --color-gray-500: #737373;
+    --color-gray-600: #595959;
+    --color-gray-700: #404040;
+    --color-gray-800: #262626;
+    --color-gray-900: #0D0D0D;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    --brand-misty-rose: #FCDCD9;
+    --brand-misty-rose-light: #FDEAE8;
+    --brand-marigolde: #F1AE50;
+    --brand-pastel-green: #F5FABD;
+    --brand-avocado-green: #C8D912;
+    --brand-ivory: #FAFDFF;
+    --brand-dark: #08003D;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+    --textcontrast: #64d97b;
+    --bgcontrast: #64d97b;
+    --primarycontrast: #64d97b;
+    --secondarycontrast: #64d97b;
+    --accentcontrast: #ff8f8f;
+
+
+    /*Tokens*/
+    --color-background: var(--brand-misty-rose);
+    --color-background-secondary: var(--brand-misty-rose-light);
+    --color-primary: var(--brand-marigolde);
+    --color-secondary: var(--brand-pastel-green);
+    --color-accent: var(--brand-avocado-green);
+    --color-tertiary: var(--color-gray-600);
+    --color-secondary-light: var(--color-gray-200);
+    --color-black: var(--brand-dark);
+    --color-white: var(--brand-ivory);
+
+
+    --color-text-primary: var(--color-gray-900);
+    --color-text-secundary: var(--color-gray-600);
+    --color-text-brand: var(--color-gray-900);
+    --color-text-invert: var(--color-gray-50);
+
+    --color-text-primary-dark: var(--color-gray-50);
+    --color-text-secundar-darky: var(--color-gray-200);
+    --color-text-brand-dark: var(--color-gray-900);
+    --color-text-invert-dark: var(--color-gray-900);
+
+    --color-surface-primary: var(--color-gray-50);
+    --color-surface-secundary: var(--color-gray-800);
+    --color-surface-invert: var(--color-gray-900);
+    --color-surface-brand: var(--brand-misty-rose);
+
+    --color-surface-primary-dark: var(--color-gray-900);
+    --color-surface-secundary-dark: var(--color-gray-400);
+    --color-surface-invert-dark: var(--color-gray-50);
+    --color-surface-brand-dark: var(--brand-misty-rose);
+
+    --color-border-primary: var(--color-gray-900);
+    --color-border-primary-dark: var(--color-gray-50);
+
+    --size-radius-m: var(--size-xs);
+    --size-radius-l: var(--size-s);
+
+    --size-gap-s: var(--size-s);
+    --size-gap-m: var(--size-m);
+    --size-gap-l: var(--size-l);
+
+    --size-padding-s: var(--size-xxs);
+    --size-padding-m: var(--size-s);
+    --size-padding-l: var(--size-l);
+
+    --size-margin-xs: var(--size-xxs);
+    --size-margin-m: var(--size-s);
+    --size-margin-l: var(--size-l);
+
+    --font-weight-normal: 300;
+    --font-weight-bold: 600;
+
+    font-family: "Poppins", sans-serif, Arial;
+
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
 }
+
 a:hover {
-  color: #535bf2;
+    color: #535bf2;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    margin: 0;
+    display: flex;
+    place-items: start end;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: var(--color-background-secondary);
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    font-size: var(--size-xl);
+    padding: var(--size-l) var(--size-m);
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: var(--size-l);
+    padding: var(--size-m) var(--size-s);
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: var(--size-radius-m);
+    border: 1px solid transparent;
+    padding: var(--size-padding-m) var(--size-padding-l);
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: var(--color-accent);
+    margin: var(--size-margin-l) 0;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
+
 button:hover {
-  border-color: #646cff;
+    border-color: var(--color-accent);
 }
+
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto blue;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--size-s);
+    color: var(--color-text-primary);
+}
+
+select,
+input,
+textarea {
+    padding: var(--size-padding-m);
+    margin: var(--size-margin-xs) 0 var(--size-margin-xs) 0;
+    border-radius: var(--size-radius-m);
+    border: 1px solid var(--color-border-primary);
+    background-color: var(--color-white);
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+
+    a:hover {
+        color: #747bff;
+    }
+
 }

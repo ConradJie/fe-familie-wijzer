@@ -1,0 +1,21 @@
+.main-person table th,
+.main-person table tr td {
+    padding: var(--size-padding-s);
+}
+
+
+.crud {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.main-person {
+    width: 100%;
+    /*width: 1200px;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*padding: var(--size-padding-m);*/
+}
+

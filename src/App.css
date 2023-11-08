@@ -1,42 +1,93 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.outer-content-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.inner-content-container {
+  flex-basis: 1400px;
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+
+.mainapp {
+  margin: 1em;
+}
+
+.inner-content-container__text-restriction {
+  flex-basis: 1000px;
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+
+.inner-content-container,
+.inner-content-container__text-restriction {
+  margin: 0 var(--size-l);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  margin: 1em;
+  background-color: var(--color-background);
+}
+
+.main-navigation {
+  background-color: var(--color-primary);
+  padding: 16px 0;
+  justify-content: space-between;
+  border-radius: var(--size-radius-l) var(--size-radius-l) 0 0;
+}
+
+.main-navigation a,
+.main-navigation a:visited {
+  color: white;
+  font-weight: 600;
+}
+
+.main-navigation a:hover {
+  color: var(--color-secondary);
+}
+
+#nav-logo {
+  width: 2em;
+}
+
+.main-navigation-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.main-navigation-links,
+.main-navigation-login {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main-navigation-links li,
+.main-navigation-login li {
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  flex-direction: row;
+  list-style: none;
+  row-gap: 16px;
+  column-gap: 16px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.main-footer {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  text-align: center;
+  padding: var(--size-gap-s) 0;
+  font-weight: 600;
+  border-radius: 0 0 var(--size-radius-l) var(--size-radius-l);
 }
