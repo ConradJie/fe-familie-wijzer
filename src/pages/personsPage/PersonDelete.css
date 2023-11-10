@@ -1,0 +1,4 @@
+.person-form-delete input,
+.person-form-delete select {
+    background-color: var(--color-background);
+}

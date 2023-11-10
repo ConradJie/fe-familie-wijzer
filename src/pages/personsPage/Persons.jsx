@@ -2,7 +2,8 @@ import './Persons.css';
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {BellSimple, BookOpen, Circle, Pencil, PlusCircle, Trash, TreeStructure, UserRectangle} from "@phosphor-icons/react";
+import {BellSimple, Circle, Pencil, PlusCircle, Trash, TreeStructure, UserRectangle} from "@phosphor-icons/react";
+import getSexLabel from "../../helpers/getSexLabel.js";
 
 function Persons() {
     const [data, setData] = useState(null);
@@ -52,7 +53,7 @@ function Persons() {
                             <tr key={p.id}>
                                 <td>{p.givenNames}</td>
                                 <td>{p.surname}</td>
-                                <td>{p.sex}</td>
+                                <td>{getSexLabel(p.sex)}</td>
                                 <td onClick={() => navigate(`/personDetail/${p.id}`)}><UserRectangle width={24}
                                                                                                 height={24}/></td>
                                 <td onClick={() => navigate(`/personEvents/${p.id}`)}><BellSimple width={24}

@@ -4,42 +4,43 @@ import axios from "axios";
 import {useState} from "react";
 import Button from "../../components/Button.jsx";
 
-function PersonForm({id, preloadedValues}) {
-    const preloadedValuesObject = {
-        givenNames: preloadedValues.givenNames,
-        surname: preloadedValues.surname,
-        sex: preloadedValues.sex
-    };
-
-    console.log(preloadedValues);
+function PersonForm({id, method, preloadedValues}) {
     const {
         register,
         formState: {errors},
         handleSubmit
     } = useForm({
-        defaultValues: preloadedValuesObject
-
-        // defaultValues: {
-        //     givenNames : preloadedValues.givenNames,
-        //     surname : preloadedValues.surname,
-        //     sex : preloadedValues.sex
-        // }
+        defaultValues: preloadedValues
     });
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const [loading, toggleLoading] = useState(false);
+    // const controller = new AbortController();
 
     async function onSubmit(data) {
         toggleLoading(false);
         try {
             setError("");
             toggleLoading(true);
-            const response = await axios.put(`http://localhost:8080/persons/${id}`,
-                {
-                    givenNames: data.givenNames,
-                    surname: data.surname,
-                    sex: data.sex
-                });
+            let response = null;
+            switch (method) {
+                case "post":
+                    response = await axios.post("http://localhost:8080/persons",
+                        {
+                            givenNames: data.givenNames,
+                            surname: data.surname,
+                            sex: data.sex
+                        });
+                    break;
+                case "put":
+                    response = await axios.put(`http://localhost:8080/persons/${id}`,
+                        {
+                            givenNames: data.givenNames,
+                            surname: data.surname,
+                            sex: data.sex
+                        });
+                    break;
+            }
         } catch (e) {
             if (axios.isCancel) {
                 console.error("Request is canceled");
@@ -56,13 +57,12 @@ function PersonForm({id, preloadedValues}) {
 
     return (
         <section>
-            <form className="new-person-form" onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="Voornamen-field">
+            <form className="person-form" onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor="givenNames-field">
                     Voornamen:
                     <input
                         type="text"
                         id="givenNames-field"
-                        name="givenNames"
                         {...register("givenNames", {
                             required: "Dit veld is verplicht"
                         })}
@@ -74,7 +74,6 @@ function PersonForm({id, preloadedValues}) {
                     <input
                         type="text"
                         id="surname-field"
-                        name="surname"
                         {...register("surname", {
                             required: "Dit veld is verplicht"
                         })}
@@ -85,10 +84,8 @@ function PersonForm({id, preloadedValues}) {
                     Geslacht:
                     <select
                         id="sex-field"
-                        name="sex"
                         {...register("sex", {
                             required: "Dit veld is verplicht"
-
                         })}
                     >
                         <option value="M">Man</option>
@@ -97,11 +94,13 @@ function PersonForm({id, preloadedValues}) {
                     </select>
                     {errors.sex && <p>{errors.sex.message}</p>}
                 </label>
-                <Button type="submit" onClick={handleSubmit}>Opslaan</Button>
-                <Button type="button" variant="cancel" onClick={() => {
+                <Button type="submit" onClick={handleSubmit}>
+                    {method === "delete"? "Verwijderen" : "Opslaan"}
+                </Button>
+                <Button type="button" variant="cancel" onClick={(e) => {
+                    e.preventDefault();
                     navigate("/persons")
                 }}>Annuleren</Button>
-
             </form>
             {error &&
                 <p>Er is iets misgegaan bij het opslaan van de gegevens:{error}</p>}

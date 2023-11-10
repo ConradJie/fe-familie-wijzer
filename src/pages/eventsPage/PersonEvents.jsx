@@ -1,8 +1,8 @@
 import './PersonEvents.css';
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Images, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
+import {ArrowLeft, Images, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
 import localDateNumeric from "../../helpers/localDateNumeric.js";
 
 function PersonEvents() {
@@ -62,12 +62,14 @@ function PersonEvents() {
 
     return (
         <main className="main-person-events">
+            <Link to="/persons"><ArrowLeft width={24} height={24}/></Link>
             {personData && <h2>Gebeurtenissen van {personData.givenNames} {personData.surname}</h2>}
             <table>
                 <thead>
                 <tr>
                     <th>Begindatum</th>
                     <th>Einddatum</th>
+                    <th>Type</th>
                     <th>Omschrijving</th>
                     <th onClick={() => navigate(`/personEventNew/${id}`)}><PlusCircle width={24} height={24}/></th>
                 </tr>
@@ -79,13 +81,15 @@ function PersonEvents() {
                             <tr key={e.id}>
                                 <td>{localDateNumeric(e.beginDate)}</td>
                                 <td>{localDateNumeric(e.endDate)}</td>
+                                <td>{e.eventType}</td>
                                 <td>{e.description}</td>
-                                <td onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}><Images width={24}
-                                                                                                     height={24}/></td>
-                                <td onClick={() => navigate(`/events/${e.id}`)}><Pencil width={24}
-                                                                                              height={24}/></td>
-                                <td onClick={() => navigate(`/events/${e.id}`)}><Trash width={24}
-                                                                                             height={24}/></td>
+                                <td onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}><Images
+                                    width={24}
+                                    height={24}/></td>
+                                <td onClick={() => navigate(`/personEventUpdate/${id}/${e.id}`)}><Pencil width={24}
+                                                                                                 height={24}/></td>
+                                <td onClick={() => navigate(`/personEventDelete/${id}/${e.id}`)}><Trash width={24}
+                                                                                                height={24}/></td>
                             </tr>)
                     })}
                 </tbody>

@@ -15,14 +15,6 @@ function Navigation() {
                                  className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
                     >Personen</NavLink>
                     </li>
-                    <li><NavLink to="/personNew"
-                                 className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                    >Persoon toevoegen</NavLink>
-                    </li>
-                    <li><NavLink to="/personDetail"
-                                 className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                    >Persoon bekijken</NavLink>
-                    </li>
                     <li><NavLink to="/relations"
                                  className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
                     >Relaties</NavLink>
