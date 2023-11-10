@@ -2,6 +2,7 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {useState} from "react";
+import Button from "../../components/Button.jsx";
 
 function PersonForm({id, preloadedValues}) {
     const preloadedValuesObject = {
@@ -96,7 +97,11 @@ function PersonForm({id, preloadedValues}) {
                     </select>
                     {errors.sex && <p>{errors.sex.message}</p>}
                 </label>
-                <button type="submit" onClick={handleSubmit}>Opslaan</button>
+                <Button type="submit" onClick={handleSubmit}>Opslaan</Button>
+                <Button type="button" variant="cancel" onClick={() => {
+                    navigate("/persons")
+                }}>Annuleren</Button>
+
             </form>
             {error &&
                 <p>Er is iets misgegaan bij het opslaan van de gegevens:{error}</p>}

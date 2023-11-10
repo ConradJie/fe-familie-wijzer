@@ -1,7 +1,0 @@
-.new-person-form {
-    background-color: var(--color-background-secondary);
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: var(--size-padding-m);
-}

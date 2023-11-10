@@ -129,6 +129,14 @@ body {
     background-color: var(--color-background-secondary);
 }
 
+main {
+    background-color: var(--color-background);
+    padding: var(--size-padding-m);
+}
+input {
+    background-color: var(--color-background);
+}
+
 h1 {
     font-size: var(--size-xl);
     padding: var(--size-l) var(--size-m);

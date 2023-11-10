@@ -2,7 +2,7 @@ import './Persons.css';
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {BookOpen, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
+import {BellSimple, BookOpen, Circle, Pencil, PlusCircle, Trash, TreeStructure, UserRectangle} from "@phosphor-icons/react";
 
 function Persons() {
     const [data, setData] = useState(null);
@@ -34,38 +34,44 @@ function Persons() {
     const navigate = useNavigate();
 
     return (
-            <main className="main-person">
-                <h2>Personen</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Voornamen</th>
-                        <th>Achternaam</th>
-                        <th>Geslacht</th>
-                        <th onClick={() => navigate('/personNew')}><PlusCircle width={24} height={24}/></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {data &&
-                        data.map((p) => {
-                            return (
-                                <tr key={p.id}>
-                                    <td>{p.givenNames}</td>
-                                    <td>{p.surname}</td>
-                                    <td>{p.sex}</td>
-                                    <td onClick={() => navigate(`/personDetail/${p.id}`)}><BookOpen width={24}
-                                                                                                    height={24}/></td>
-                                    <td onClick={() => navigate(`/personUpdate/${p.id}`)}><Pencil width={24}
+        <main className="main-person">
+            <h2>Personen</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Voornamen</th>
+                    <th>Achternaam</th>
+                    <th>Geslacht</th>
+                    <th onClick={() => navigate('/personNew')}><PlusCircle width={24} height={24}/></th>
+                </tr>
+                </thead>
+                <tbody>
+                {data &&
+                    data.map((p) => {
+                        return (
+                            <tr key={p.id}>
+                                <td>{p.givenNames}</td>
+                                <td>{p.surname}</td>
+                                <td>{p.sex}</td>
+                                <td onClick={() => navigate(`/personDetail/${p.id}`)}><UserRectangle width={24}
+                                                                                                height={24}/></td>
+                                <td onClick={() => navigate(`/personEvents/${p.id}`)}><BellSimple width={24}
                                                                                                   height={24}/></td>
-                                    <td onClick={() => navigate(`/personDelete/${p.id}`)}><Trash width={24}
-                                                                                                 height={24}/></td>
-                                </tr>)
-                        })}
-                    </tbody>
-                </table>
-                {loading && <p>Loading..</p>}
-                {!data && error && <p>{error}</p>}
-            </main>
+                                <td onClick={() => navigate(`/relations/${p.id}`)}><Circle width={24}
+                                                                                           height={24}/></td>
+                                <td onClick={() => navigate(`/trees/${p.id}`)}><TreeStructure width={24}
+                                                                                                  height={24}/></td>
+                                <td onClick={() => navigate(`/personUpdate/${p.id}`)}><Pencil width={24}
+                                                                                              height={24}/></td>
+                                <td onClick={() => navigate(`/personDelete/${p.id}`)}><Trash width={24}
+                                                                                             height={24}/></td>
+                            </tr>)
+                    })}
+                </tbody>
+            </table>
+            {loading && <p>Loading..</p>}
+            {!data && error && <p>{error}</p>}
+        </main>
     )
 }
 

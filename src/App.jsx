@@ -12,20 +12,22 @@ import PersonUpdate from "./pages/personsPage/PersonUpdate.jsx";
 import Trees from "./pages/treesPage/Trees.jsx";
 import SignUp from "./pages/signUpPage/SignUp.jsx";
 import Login from "./pages/loginPage/Login.jsx";
+import PersonEvents from "./pages/eventsPage/PersonEvents.jsx";
+import PersonEventNew from "./pages/eventsPage/PersonEventNew.jsx";
+import EventMultimedias from "./pages/eventMultimediasPage/EventMultimedias.jsx";
+import EventMultimediaNew from "./pages/eventMultimediasPage/EventMultimediaNew.jsx";
 
 function App() {
     const navigate = useNavigate();
 
     return (
-        <div className="app-main">
+        <div className="main-app">
             <nav className="outer-content-container main-navigation">
                 <ul className="outer-content-container main-navigation-links">
                     <li><Link to="/"><img id="nav-logo" src={logo}
                                           alt="Home pagina Familie Wijzer"/></Link></li>
                     <li><Link to="/persons">Personen</Link></li>
-                    <li><Link to="/relations">Relaties</Link></li>
-                    <li><Link to="/children">Kinderen</Link></li>
-                    <li><Link to="/trees">Stambomen</Link></li>
+                    <li><Link to="/overviews">Overzichten</Link></li>
                 </ul>
                 <ul className="outer-content-container main-navigation-login">
                     <li><Link to="/signin">Registreren</Link></li>
@@ -38,6 +40,10 @@ function App() {
                 <Route path="/persons" element={<Persons/>}/>
                 <Route path="/personNew" element={<PersonNew/>}/>
                 <Route path="/personDetail/:id" element={<PersonDetail/>}/>
+                <Route path="/personEvents/:id" element={<PersonEvents/>}/>
+                <Route path="/personEventNew/:id" element={<PersonEventNew/>}/>
+                <Route path="/eventMultimedias/:t/:tid/:id" element={<EventMultimedias/>}/>
+                <Route path="/eventMultimediaNew/:t/:tid/:id" element={<EventMultimediaNew/>}/>
                 <Route path="/personUpdate/:id" element={<PersonUpdate/>}/>
                 <Route path="/relations" element={<Relations/>}/>
                 <Route path="/children" element={<Children/>}/>
@@ -48,7 +54,7 @@ function App() {
             </Routes>
 
             <footer className="main-footer outer-content-container">
-                &copy; 2023 Familie Wijzer
+                2023 &copy; Familie Wijzer
             </footer>
         </div>
     )
