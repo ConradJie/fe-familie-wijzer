@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {useState} from "react";
+import Button from "../../components/Button.jsx";
 
 function PersonNew() {
     // const preloadedValues = {
@@ -19,13 +20,13 @@ function PersonNew() {
     );
     const navigate = useNavigate();
     const [error, setError] = useState("");
-    const [loading, toggleLoading] = useState(false);
+    const [sending, toggleSending] = useState(false);
 
     async function onSubmit(data) {
-        toggleLoading(false);
+        toggleSending(false);
         try {
             setError("");
-            toggleLoading(true);
+            toggleSending(true);
             const response = await axios.post("http://localhost:8080/persons",
                 {
                     givenNames: data.givenNames,
@@ -41,7 +42,7 @@ function PersonNew() {
                 console.error(e);
             }
         } finally {
-            toggleLoading(false);
+            toggleSending(false);
         }
         navigate("/persons");
     }
@@ -59,8 +60,8 @@ function PersonNew() {
                             required: "Dit veld is verplicht"
                         })}
                     />
-                    {errors.givenNames && <p>{errors.givenNames.message}</p>}
                 </label>
+                {errors.givenNames && <p>{errors.givenNames.message}</p>}
                 <label htmlFor="surname-field">
                     Achternaam:
                     <input
@@ -87,11 +88,14 @@ function PersonNew() {
                     </select>
                     {errors.sex && <p>{errors.sex.message}</p>}
                 </label>
-                <button type="submit" onClick={handleSubmit}>Opslaan</button>
+                <Button type="submit" onClick={handleSubmit}>Opslaan</Button>
+                <Button type="button" variant="cancel" onClick={() => {
+                    navigate("/persons")
+                }}>Annuleren</Button>
             </form>
             {error &&
                 <p>Er is iets misgegaan bij het opslaan van de gegevens:{error}</p>}
-            {loading && <p>Loading...</p>}
+            {sending && <p>Saving...</p>}
         </main>
     );
 }
