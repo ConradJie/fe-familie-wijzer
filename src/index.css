@@ -54,6 +54,7 @@
     --color-white: var(--brand-ivory);
 
 
+
     --color-text-primary: var(--color-gray-900);
     --color-text-secundary: var(--color-gray-600);
     --color-text-brand: var(--color-gray-900);
@@ -135,6 +136,11 @@ main {
 }
 input {
     background-color: var(--color-background);
+}
+input[type="date"]:focus {
+    caret-color: #64d97b;
+    -webkit-text-fill-color: var(--color-black);
+
 }
 
 h1 {

@@ -16,6 +16,9 @@ import PersonEvents from "./pages/eventsPage/PersonEvents.jsx";
 import PersonEventNew from "./pages/eventsPage/PersonEventNew.jsx";
 import EventMultimedias from "./pages/eventMultimediasPage/EventMultimedias.jsx";
 import EventMultimediaNew from "./pages/eventMultimediasPage/EventMultimediaNew.jsx";
+import PersonDelete from "./pages/personsPage/PersonDelete.jsx";
+import PersonEventUpdate from "./pages/eventsPage/PersonEventUpdate.jsx";
+import PersonEventDelete from "./pages/eventsPage/PersonEventDelete.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -39,12 +42,15 @@ function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/persons" element={<Persons/>}/>
                 <Route path="/personNew" element={<PersonNew/>}/>
+                <Route path="/personUpdate/:id" element={<PersonUpdate/>}/>
+                <Route path="/personDelete/:id" element={<PersonDelete/>}/>
                 <Route path="/personDetail/:id" element={<PersonDetail/>}/>
                 <Route path="/personEvents/:id" element={<PersonEvents/>}/>
-                <Route path="/personEventNew/:id" element={<PersonEventNew/>}/>
+                <Route path="/personEventNew/:pid" element={<PersonEventNew/>}/>
+                <Route path="/personEventUpdate/:pid/:id" element={<PersonEventUpdate/>}/>
+                <Route path="/personEventDelete/:pid/:id" element={<PersonEventDelete/>}/>
                 <Route path="/eventMultimedias/:t/:tid/:id" element={<EventMultimedias/>}/>
                 <Route path="/eventMultimediaNew/:t/:tid/:id" element={<EventMultimediaNew/>}/>
-                <Route path="/personUpdate/:id" element={<PersonUpdate/>}/>
                 <Route path="/relations" element={<Relations/>}/>
                 <Route path="/children" element={<Children/>}/>
                 <Route path="/trees" element={<Trees/>}/>

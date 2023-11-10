@@ -31,9 +31,12 @@ function PersonUpdate() {
 
     return (
         <main>
-            <h2>Update</h2>
-            {data? <p>{data.givenNames} {data.surname}</p> : <p>leeg</p>}
-            {data? <PersonForm id={id} preloadedValues={data}/>
+            <h2>Persoon wijzigen</h2>
+            {data?.id ? <PersonForm
+                method="put"
+                preloadedValues={data}
+                id={id}
+                />
                 : <p>Loading...</p>}
             {error && <p>{error}</p>}
         </main>
