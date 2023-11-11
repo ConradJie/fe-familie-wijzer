@@ -1,69 +1,21 @@
 import './PersonEvents.css';
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import axios from "axios";
 import {ArrowLeft, Images, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
 import localDateNumeric from "../../helpers/localDateNumeric.js";
+import useGetPerson from "../../hooks/useGetPerson.js";
+import useGetData from "../../hooks/useGetData.js";
 
 function PersonEvents() {
     const {id} = useParams();
-    const [personData, setPersonData] = useState([]);
-    const [data, setData] = useState([]);
-    const [errorPerson, setErrorPerson] = useState("");
-    const [errorData, setErrorData] = useState("");
-    const [loadingPerson, toggleLoadingPerson] = useState(false);
-    const [loadingData, toggleLoadingData] = useState(false);
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        async function getPersonData() {
-            try {
-                setErrorPerson("");
-                toggleLoadingPerson(true);
-                const response = await axios.get(`http://localhost:8080/persons/${id}`,
-                    {});
-                setPersonData(response.data);
-            } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setErrorPerson(e.message);
-                } else {
-                    setErrorPerson(e.message);
-                }
-            } finally {
-                toggleLoadingPerson(false);
-            }
-        }
-
-        async function getData() {
-            try {
-                setErrorData("");
-                const response = await axios.get(`http://localhost:8080/persons/${id}/events`);
-                setData(response.data);
-            } catch (error) {
-                setErrorData(error.message);
-                console.error(error);
-            } finally {
-                toggleLoadingData(false);
-            }
-        }
-
-        void getPersonData();
-        void getData();
-
-        return function cleanup() {
-            controller.abort();
-        }
-
-    }, [id]);
+    const {person, personError} = useGetPerson(`http://localhost:8080/persons/${id}`);
+    const {data, dataError} = useGetData(`http://localhost:8080/persons/${id}/events`);
 
     return (
         <main className="main-person-events">
             <Link to="/persons"><ArrowLeft width={24} height={24}/></Link>
-            {personData && <h2>Gebeurtenissen van {personData.givenNames} {personData.surname}</h2>}
+            {person && <h2>Gebeurtenissen van {person.givenNames} {person.surname}</h2>}
             <table>
                 <thead>
                 <tr>
@@ -87,16 +39,18 @@ function PersonEvents() {
                                     width={24}
                                     height={24}/></td>
                                 <td onClick={() => navigate(`/personEventUpdate/${id}/${e.id}`)}><Pencil width={24}
-                                                                                                 height={24}/></td>
+                                                                                                         height={24}/>
+                                </td>
                                 <td onClick={() => navigate(`/personEventDelete/${id}/${e.id}`)}><Trash width={24}
-                                                                                                height={24}/></td>
+                                                                                                        height={24}/>
+                                </td>
                             </tr>)
                     })}
                 </tbody>
             </table>
-            {(loadingData || loadingPerson) && <p>Loading..</p>}
-            {!personData && errorPerson && <p>{errorPerson}</p>}
-            {!data && errorData && <p>{errorData}</p>}
+            {(!data || !person) && <p>Loading..</p>}
+            {!person && personError && <p>{personError}</p>}
+            {!data && dataError && <p>{dataError}</p>}
         </main>
     )
 }
