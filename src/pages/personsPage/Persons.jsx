@@ -1,37 +1,11 @@
 import './Persons.css';
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
-import axios from "axios";
 import {BellSimple, Circle, Pencil, PlusCircle, Trash, TreeStructure, UserRectangle} from "@phosphor-icons/react";
 import getSexLabel from "../../helpers/getSexLabel.js";
+import useGetData from "../../hooks/useGetData.js";
 
 function Persons() {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        (async function requestMethod() {
-            try {
-                setError("");
-                const response = await axios.get("http://localhost:8080/persons");
-                setData(response.data);
-            } catch (error) {
-                setError(error.message);
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        })();
-
-        return function cleanup() {
-            controller.abort();
-        }
-
-    }, []);
-
+    const {data,dataError} = useGetData("http://localhost:8080/persons");
     const navigate = useNavigate();
 
     return (
@@ -67,11 +41,12 @@ function Persons() {
                                 <td onClick={() => navigate(`/personDelete/${p.id}`)}><Trash width={24}
                                                                                              height={24}/></td>
                             </tr>)
-                    })}
+                    })
+                }
                 </tbody>
             </table>
-            {loading && <p>Loading..</p>}
-            {!data && error && <p>{error}</p>}
+            {!data && <p>Loading..</p>}
+            {!data && dataError && <p>{dataError}</p>}
         </main>
     )
 }

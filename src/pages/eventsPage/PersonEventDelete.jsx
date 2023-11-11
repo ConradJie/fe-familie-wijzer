@@ -1,56 +1,20 @@
 import './PersonEventDelete.css';
 import {useNavigate, useParams} from 'react-router-dom';
-import {useEffect, useState} from "react";
 import axios from "axios";
 import Button from "../../components/Button.jsx";
+import useGetPerson from "../../hooks/useGetPerson.js";
+import {useState} from "react";
+import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonEventDelete() {
-    let {pid} = useParams();
-    let {id} = useParams();
-    const [personData, setPersonData] = useState([]);
-    const [data, setData] = useState([]);
-    const [personError, setPersonError] = useState("");
-    const [error, setError] = useState("");
+    const {pid} = useParams();
+    const {id} = useParams();
     const navigate = useNavigate();
     const controller = new AbortController();
-
-    useEffect(() => {
-        async function getPersonData() {
-            try {
-                setPersonError("");
-                const response = await axios.get(`http://localhost:8080/persons/${pid}`,
-                    {});
-                setPersonData(response.data);
-            } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setPersonError(e.message);
-                } else {
-                    setPersonError(e.message);
-                }
-            }
-        }
-
-        async function getData() {
-            try {
-                setError("");
-                const response = await axios.get(`http://localhost:8080/persons/${pid}/events/${id}`,
-                    {});
-                setData(response.data);
-            } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setError(e.message);
-                } else {
-                    setError(e.message);
-                }
-            }
-        }
-
-        void getPersonData();
-        void getData();
-
-    }, [pid, id]);
+    const [response, setResponse] = useState([]);
+    const [error, setError] = useState("");
+    const {person, personError} = useGetPerson(`http://localhost:8080/persons/${pid}`);
+    const {event, eventError} = useGetEvent(`http://localhost:8080/persons/${pid}/events/${id}`);
 
     async function deleteData(e) {
         e.preventDefault();
@@ -59,7 +23,7 @@ function PersonEventDelete() {
             setError("");
             const response = await axios.delete(`http://localhost:8080/persons/${pid}/events/${id}`,
                 {});
-            setData(response.data);
+            setResponse(response.data);
         } catch (e) {
             setError(e.message);
         }
@@ -72,16 +36,16 @@ function PersonEventDelete() {
 
     return (
         <>
-            {data?.id ?
+            {event?.id ?
                 <main>
-                    {personData && <h2>Gebeurtenis van {personData.givenNames} {personData.surname} verwijderen</h2>}
+                    {person && <h2>Gebeurtenis van {person.givenNames} {person.surname} verwijderen</h2>}
                     <form className="person-event-delete-form">
                         <label htmlFor="event-type-field">
                             Eventtype:
                             <select
                                 id="event-type-field"
                                 disabled
-                                value={data.eventType}
+                                value={event.eventType}
                             >
                                 <option value="BIRTH">Geboorte</option>
                                 <option value="DEATH">Gestorven</option>
@@ -96,7 +60,7 @@ function PersonEventDelete() {
                                 type=" text"
                                 id="description-field"
                                 disabled
-                                placeholder={data.description}
+                                placeholder={event.description}
                             />
                         </label>
                         <label htmlFor=" text-field">
@@ -104,7 +68,7 @@ function PersonEventDelete() {
                             <textarea
                                 id="text-field"
                                 disabled
-                                value={data.text}
+                                value={event.text}
                             >
                     </textarea>
                         </label>
@@ -114,7 +78,7 @@ function PersonEventDelete() {
                                 type="date"
                                 id=" beginDate-field"
                                 disabled
-                                value={data.beginDate.substring(0,10)}
+                                value={event.beginDate.substring(0, 10)}
                             />
                         </label>
                         <label htmlFor=" endDate-field">
@@ -123,7 +87,7 @@ function PersonEventDelete() {
                                 type="date"
                                 id=" endDate-field"
                                 disabled
-                                value={data.endDate.substring(0,10)}
+                                value={event.endDate.substring(0, 10)}
                             />
                         </label>
                         <Button type="button" onClick={deleteData}>
@@ -136,7 +100,9 @@ function PersonEventDelete() {
                 :
                 <p>Loading...</p>}
             {personError && <p>{personError}</p>}
+            {eventError && <p>{eventError}</p>}
             {error && <p>{error}</p>}
+            {response && <p>{response}</p>}
         </>
     );
 }

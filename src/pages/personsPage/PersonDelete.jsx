@@ -2,40 +2,17 @@ import './PersonDelete.css';
 import {useNavigate, useParams} from 'react-router-dom';
 import axios from "axios";
 import Button from "../../components/Button.jsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import useGetPerson from "../../hooks/useGetPerson.js";
 
 function PersonDelete() {
     const {id} = useParams();
-    const [data, setData] = useState([]);
+    const [response, setResponse] = useState([]);
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const controller = new AbortController();
 
-    useEffect(() => {
-        async function getData() {
-
-            try {
-                setError("");
-                const response = await axios.get(`http://localhost:8080/persons/${id}`,
-                    {});
-                setData(response.data);
-            } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setError(e.message);
-                } else {
-                    setError(e.message);
-                }
-            }
-
-            return function cleanup() {
-                controller.abort();
-            }
-        }
-
-        void getData();
-    } );
-
+    const {person, personError} = useGetPerson(`http://localhost:8080/persons/${id}`);
 
     async function deleteData(e) {
         e.preventDefault();
@@ -44,7 +21,7 @@ function PersonDelete() {
             setError("");
             const response = await axios.delete(`http://localhost:8080/persons/${id}`,
                 {});
-            setData(response.data);
+            setResponse(response.data);
         } catch (e) {
             setError(e.message);
         }
@@ -57,7 +34,7 @@ function PersonDelete() {
 
     return (
         <>
-            {data?.id ?
+            {person?.id ?
                 <main>
                     <h2>Persoon verwijderen</h2>
                     <form className="person-delete-form">
@@ -67,7 +44,7 @@ function PersonDelete() {
                                 type="text"
                                 id="givenNames-field"
                                 disabled
-                                value={data.givenNames}
+                                value={person.givenNames}
                             />
                         </label>
                         <label htmlFor="surname-field">
@@ -76,14 +53,14 @@ function PersonDelete() {
                                 type="text"
                                 id="surname-field"
                                 disabled
-                                value={data.surname}
+                                value={person.surname}
                             />
                         </label>
                         <label htmlFor="sex-field">
                             Geslacht:
                             <select
                                 id="sex-field"
-                                value={data.sex}
+                                value={person.sex}
                                 disabled
                             >
                                 <option value="M">Man</option>
@@ -100,7 +77,9 @@ function PersonDelete() {
                 </main>
                 : <p> Loading...</p>
             }
-            {error && <p>{error}</p>}
+            {personError && <p>{personError}</p>}
+            {error && <o>{error}</o>}
+            {response && <o>{response}</o>}
         </>
     );
 }
