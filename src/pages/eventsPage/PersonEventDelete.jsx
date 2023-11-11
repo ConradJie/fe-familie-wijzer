@@ -5,8 +5,8 @@ import axios from "axios";
 import Button from "../../components/Button.jsx";
 
 function PersonEventDelete() {
-    const {pid} = useParams();
-    const {id} = useParams();
+    let {pid} = useParams();
+    let {id} = useParams();
     const [personData, setPersonData] = useState([]);
     const [data, setData] = useState([]);
     const [personError, setPersonError] = useState("");
@@ -34,7 +34,6 @@ function PersonEventDelete() {
         async function getData() {
             try {
                 setError("");
-                console.log("pid=",pid)
                 const response = await axios.get(`http://localhost:8080/persons/${pid}/events/${id}`,
                     {});
                 setData(response.data);
@@ -50,6 +49,7 @@ function PersonEventDelete() {
 
         void getPersonData();
         void getData();
+
     }, [pid, id]);
 
     async function deleteData(e) {
@@ -75,11 +75,12 @@ function PersonEventDelete() {
             {data?.id ?
                 <main>
                     {personData && <h2>Gebeurtenis van {personData.givenNames} {personData.surname} verwijderen</h2>}
-                    <form className="new-person-form">
+                    <form className="person-event-delete-form">
                         <label htmlFor="event-type-field">
                             Eventtype:
                             <select
                                 id="event-type-field"
+                                disabled
                                 value={data.eventType}
                             >
                                 <option value="BIRTH">Geboorte</option>
@@ -94,13 +95,15 @@ function PersonEventDelete() {
                             <input
                                 type=" text"
                                 id="description-field"
-                                value={data.description}
+                                disabled
+                                placeholder={data.description}
                             />
                         </label>
                         <label htmlFor=" text-field">
                             Tekst:
                             <textarea
                                 id="text-field"
+                                disabled
                                 value={data.text}
                             >
                     </textarea>
@@ -110,7 +113,8 @@ function PersonEventDelete() {
                             <input
                                 type="date"
                                 id=" beginDate-field"
-                                value={data.beginDate}
+                                disabled
+                                value={data.beginDate.substring(0,10)}
                             />
                         </label>
                         <label htmlFor=" endDate-field">
@@ -118,7 +122,8 @@ function PersonEventDelete() {
                             <input
                                 type="date"
                                 id=" endDate-field"
-                                value={data.endDate}
+                                disabled
+                                value={data.endDate.substring(0,10)}
                             />
                         </label>
                         <Button type="button" onClick={deleteData}>

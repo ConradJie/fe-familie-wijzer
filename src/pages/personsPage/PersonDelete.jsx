@@ -58,8 +58,9 @@ function PersonDelete() {
     return (
         <>
             {data?.id ?
-                <section>
-                    <form className="person-form-delete">
+                <main>
+                    <h2>Persoon verwijderen</h2>
+                    <form className="person-delete-form">
                         <label htmlFor="givenNames-field">
                             Voornamen:
                             <input
@@ -96,7 +97,7 @@ function PersonDelete() {
                         <Button type="button" variant="cancel"
                                 onClick={() => navigate("/persons")}>Annuleren</Button>
                     </form>
-                </section>
+                </main>
                 : <p> Loading...</p>
             }
             {error && <p>{error}</p>}

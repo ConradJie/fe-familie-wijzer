@@ -11,9 +11,6 @@ function PersonEventUpdate() {
     const [data, setData] = useState([]);
     const [personError, setPersonError] = useState("");
     const [error, setError] = useState("");
-console.log("update");
-console.log("pid",pid);
-console.log("id",id);
 
     useEffect(() => {
         async function getPersonData() {
@@ -37,6 +34,9 @@ console.log("id",id);
                 setError("");
                 const response = await axios.get(`http://localhost:8080/persons/${pid}/events/${id}`,
                     {});
+                //For dates, useForm.defaultValues only accepts the YYYY-MM-DD format!!
+                response.data.beginDate = response.data.beginDate.substring(0,10);
+                response.data.endDate = response.data.endDate.substring(0,10);
                 setData(response.data);
             } catch (e) {
                 if (axios.isCancel) {
@@ -55,7 +55,6 @@ console.log("id",id);
 
     return (
         <main>
-            {data?.id && <p>dataa.beginDate</p> }
             {personData?.id && <h2>Gebeurtenis van {personData.givenNames} {personData.surname} wijzigen</h2>}
             {data?.id ? <PersonEventForm
                     method="put"
@@ -63,7 +62,7 @@ console.log("id",id);
                     pid={pid}
                     id={id}
                 />
-                : <p>Loading...</p>}
+                : <p>Loading...from update</p>}
             {personError && <p>{personError}</p>}
             {error && <p>{error}</p>}
         </main>
