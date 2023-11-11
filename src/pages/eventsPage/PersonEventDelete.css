@@ -1,0 +1,6 @@
+.person-event-delete-form input,
+.person-event-delete-form select,
+.person-event-delete-form textarea
+{
+    background-color: var(--color-background-secondary);
+}

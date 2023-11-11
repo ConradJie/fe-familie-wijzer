@@ -4,14 +4,13 @@ import axios from "axios";
 import {useForm} from "react-hook-form";
 import Button from "../../components/Button.jsx";
 
-// eslint-disable-next-line react/prop-types
 function PersonEventForm({pid, id, method, preloadedValues}) {
     const {
         register,
         formState: {errors},
         handleSubmit
     } = useForm(
-        {defaultValues: preloadedValues}
+        {defaultValues : preloadedValues}
     );
     const [error, setError] = useState("");
     const [sending, toggleSending] = useState(false);
@@ -62,7 +61,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
 
     return (
         <main>
-            <form className="new-person-event-form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="person-event-form" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="event-type-field">
                     Eventtype:
                     <select
@@ -130,8 +129,8 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
             </form>
             {error &&
                 <p>Er is iets misgegaan bij het opslaan van de gegevens:{error}</p>}
-            {error && <p>Er is iets misgegaan bij het versturen van geevens: {error}</p>}
-            {toggleSending && <p>Sending...</p>}
+            {error && <p>Er is iets misgegaan bij het versturen van gegevens: {error}</p>}
+            {sending && <p>Sending...</p>}
         </main>
     )
 }
