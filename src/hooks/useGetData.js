@@ -4,6 +4,7 @@ import axios from 'axios';
 const useGetData = (url) => {
 
     const [data, setData] = useState([]);
+    const [dataLoading,toggleDataLoading] = useState(true);
     const [dataError, setDataError] = useState("");
 
     useEffect(() => {
@@ -20,6 +21,8 @@ const useGetData = (url) => {
                 } else {
                     setDataError(e.message);
                 }
+            } finally {
+                toggleDataLoading(false);
             }
         }
         void getData();
@@ -29,7 +32,7 @@ const useGetData = (url) => {
         }
 
     }, [url]);
-    return { data, dataError }
+    return { data, dataError , dataLoading}
 };
 
 export default useGetData;

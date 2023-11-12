@@ -4,7 +4,7 @@ import axios from "axios";
 import {useState} from "react";
 import Button from "../../components/Button.jsx";
 
-function PersonForm({id, method, preloadedValues}) {
+function PersonForm({pid, method, preloadedValues}) {
     const {
         register,
         formState: {errors},
