@@ -19,6 +19,8 @@ import EventMultimediaNew from "./pages/eventMultimediasPage/EventMultimediaNew.
 import PersonDelete from "./pages/personsPage/PersonDelete.jsx";
 import PersonEventUpdate from "./pages/eventsPage/PersonEventUpdate.jsx";
 import PersonEventDelete from "./pages/eventsPage/PersonEventDelete.jsx";
+import EventMultimediaUpdate from "./pages/eventMultimediasPage/EventMultimediaUpdate.jsx";
+import RelationNew from "./pages/relationsPage/RelationNew.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -49,9 +51,11 @@ function App() {
                 <Route path="/personEventNew/:pid" element={<PersonEventNew/>}/>
                 <Route path="/personEventUpdate/:pid/:id" element={<PersonEventUpdate/>}/>
                 <Route path="/personEventDelete/:pid/:id" element={<PersonEventDelete/>}/>
-                <Route path="/eventMultimedias/:t/:tid/:id" element={<EventMultimedias/>}/>
-                <Route path="/eventMultimediaNew/:t/:tid/:id" element={<EventMultimediaNew/>}/>
-                <Route path="/relations" element={<Relations/>}/>
+                <Route path="/eventMultimedias/:t/:tid/:eid" element={<EventMultimedias/>}/>
+                <Route path="/eventMultimediaNew/:t/:tid/:eid" element={<EventMultimediaNew/>}/>
+                <Route path="/eventMultimediaUpdate/:id" element={<EventMultimediaUpdate/>}/>
+                <Route path="/relations/:pid" element={<Relations/>}/>
+                <Route path="/relationsNew/:pid" element={<RelationNew/>}/>
                 <Route path="/children" element={<Children/>}/>
                 <Route path="/trees" element={<Trees/>}/>
                 <Route path="/signin" element={<SignUp/>}/>

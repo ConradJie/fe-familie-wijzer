@@ -9,8 +9,8 @@ function PersonEvents() {
     const {id} = useParams();
 
     const navigate = useNavigate();
-    const {person, personError} = useGetPerson(`http://localhost:8080/persons/${id}`);
-    const {data, dataError} = useGetData(`http://localhost:8080/persons/${id}/events`);
+    const {person, personError,personLoading} = useGetPerson(`http://localhost:8080/persons/${id}`);
+    const {data, dataError, dataLoading} = useGetData(`http://localhost:8080/persons/${id}/events`);
 
     return (
         <main className="main-person-events">
@@ -27,7 +27,7 @@ function PersonEvents() {
                 </tr>
                 </thead>
                 <tbody>
-                {data &&
+                {Object.keys(data).length > 0 &&
                     data.map((e) => {
                         return (
                             <tr key={e.id}>
@@ -35,9 +35,12 @@ function PersonEvents() {
                                 <td>{localDateNumeric(e.endDate)}</td>
                                 <td>{e.eventType}</td>
                                 <td>{e.description}</td>
-                                <td onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}><Images
-                                    width={24}
-                                    height={24}/></td>
+                                <td onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}>
+                                    <Images
+                                        width={24}
+                                        height={24}/>
+                                    pid:{id} , eid:{e.id}
+                                </td>
                                 <td onClick={() => navigate(`/personEventUpdate/${id}/${e.id}`)}><Pencil width={24}
                                                                                                          height={24}/>
                                 </td>
@@ -45,12 +48,13 @@ function PersonEvents() {
                                                                                                         height={24}/>
                                 </td>
                             </tr>)
-                    })}
+                    })
+                }
                 </tbody>
             </table>
-            {(!data || !person) && <p>Loading..</p>}
-            {!person && personError && <p>{personError}</p>}
-            {!data && dataError && <p>{dataError}</p>}
+            {(dataLoading || personLoading) && <p>Loading..</p>}
+            {personError && <p>{personError}</p>}
+            {dataError && <p>{dataError}</p>}
         </main>
     )
 }
