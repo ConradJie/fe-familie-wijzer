@@ -5,19 +5,23 @@ import useGetEvent from "../../hooks/useGetEvent.js";
 import useGetData from "../../hooks/useGetData.js";
 
 function EventMultimedias() {
-    const {t} = useParams();    //person
-    const {tid} = useParams();  //personId
-    const {eid} = useParams();  //eventId
-    const urlEvent = `http://localhost:8080/persons/${tid}/events/${eid}`;
-    const urlMultimedias = `http://localhost:8080/events/${eid}/multimedias`;
+    const {t,tid,eid} = useParams();
     const navigate = useNavigate();
+    // const urlEvent = `http://localhost:8080/persons/${tid}/events/${eid}`;
+    // const urlMultimedias = `http://localhost:8080/events/${eid}/multimedias`;
+    const urlEvent = (typeof tid === 'string') && (typeof eid === 'string')?
+        `http://localhost:8080/persons/${tid}/events/${eid}` : "";
+    const urlMultimedias = (typeof tid === 'string') ?
+        `http://localhost:8080/events/${eid}/multimedias` : "";
+
     const {event, eventError} = useGetEvent(urlEvent);
     const {data, dataError} = useGetData(urlMultimedias);
 
     return (
         <>{
-            // t && tid && eid &&
-            <main className="main-person-events">
+            t && tid && eid &&
+              (typeof t === 'string') && (typeof tid === 'string') && (typeof eid === 'string') &&
+            <main className="main-event-multimedias">
                 {event && <h2>Multimedia over gebeurtenis {event.description} | eid:{event.id}</h2>}
                 <p>{urlEvent}</p>
                 <p>{urlMultimedias}</p>

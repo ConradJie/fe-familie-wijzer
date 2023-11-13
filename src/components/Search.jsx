@@ -2,7 +2,7 @@ import './Search.css';
 import {useState} from 'react';
 import axios from 'axios';
 
-function Search({id, label, className, endpoint, chooseMessage}) {
+function Search({id, label, className, endpoint, choose}) {
     const [data, setData] = useState({});
     const [loading, toggleLoading] = useState(false);
     const [error, setError] = useState("");
@@ -49,7 +49,7 @@ function Search({id, label, className, endpoint, chooseMessage}) {
                            } else {
                                setInputError("");
                                setInput(e.target.value);
-                               chooseMessage(e.target.value);
+                               choose(e.target.value);
                                e.target.value && getData(e.target.value);
                            }
                        }}
@@ -61,7 +61,7 @@ function Search({id, label, className, endpoint, chooseMessage}) {
                     <datalist id={`${id}search-result`} className="search-result ${className}">
                         {data.map((d) => {
                             return (
-                                <option key={`${d.id}`} value={`${d.id}`}>{`${d.givenNames} - ${d.surname}`}</option>
+                                <option key={`${d.id}`} value={`${d.id}`}>{`${d.givenNames} ${d.surname}`}</option>
                             )
                         })}
                     </datalist>

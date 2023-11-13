@@ -33,7 +33,7 @@ function PersonForm({pid, method, preloadedValues}) {
                         });
                     break;
                 case "put":
-                    response = await axios.put(`http://localhost:8080/persons/${id}`,
+                    response = await axios.put(`http://localhost:8080/persons/${pid}`,
                         {
                             givenNames: data.givenNames,
                             surname: data.surname,
@@ -44,6 +44,7 @@ function PersonForm({pid, method, preloadedValues}) {
         } catch (e) {
             if (axios.isCancel) {
                 console.error("Request is canceled");
+                console.log(e)
                 setError(e.message);
             } else {
                 setError(e.message);
