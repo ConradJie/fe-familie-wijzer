@@ -6,30 +6,27 @@ import axios from "axios";
 import {useState} from "react";
 
 function EventMultimediaDelete() {
-    const {t} = useParams();
-    const {tid} = useParams();
-    const {eid} = useParams();
-    const {id} = useParams();
+    const {t, tid, eid, id} = useParams();
     const url = (t === 'person') ? `http://localhost:8080/events/${eid}/multimedias/${id}`
         : `http://localhost:8080/multimedias/${id}`;
-    const {data, dataError} = useGetData(url);
-    const {error, setError} = useState("");
+    const urlDelete = `http://localhost:8080/events/${eid}/multimedias/${id}`;
+    const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
+    const {data, dataError,dataLoading} = useGetData(url);
+    const [error, setError] = useState("");
+    const [responseData, setResponseData] = useState([]);
     const navigate = useNavigate();
     const controller = new AbortController();
-    const goBack = "`/eventMultimedias/${tid}/${tid}/${e.id}`";
 
-    async function deleteData(e) {
-        e.preventDefault();
-
+    async function deleteData() {
+        // e.preventDefault();
         try {
             setError("");
-            const response = await axios.delete(`http://localhost:8080//events/${eid}/multimedias/${id}`,
-                {});
-            console.log(response.data);
+            const response = await axios.delete(urlDelete, {});
+            setResponseData(response.data);
         } catch (e) {
             setError(e.message);
         }
-        navigate("/persons")
+        navigate(urlGoBack);
 
         return function cleanup() {
             controller.abort();
@@ -38,7 +35,7 @@ function EventMultimediaDelete() {
 
     return (
         <>
-            {t && tid && eid && id && data?.id ?
+            {data?.id &&
                 <main>
                     <form className="event-multimedia-delete-form">
                         <label htmlFor="description-field">
@@ -46,6 +43,7 @@ function EventMultimediaDelete() {
                             <input
                                 type=" text"
                                 id="description-field"
+                                disabled
                                 value={data.description}
                             />
                         </label>
@@ -54,6 +52,7 @@ function EventMultimediaDelete() {
                             <input
                                 type=" text"
                                 id="filename-field"
+                                disabled
                                 value={data.filename}
                             />
                         </label>
@@ -61,13 +60,13 @@ function EventMultimediaDelete() {
                             Verwijderen
                         </Button>
                         <Button type="button" variant="cancel"
-                                onClick={() => navigate(goBack)}> Annuleren
+                                onClick={() => navigate(urlGoBack)}> Annuleren
                         < /Button>
                     </form>
                 </main>
-                : <p>Loading...</p>
             }
-            {dataError && <p>Er is iets misgegaan bij het opslaan van de gegevens:{dataError}</p>}
+            {dataLoading && <p>Loading...</p>}
+            {dataError && <p>{dataError}</p>}
             {error && <p>{error}</p>}
         </>
     );
