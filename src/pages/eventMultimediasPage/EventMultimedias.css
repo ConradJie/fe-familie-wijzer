@@ -1,0 +1,4 @@
+.main-event-multimedias table th,
+.main-event-multimedias table tr td {
+    padding: var(--size-padding-s);
+}

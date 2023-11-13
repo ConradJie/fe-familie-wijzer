@@ -1,32 +1,29 @@
 import './RelationNew.css';
 import {useParams} from "react-router-dom";
 import useGetPerson from "../../hooks/useGetPerson.js";
-import Search from "../../components/Search.jsx";
 import Button from "../../components/Button.jsx";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {useState} from "react";
+import useGetData from "../../hooks/useGetData.js";
 
-function RelationNew() {
-    const {pid} = useParams();
+function RelationDelete() {
+    const {pid, sid} = useParams();
     const urlPerson = `http://localhost:8080/persons/${pid}`;
     const urlGoBack = `/relations/${pid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
-    // const [sending, toggleSending] = useState(false);
+    const {data, dataError, dataLoading} = useGetData(`http://localhost:8080/persons/${sid}`);
+    const [sending, toggleSending] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const [choice, setChoice] = useState("");
-    const choose = (choice) => setChoice(choice);
 
     async function handleSubmit() {
         try {
+            toggleSending(true);
             setError("");
-            const response = await axios.post("http://localhost:8080/relations",
-                {
-                    personId: pid,
-                    spouseId: choice
-                });
+            const response = await axios.delete(`http://localhost:8080/relations/persons/${pid}/${sid}`,
+                {});
         } catch (e) {
             if (axios.isCancel) {
                 console.error("Request is canceled");
@@ -36,29 +33,27 @@ function RelationNew() {
                 console.error(e);
             }
         } finally {
-            // toggleSending(false);
+            toggleSending(false);
         }
         navigate(`/relations/${pid}`);
     }
 
     return (
-        <main>
-            {person && <h2>Relatie toevoegen aan {person.givenNames} {person.surname}</h2>}
-            <Search
-                id="spouse"
-                label="Partner"
-                className=""
-                endpoint="http://localhost:8080/persons/namecontains/"
-                choose={choose}
-            />
-            <Button type="button" onClick={() => isNaN(choice) ?
-                setError("ongeldige keuze") : handleSubmit()}>Opslaan</Button>
+        <main className="main-relation-delete">
+            {person && <h2>Relatie van {person.givenNames} {person.surname} verwijderen</h2>}
+            {data ? <p>id:{data.id}!personid:{data.personId}!spouseId:{data.spouseId}!</p> : <p>Geen data</p>}
+            {data?.id && <input type="text" id="spouse" disabled value="data.spouseId"/>}
+            {data?.id && <p>{data.spouseId}</p>}
+            <Button type="button" onClick={handleSubmit}>Verwijderen</Button>
             <Button type="button" variant="cancel" onClick={() => navigate(urlGoBack)}>Annuleren</Button>
             {personLoading && <p>Loading...</p>}
+            {dataLoading && <p>Loading...</p>}
             {personError && <p>url:{urlPerson}<br/>{personError}</p>}
+            {dataError && <p>{dataError}</p>}
+            {sending && <p>Sending...</p>}
             {error && <p>{error}</p>}
         </main>
     );
 }
 
-export default RelationNew;
+export default RelationDelete;

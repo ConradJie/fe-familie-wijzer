@@ -13,7 +13,7 @@ function PersonUpdate() {
             {person?.id ? <PersonForm
                 method="put"
                 preloadedValues={person}
-                id={id}
+                pid={id}
                 />
                 : <p>Loading...</p>}
             {personError && <p>{personError}</p>}
