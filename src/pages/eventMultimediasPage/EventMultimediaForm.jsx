@@ -5,10 +5,10 @@ import {useState} from "react";
 import axios from "axios";
 import Button from "../../components/Button.jsx";
 
-function EventMultimediaForm(t, tid, eid, id, method, preloadedValues) {
-    const goBack = `/eventMultimedias/${t}/${tid}/${eid}`;
-    console.log("t",t,"tid",tid,"eid",eid,"method",method, "preloadedValues",preloadedValues);
-    console.log("goBack", goBack);
+function EventMultimediaForm({t, tid, eid, id, method, preloadedValues}) {
+    const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
+    const urlPost = `http://localhost:8080/events/${eid}/multimedias`;
+    const urlPut = `http://localhost:8080/events/${eid}/multimedias/${id}`;
     const {
         register,
         formState: {errors},
@@ -26,10 +26,10 @@ function EventMultimediaForm(t, tid, eid, id, method, preloadedValues) {
             setError("");
             toggleSending(true);
             let response = null;
+            console.log("method", method, urlPost);
             switch (method) {
                 case "post":
-                    // response = await axios.post(`http://localhost:8080/events/${eid}/multimedias`,
-                    response = await axios.post(`http://localhost:8080/multimedias`,
+                    response = await axios.post(urlPost,
                         {
                             eventId: data.eventId,
                             description: data.description,
@@ -37,8 +37,9 @@ function EventMultimediaForm(t, tid, eid, id, method, preloadedValues) {
                         });
                     break;
                 case "put":
-                    response = await axios.put(`http://localhost:8080/multimedias/${id}`,
+                    response = await axios.put(urlPut,
                         {
+                            id: data.id,
                             eventId: data.eventId,
                             description: data.description,
                             filename: data.filename
@@ -46,6 +47,7 @@ function EventMultimediaForm(t, tid, eid, id, method, preloadedValues) {
                     break;
             }
         } catch (e) {
+            console.log(e);
             if (axios.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
@@ -57,7 +59,7 @@ function EventMultimediaForm(t, tid, eid, id, method, preloadedValues) {
         } finally {
             toggleSending(false);
         }
-        navigate(goBack);
+        navigate(urlGoBack);
     }
 
     return (
@@ -89,9 +91,9 @@ function EventMultimediaForm(t, tid, eid, id, method, preloadedValues) {
                 {sending && <p>sending...</p>}
                 <Button type="submit" onClick={handleSubmit}>Opslaan</Button>
                 <Button type="button" variant="cancel" onClick={(e) => {
-                    console.log("Van Update/delete terug naar Multimedia1:", goBack);
+                    console.log("Van Update/delete terug naar Multimedia1:", urlGoBack);
                     e.preventDefault();
-                    navigate(goBack)
+                    navigate(urlGoBack)
                 }}>Annuleren</Button>
             </form>
             {error &&

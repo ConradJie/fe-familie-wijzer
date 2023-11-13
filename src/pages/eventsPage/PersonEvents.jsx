@@ -4,12 +4,13 @@ import {ArrowLeft, Images, Pencil, PlusCircle, Trash} from "@phosphor-icons/reac
 import localDateNumeric from "../../helpers/localDateNumeric.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetData from "../../hooks/useGetData.js";
+import getEventTypeLabel from "../../helpers/getEventTypeLabel.js";
 
 function PersonEvents() {
     const {id} = useParams();
 
     const navigate = useNavigate();
-    const {person, personError,personLoading} = useGetPerson(`http://localhost:8080/persons/${id}`);
+    const {person, personError, personLoading} = useGetPerson(`http://localhost:8080/persons/${id}`);
     const {data, dataError, dataLoading} = useGetData(`http://localhost:8080/persons/${id}/events`);
 
     return (
@@ -33,13 +34,10 @@ function PersonEvents() {
                             <tr key={e.id}>
                                 <td>{localDateNumeric(e.beginDate)}</td>
                                 <td>{localDateNumeric(e.endDate)}</td>
-                                <td>{e.eventType}</td>
+                                <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
                                 <td onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}>
-                                    <Images
-                                        width={24}
-                                        height={24}/>
-                                    pid:{id} , eid:{e.id}
+                                    <Images width={24} height={24}/>
                                 </td>
                                 <td onClick={() => navigate(`/personEventUpdate/${id}/${e.id}`)}><Pencil width={24}
                                                                                                          height={24}/>
