@@ -1,7 +1,7 @@
-.detail-person-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: var(--size-padding-m);
+.main-person-detail input,
+.main-person-detail select {
+    background-color: var(--color-background-secondary);
 }
-
+.main-person-detail button {
+    width: 100%;
+}
