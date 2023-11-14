@@ -23,6 +23,8 @@ import EventMultimediaUpdate from "./pages/eventMultimediasPage/EventMultimediaU
 import RelationNew from "./pages/relationsPage/RelationNew.jsx";
 import RelationDelete from "./pages/relationsPage/RelationDelete.jsx";
 import EventMultimediaDelete from "./pages/eventMultimediasPage/EventMultimediaDelete.jsx";
+import RelationUpdate from "./pages/relationsPage/RelationUpdate.jsx";
+import ChildNew from "./pages/childrenPage/ChildNew.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -59,8 +61,10 @@ function App() {
                 <Route path="/eventMultimediaDelete/:t/:tid/:eid/:id" element={<EventMultimediaDelete/>}/>
                 <Route path="/relations/:pid" element={<Relations/>}/>
                 <Route path="/relationNew/:pid" element={<RelationNew/>}/>
-                <Route path="/relationDelete/:pid/:sid" element={<RelationDelete/>}/>
-                <Route path="/children" element={<Children/>}/>
+                <Route path="/relationUpdate/:pid/:rid/:sid" element={<RelationUpdate/>}/>
+                <Route path="/relationDelete/:pid/:rid/:sid" element={<RelationDelete/>}/>
+                <Route path="/children/:pid/:rid/:sid" element={<Children/>}/>
+                <Route path="/childNew/:pid/:rid/:sid" element={<ChildNew/>}/>
                 <Route path="/trees" element={<Trees/>}/>
                 <Route path="/signin" element={<SignUp/>}/>
                 <Route path="/login" element={<Login/>}/>

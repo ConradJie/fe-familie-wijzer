@@ -1,5 +1,4 @@
-#spouse {
-    width: 80em;
-    background-color: red;
-    caret-color: red;
+.main-relation-delete input {
+    width: 100%;
+    background-color: var(--color-background-secondary);
 }

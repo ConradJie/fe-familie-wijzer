@@ -1,16 +1,15 @@
-import './RelationNew.css';
-import {useParams} from "react-router-dom";
+import './ChildNew.css';
+import {useNavigate, useParams} from "react-router-dom";
 import useGetPerson from "../../hooks/useGetPerson.js";
+import {useState} from "react";
+import axios from "axios";
 import Search from "../../components/Search.jsx";
 import Button from "../../components/Button.jsx";
-import {useNavigate} from 'react-router-dom';
-import axios from "axios";
-import {useState} from "react";
 
-function RelationNew() {
-    const {pid} = useParams();
+function ChildNew() {
+    const {pid, rid, sid} = useParams();
     const urlPerson = `http://localhost:8080/persons/${pid}`;
-    const urlGoBack = `/relations/${pid}`;
+    const urlGoBack = `/children/${pid}/${rid}/${sid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -21,13 +20,10 @@ function RelationNew() {
     async function handleSubmit() {
         try {
             setError("");
-            if (choice==="") {
-                setChoice(null);
-            }
-            const response = await axios.post("http://localhost:8080/relations",
+            const response = await axios.post(`http://localhost:8080/relations/${rid}/children`,
                 {
-                    personId: pid,
-                    spouseId: choice
+                    relationId: rid,
+                    personId: choice
                 });
         } catch (e) {
             if (axios.isCancel) {
@@ -43,15 +39,15 @@ function RelationNew() {
 
     return (
         <main>
-            {person && <h2>Relatie toevoegen aan {person.givenNames} {person.surname}</h2>}
+            {person && <h2>Kind van {person.givenNames} {person.surname} toevoegen</h2>}
             <Search
-                id="spouse"
-                label="Partner"
+                id="child"
+                label="Kind"
                 className=""
                 endpoint="http://localhost:8080/persons/namecontains/"
                 choose={choose}
             />
-            <Button type="button" onClick={() => (choice !== "" && isNaN(Number(choice))) ?
+            <Button type="button" onClick={() => isNaN(Number(choice)) ?
                 setError("ongeldige keuze") : handleSubmit()}>Opslaan</Button>
             <Button type="button" variant="cancel" onClick={() => navigate(urlGoBack)}>Annuleren</Button>
             {personLoading && <p>Loading...</p>}
@@ -61,4 +57,4 @@ function RelationNew() {
     );
 }
 
-export default RelationNew;
+export default ChildNew;
