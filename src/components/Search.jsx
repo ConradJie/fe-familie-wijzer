@@ -2,7 +2,7 @@ import './Search.css';
 import {useState} from 'react';
 import axios from 'axios';
 
-function Search({id, label, className, endpoint, choose}) {
+function Search({id, label, className, placeholder, endpoint, choose}) {
     const [data, setData] = useState({});
     const [loading, toggleLoading] = useState(false);
     const [error, setError] = useState("");
@@ -37,6 +37,7 @@ function Search({id, label, className, endpoint, choose}) {
                        id={id}
                        list={`${id}search-result`}
                        value={input}
+                       placeholder={placeholder}
                        onChange={(e) => {
                            if (e.target.value.includes("\\")) {
                                setInputError("\\");

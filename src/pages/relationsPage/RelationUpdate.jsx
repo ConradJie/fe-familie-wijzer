@@ -1,4 +1,4 @@
-import './RelationNew.css';
+import './RelationUpdate.css';
 import {useParams} from "react-router-dom";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import Search from "../../components/Search.jsx";
@@ -7,14 +7,13 @@ import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {useState} from "react";
 
-function RelationNew() {
-    const {pid} = useParams();
+function RelationUpdate() {
+    const {pid,rid,sid} = useParams();
     const urlPerson = `http://localhost:8080/persons/${pid}`;
     const urlGoBack = `/relations/${pid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
     const [choice, setChoice] = useState("");
     const choose = (choice) => setChoice(choice);
 
@@ -24,13 +23,15 @@ function RelationNew() {
             if (choice==="") {
                 setChoice(null);
             }
-            const response = await axios.post("http://localhost:8080/relations",
+            const response = await axios.put(`http://localhost:8080/relations/${rid}`,
                 {
+                    id: rid,
                     personId: pid,
                     spouseId: choice
                 });
         } catch (e) {
             if (axios.isCancel) {
+                console.log(e)
                 console.error("Request is canceled");
                 setError(e.message);
             } else {
@@ -43,10 +44,11 @@ function RelationNew() {
 
     return (
         <main>
-            {person && <h2>Relatie toevoegen aan {person.givenNames} {person.surname}</h2>}
+            {person && <h2>Relatie van {person.givenNames} {person.surname} wijzigen</h2>}
             <Search
                 id="spouse"
                 label="Partner"
+                placeholder={sid}
                 className=""
                 endpoint="http://localhost:8080/persons/namecontains/"
                 choose={choose}
@@ -61,4 +63,4 @@ function RelationNew() {
     );
 }
 
-export default RelationNew;
+export default RelationUpdate;
