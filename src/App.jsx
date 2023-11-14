@@ -3,28 +3,29 @@ import {Link, Route, Routes, useNavigate} from "react-router-dom";
 import logo from './assets/familiewijzer-secondary.svg'
 import Home from "./pages/homePage/Home.jsx";
 import NotFound from "./pages/notFoundPage/NotFound.jsx";
-import Persons from "./pages/personsPage/Persons.jsx";
 import Children from "./pages/childrenPage/Children.jsx";
 import Relations from "./pages/relationsPage/Relations.jsx";
+import Persons from "./pages/personsPage/Persons.jsx";
 import PersonNew from "./pages/personsPage/PersonNew.jsx";
-import PersonDetail from "./pages/personsPage/PersonDetail.jsx";
 import PersonUpdate from "./pages/personsPage/PersonUpdate.jsx";
+import PersonDelete from "./pages/personsPage/PersonDelete.jsx";
+import PersonDetail from "./pages/personsPage/PersonDetail.jsx";
 import Trees from "./pages/treesPage/Trees.jsx";
 import SignUp from "./pages/signUpPage/SignUp.jsx";
 import Login from "./pages/loginPage/Login.jsx";
 import PersonEvents from "./pages/eventsPage/PersonEvents.jsx";
 import PersonEventNew from "./pages/eventsPage/PersonEventNew.jsx";
-import EventMultimedias from "./pages/eventMultimediasPage/EventMultimedias.jsx";
-import EventMultimediaNew from "./pages/eventMultimediasPage/EventMultimediaNew.jsx";
-import PersonDelete from "./pages/personsPage/PersonDelete.jsx";
 import PersonEventUpdate from "./pages/eventsPage/PersonEventUpdate.jsx";
 import PersonEventDelete from "./pages/eventsPage/PersonEventDelete.jsx";
+import EventMultimedias from "./pages/eventMultimediasPage/EventMultimedias.jsx";
+import EventMultimediaNew from "./pages/eventMultimediasPage/EventMultimediaNew.jsx";
 import EventMultimediaUpdate from "./pages/eventMultimediasPage/EventMultimediaUpdate.jsx";
+import EventMultimediaDelete from "./pages/eventMultimediasPage/EventMultimediaDelete.jsx";
 import RelationNew from "./pages/relationsPage/RelationNew.jsx";
 import RelationDelete from "./pages/relationsPage/RelationDelete.jsx";
-import EventMultimediaDelete from "./pages/eventMultimediasPage/EventMultimediaDelete.jsx";
 import RelationUpdate from "./pages/relationsPage/RelationUpdate.jsx";
 import ChildNew from "./pages/childrenPage/ChildNew.jsx";
+import ChildDelete from "./pages/childrenPage/ChildDelete.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/relationDelete/:pid/:rid/:sid" element={<RelationDelete/>}/>
                 <Route path="/children/:pid/:rid/:sid" element={<Children/>}/>
                 <Route path="/childNew/:pid/:rid/:sid" element={<ChildNew/>}/>
+                <Route path="/childDelete/:pid/:rid/:sid/:id" element={<ChildDelete/>}/>
                 <Route path="/trees" element={<Trees/>}/>
                 <Route path="/signin" element={<SignUp/>}/>
                 <Route path="/login" element={<Login/>}/>
