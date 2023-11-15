@@ -7,7 +7,6 @@ function EventMultimediaUpdate() {
     const {t, tid, eid, id} = useParams();
 
     const {data, dataError} = useGetData(`http://localhost:8080/events/${eid}/multimedias/${id}`)
-    // const {data, dataError} = useGetData(`http://localhost:8080/multimedias/${id}`)
 
     return (
         <main>
@@ -19,7 +18,8 @@ function EventMultimediaUpdate() {
                     eid={eid}
                     id={id}
                     method="put"
-                    preloadedValues={data}
+                    description={data.description}
+                    filename={data.filename}
                 />
             }
             {dataError && <p>{dataError}</p>}

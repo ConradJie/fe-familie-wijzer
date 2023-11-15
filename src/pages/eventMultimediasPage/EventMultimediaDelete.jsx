@@ -11,14 +11,14 @@ function EventMultimediaDelete() {
         : `http://localhost:8080/multimedias/${id}`;
     const urlDelete = `http://localhost:8080/events/${eid}/multimedias/${id}`;
     const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
-    const {data, dataError,dataLoading} = useGetData(url);
+    const {data, dataError, dataLoading} = useGetData(url);
     const [error, setError] = useState("");
     const [responseData, setResponseData] = useState([]);
     const navigate = useNavigate();
     const controller = new AbortController();
 
-    async function deleteData() {
-        // e.preventDefault();
+    async function onSubmit(e) {
+        e.preventDefault();
         try {
             setError("");
             const response = await axios.delete(urlDelete, {});
@@ -37,7 +37,7 @@ function EventMultimediaDelete() {
         <>
             {data?.id &&
                 <main>
-                    <form className="event-multimedia-delete-form">
+                    <form className="event-multimedia-delete-form" onSubmit={onSubmit}>
                         <label htmlFor="description-field">
                             Omschrijving:
                             <input
@@ -56,9 +56,7 @@ function EventMultimediaDelete() {
                                 value={data.filename}
                             />
                         </label>
-                        <Button type="button" onClick={deleteData}>
-                            Verwijderen
-                        </Button>
+                        <Button type="submit"> Verwijderen </Button>
                         <Button type="button" variant="cancel"
                                 onClick={() => navigate(urlGoBack)}> Annuleren
                         < /Button>
