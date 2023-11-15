@@ -12,10 +12,9 @@ function EventMultimediaNew() {
                 tid={tid}
                 eid={eid}
                 id={null}
-                method="post"
-                preloadedValues={{
-                    eventId: `${eid}`
-                }}
+                method={"post"}
+                description={""}
+                filename={""}
             />
         </main>
     );
