@@ -26,6 +26,9 @@ import RelationDelete from "./pages/relationsPage/RelationDelete.jsx";
 import RelationUpdate from "./pages/relationsPage/RelationUpdate.jsx";
 import ChildNew from "./pages/childrenPage/ChildNew.jsx";
 import ChildDelete from "./pages/childrenPage/ChildDelete.jsx";
+import RelationEvents from "./pages/eventsPage/RelationEvents.jsx";
+import RelationEventNew from "./pages/eventsPage/RelationEventNew.jsx";
+import RelationEventUpdate from "./pages/eventsPage/RelationEventUpdate.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -64,6 +67,10 @@ function App() {
                 <Route path="/relationNew/:pid" element={<RelationNew/>}/>
                 <Route path="/relationUpdate/:pid/:rid/:sid" element={<RelationUpdate/>}/>
                 <Route path="/relationDelete/:pid/:rid/:sid" element={<RelationDelete/>}/>
+                <Route path="/relationEvents/:pid/:rid/:sid" element={<RelationEvents/>}/>
+                <Route path="/relationEventNew/:pid/:rid/:sid" element={<RelationEventNew/>}/>
+                <Route path="/relationEventUpdate/:pid/:rid/:sid/:id" element={<RelationEventUpdate/>}/>
+                <Route path="/relationEventDelete/:pid/:rid/:sid/:id" element={<RelationDelete/>}/>
                 <Route path="/children/:pid/:rid/:sid" element={<Children/>}/>
                 <Route path="/childNew/:pid/:rid/:sid" element={<ChildNew/>}/>
                 <Route path="/childDelete/:pid/:rid/:sid/:id" element={<ChildDelete/>}/>

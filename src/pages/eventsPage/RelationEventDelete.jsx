@@ -1,32 +1,40 @@
-import './PersonEventDelete.css';
+import './RelationEventDelete.css';
 import {useNavigate, useParams} from 'react-router-dom';
 import axios from "axios";
 import Button from "../../components/Button.jsx";
-import useGetPerson from "../../hooks/useGetPerson.js";
 import {useState} from "react";
+import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetEvent from "../../hooks/useGetEvent.js";
+import useGetSpouse from "../../hooks/useGetSpouse.js";
 
-function PersonEventDelete() {
-    const {pid, id} = useParams();
+function RelationEventDelete() {
+    const {pid, rid, sid, id} = useParams();
+    const urlGoBack = `/relationEvents/${pid}/${rid}/${sid}`;
+    const urlPerson = `http://localhost:8080/persons/${pid}`;
+    const urlSpouse = `http://localhost:8080/persons/${sid}`;
+    const urlEvent = `http://localhost:8080/relations/${rid}/events/${id}`;
+    console.log("urlPerson", urlPerson)
+    const {person, personError, personLoading} = useGetPerson(urlPerson);
+    console.log("urlSpouse", urlSpouse)
+    const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
+    console.log("urlEvent", urlEvent)
+    const {event, eventError, eventLoading} = useGetEvent(urlEvent);
     const navigate = useNavigate();
     const controller = new AbortController();
     const [response, setResponse] = useState([]);
     const [error, setError] = useState("");
-    const {person, personError} = useGetPerson(`http://localhost:8080/persons/${pid}`);
-    const {event, eventError} = useGetEvent(`http://localhost:8080/persons/${pid}/events/${id}`);
 
     async function deleteData(e) {
         e.preventDefault();
 
         try {
             setError("");
-            const response = await axios.delete(`http://localhost:8080/persons/${pid}/events/${id}`,
-                {});
+            const response = await axios.delete(urlEvent, {});
             setResponse(response.data);
         } catch (e) {
             setError(e.message);
         }
-        navigate("/persons")
+        navigate(urlGoBack)
 
         return function cleanup() {
             controller.abort();
@@ -35,9 +43,12 @@ function PersonEventDelete() {
 
     return (
         <>
-            {event?.id ?
-                <main>
-                    {person && <h2>Gebeurtenis van {person.givenNames} {person.surname} verwijderen</h2>}
+            <main>
+                {person?.id && spouse?.id && <h2>Gebeurtenis
+                    van {person.givenNames} {person.surname} en {spouse.givenNames} {spouse.surname} verwijderen</h2>}
+                {person && sid === "null" &&
+                    <h2>Gebeurtenis van {person.givenNames} {person.surname} verwijderen</h2>}
+                {event?.id &&
                     <form className="person-event-delete-form">
                         <label htmlFor="event-type-field">
                             Eventtype:
@@ -46,8 +57,8 @@ function PersonEventDelete() {
                                 disabled
                                 value={event.eventType}
                             >
-                                <option value="BIRTH">Geboorte</option>
-                                <option value="DEATH">Gestorven</option>
+                                <option value="MARRIAGE">Huwelijk</option>
+                                <option value="DIVORCE">Scheiding</option>
                                 <option value="MIGRATION">Migratie</option>
                                 <option value="CELEBRATION">Viering</option>
                                 <option value="OTHERS">Anders</option>
@@ -93,12 +104,13 @@ function PersonEventDelete() {
                             Verwijderen
                         </Button>
                         <Button type="button" variant="cancel"
-                                onClick={() => navigate(`/personEvents/${id}`)}>Annuleren</Button>
+                                onClick={() => navigate(urlGoBack)}>Annuleren</Button>
                     </form>
-                </main>
-                :
-                <p>Loading...</p>}
+                }
+            </main>
+            {(personLoading || spouseLoading || eventLoading) && <p>Loading...</p>}
             {personError && <p>{personError}</p>}
+            {spouseError && <p>{spouseError}</p>}
             {eventError && <p>{eventError}</p>}
             {error && <p>{error}</p>}
             {response && <p>{response}</p>}
@@ -106,4 +118,4 @@ function PersonEventDelete() {
     );
 }
 
-export default PersonEventDelete;
+export default RelationEventDelete;

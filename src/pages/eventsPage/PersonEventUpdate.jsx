@@ -5,8 +5,7 @@ import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonEventUpdate() {
-    const {pid} = useParams();
-    const {id} = useParams();
+    const {pid,id} = useParams();
     const {person, personError} = useGetPerson(`http://localhost:8080/persons/${pid}`);
     const {event,eventError} = useGetEvent(`http://localhost:8080/persons/${pid}/events/${id}`);
 

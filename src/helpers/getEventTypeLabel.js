@@ -1,9 +1,11 @@
 function getEventTypeLabel(value) {
     return (value === "BIRTH") ? "Geboorte"
         : (value === "DEATH") ? "Gestorven"
-            : (value === "MIGRATION") ? "Migratie"
-                : (value === "CELEBRATION") ? "Viering"
-                    : "Anders";
+            : (value === "MARRIAGE") ? "Huwelijk"
+                : (value === "DIVORCE") ? "Scheiding"
+                    : (value === "CELEBRATION") ? "Viering"
+                        : (value === "MIGRATION") ? "Migratie"
+                            : "Anders";
 }
 
 export default getEventTypeLabel;

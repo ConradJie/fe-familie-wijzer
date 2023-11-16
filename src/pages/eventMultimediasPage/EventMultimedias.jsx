@@ -11,7 +11,9 @@ function EventMultimedias() {
         `http://localhost:8080/persons/${tid}/events/${eid}` : "";
     const urlMultimedias = (typeof tid === 'string') ?
         `http://localhost:8080/events/${eid}/multimedias` : "";
+
     // const urlGoBack = `/personEvents/${tid}/${eid}`;
+
     const urlGoBack = `/personEvents/${tid}`;
 
     const {event, eventError} = useGetEvent(urlEvent);
