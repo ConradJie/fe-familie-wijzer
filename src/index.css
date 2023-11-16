@@ -122,9 +122,6 @@ a:hover {
 }
 
 body {
-    margin: 0;
-    display: flex;
-    place-items: start end;
     min-width: 320px;
     min-height: 100vh;
     background-color: var(--color-background-secondary);
@@ -134,9 +131,11 @@ main {
     background-color: var(--color-background);
     padding: var(--size-padding-m);
 }
+
 input {
     background-color: var(--color-background);
 }
+
 input[type="date"]:focus {
     caret-color: #64d97b;
     -webkit-text-fill-color: var(--color-black);
@@ -197,7 +196,7 @@ textarea {
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;
-        background-color: #ffffff;
+        background-color: var(--color-background-secondary);
     }
 
     a:hover {
