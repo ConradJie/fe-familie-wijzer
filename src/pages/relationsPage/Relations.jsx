@@ -1,7 +1,7 @@
 import './Relations.css';
 import useGetData from "../../hooks/useGetData.js";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {ArrowLeft, Baby, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
+import {ArrowLeft, Baby, BellSimple, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
 import useGetPerson from "../../hooks/useGetPerson.js";
 
 function Relations() {
@@ -32,8 +32,10 @@ function Relations() {
                             <tr key={s.id}>
                                 <td>{(s.spouseGivenNames !== null) ? s.spouseGivenNames : "-"}</td>
                                 <td>{(s.spouseSurname !== null) ? s.spouseSurname : "-"}</td>
+                                <td onClick={() => navigate(`/relationevents/${pid}/${s.id}/${s.spouseId}`)}><BellSimple width={24}
+                                                                                                             height={24}/></td>
                                 <td onClick={() => navigate(`/children/${pid}/${s.id}/${s.spouseId}`)}><Baby width={24}
-                                                                                               height={24}/></td>
+                                                                                                             height={24}/></td>
                                 <td onClick={() => navigate(`/relationUpdate/${pid}/${s.id}/${s.spouseId}`)}><Pencil
                                     width={24}
                                     height={24}/></td>

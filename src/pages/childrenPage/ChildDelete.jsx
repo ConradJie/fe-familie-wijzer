@@ -12,7 +12,7 @@ function ChildDelete() {
     const urlSpouse = `http://localhost:8080/persons/${sid}`;
     const urlGoBack = `/children/${pid}/${rid}/${sid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
-    const {spouse, spouseError, spouseLoading} = useGetSpouse(urlSpouse);
+    const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
