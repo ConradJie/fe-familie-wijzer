@@ -12,6 +12,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
     const [error, setError] = useState("");
     const [sending, toggleSending] = useState(false);
     const [descriptionValue, setDescriptionValue] = useState(description);
+    const [errorDescription, setErrorDescription] = useState("");
     const [file, setFile] = useState(filename);
     const [previewUrl, setPreviewUrl] = useState('');
     const [sendingFile, toggleSendingFile] = useState(false);
@@ -20,20 +21,30 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
     const [buttonVariant, setButtonVariant] = useState("primary");
     const navigate = useNavigate();
 
+    function disableSaveButton() {
+        toggleDisabled(true);
+        setButtonVariant("disabled");
+    }
+
+    function enableSaveButton() {
+        toggleDisabled(false);
+        setButtonVariant("primary");
+    }
+
     function handleChangeFile(e) {
         const uploadedFile = e.target.files[0];
         setFile(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
-        if (e.target.files[0].size > 20_971_520) {
-            toggleDisabled(true);
-            setButtonVariant("disabled");
+        if (e.target.files[0].type !== "application/pdf" && !e.target.files[0].type.startsWith("image")) {
+            disableSaveButton();
+            setErrorFile("Alleen een afbeelding of een PDF-bestand is toegestaan");
+        } else if (e.target.files[0].size > 20_971_000) {
+            disableSaveButton();
             setErrorFile("Bestand mag max. 20MB groot zijn");
         } else {
-            toggleDisabled(false);
-            setButtonVariant("primary");
+            enableSaveButton();
             setErrorFile("");
         }
-        console.log(error)
     }
 
     async function onSubmit(e) {
@@ -65,11 +76,10 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                     break;
             }
         } catch (e) {
-            console.log(e);
             if (axios.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
-                console.log(e.message);
+                console.error(e);
             } else {
                 setError(e.message);
                 console.error(e);
@@ -94,7 +104,6 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                 {
                     headers: {"Content-Type": "multipart/form-data"},
                 })
-            console.log(result.data);
         } catch (e) {
             console.error(e);
             setErrorFile(e.message);
@@ -115,12 +124,18 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                         name="description-field"
                         value={descriptionValue}
                         onChange={(e) => setDescriptionValue(e.target.value)}
-                        onBlur={(e) =>
-                            (e.target.value === "") ? setError("Omschrijving is niet ingevuld")
-                                : setError("")}
+                        onBlur={(e) => {
+                            if (e.target.value === "") {
+                                setErrorDescription("Omschrijving is niet ingevuld");
+                                disableSaveButton();
+                            } else {
+                                setErrorDescription("");
+                                enableSaveButton();
+                            }
+                        }}
                     />
                 </label>
-                {error && <p>{error}</p>}
+                {errorDescription && <p>{errorDescription}</p>}
                 {method === "put" &&
                     <label htmlFor="filename-field">
                         Bestandsnaam:
@@ -132,11 +147,15 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                         />
                     </label>
                 }
+                {errorFile && <p className="errorFile">{errorFile}</p>}
                 {previewUrl && file.type.startsWith("image") &&
                     <label>
                         Preview:
                         <img src={previewUrl} alt="Preview image" className="image-preview"/>
                     </label>
+                }
+                {previewUrl && file.type.startsWith("application/pdf") &&
+                    <embed src={previewUrl} className="pdf-preview"/>
                 }
                 <Button type="submit" disabled={disabled} variant={buttonVariant}>Opslaan</Button>
                 <Button type="button" variant="cancel" onClick={(e) => {
@@ -147,7 +166,6 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
             {sending && <p>Sending...</p>}
             {sendingFile && <p>Sendng file...</p>}
             {error && <p>{error}</p>}
-            {errorFile && <p>{errorFile}</p>}
         </main>
     )
 }

@@ -1,11 +1,11 @@
 import './RelationEvents.css';
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {ArrowLeft, Images, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
+import {ArrowLeft, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
 import localDateNumeric from "../../helpers/localDateNumeric.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
+import useGetSpouse from "../../hooks/useGetSpouse.js";
 import useGetData from "../../hooks/useGetData.js";
 import getEventTypeLabel from "../../helpers/getEventTypeLabel.js";
-import useGetSpouse from "../../hooks/useGetSpouse.js";
 
 function RelationEvents() {
     const {pid, rid, sid} = useParams();
@@ -41,9 +41,6 @@ function RelationEvents() {
                                 <td>{localDateNumeric(e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td onClick={() => navigate(`/eventMultimedias/relation/${pid}/${e.id}/${rid}/${sid}`)}>
-                                    <Images width={24} height={24}/>
-                                </td>
                                 <td onClick={() => navigate(`/relationEventUpdate/${pid}/${rid}/${sid}/${e.id}`)}><Pencil width={24}
                                                                                                           height={24}/>
                                 </td>
