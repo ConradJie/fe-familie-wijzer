@@ -3,18 +3,30 @@ import {useState} from "react";
 import axios from "axios";
 import {useForm} from "react-hook-form";
 import Button from "../../components/Button.jsx";
+import translate from "../../helpers/translate.js";
 
 function PersonEventForm({pid, id, method, preloadedValues}) {
     const {
         register,
         formState: {errors},
-        handleSubmit
+        handleSubmit,
+        getValues
     } = useForm(
-        {defaultValues : preloadedValues}
+        {defaultValues: preloadedValues}
     );
+    const urlGoBack = `/personEvents/${pid}`;
     const [error, setError] = useState("");
     const [sending, toggleSending] = useState(false);
     const navigate = useNavigate();
+    let processed = true;
+
+    function isValidBeginDate(date) {
+        return date <= getValues("endDate")
+    }
+
+    function isValidEndDate(date) {
+        return getValues("beginDate") <= date
+    }
 
     async function onSubmit(data) {
 
@@ -23,6 +35,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
             setError("");
             toggleSending(true);
             let response = null;
+            processed = true;
             switch (method) {
                 case "post":
                     response = await axios.post(`http://localhost:8080/persons/${pid}/events`,
@@ -46,24 +59,21 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                     break;
             }
         } catch (e) {
-            if (axios.isCancel) {
-                console.error("Request is canceled");
-                setError(e.message);
-            } else {
-                setError(e.message);
-                console.error(e);
-            }
+            processed = false;
+            setError(translate(e.response.data));
         } finally {
             toggleSending(false);
         }
-        navigate(`/personEvents/${pid}`);
+        if (processed) {
+            navigate(urlGoBack);
+        }
     }
 
     return (
         <main>
             <form className="person-event-form" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="event-type-field">
-                    Eventtype:
+                    Type gebeurtenis:
                     <select
                         id="event-type-field"
                         {...register("eventType", {
@@ -84,7 +94,11 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                         type=" text"
                         id="description-field"
                         {...register("description", {
-                            required: "Dit veld is verplicht"
+                            required: "Dit veld is verplicht",
+                            pattern: {
+                                value: /[a-zA-Z0-9]+/,
+                                message: "De omschrijving moet letters of cijfers bevatten",
+                            },
                         })}
                     />
                 </label>
@@ -104,7 +118,11 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                         type="date"
                         id=" beginDate-field"
                         {...register("beginDate", {
-                            required: " Dit veld is verplicht"
+                            required: {
+                                value: true,
+                                message: " Dit veld is verplicht",
+                            },
+                            validate: (value) => isValidBeginDate(value) || 'Begindatum komt na einddatum',
                         })}
                     />
                 </label>
@@ -115,7 +133,11 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                         type="date"
                         id=" endDate-field"
                         {...register("endDate", {
-                            required: " Dit veld is verplicht"
+                            required: {
+                                value: true,
+                                message: " Dit veld is verplicht",
+                            },
+                            validate: (value) => isValidEndDate(value) || 'Einddatum komt voor einddatum',
                         })}
                     />
                 </label>
@@ -124,12 +146,10 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                 <Button type=" submit" onClick={handleSubmit}>Opslaan</Button>
                 <Button type=" button" variant="cancel" onClick={(e) => {
                     e.preventDefault();
-                    navigate(`/personEvents/${pid}`)
+                    navigate(urlGoBack)
                 }}>Annuleren</Button>
             </form>
-            {error &&
-                <p>Er is iets misgegaan bij het opslaan van de gegevens:{error}</p>}
-            {error && <p>Er is iets misgegaan bij het versturen van gegevens: {error}</p>}
+            {error && <p>{error}</p>}
             {sending && <p>Sending...</p>}
         </main>
     )
