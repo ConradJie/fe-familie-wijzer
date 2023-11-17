@@ -1,3 +1,7 @@
-.image-preview{
+.image-preview {
     width: 10em;
+}
+
+.pdf-preview {
+    width: 60%;
 }
