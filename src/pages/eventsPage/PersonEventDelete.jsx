@@ -40,7 +40,7 @@ function PersonEventDelete() {
                     {person && <h2>Gebeurtenis van {person.givenNames} {person.surname} verwijderen</h2>}
                     <form className="person-event-delete-form">
                         <label htmlFor="event-type-field">
-                            Eventtype:
+                            Type gebeurtenis:
                             <select
                                 id="event-type-field"
                                 disabled
