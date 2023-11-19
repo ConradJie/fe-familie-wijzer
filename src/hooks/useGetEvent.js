@@ -19,7 +19,6 @@ const useGetEvent = (url) => {
                 response.data.endDate = response.data.endDate.substring(0, 10);
                 setEvent(response.data);
             } catch (e) {
-                console.log(e);
                 if (axios.isCancel) {
                     console.error("Request is canceled");
                     setEventError(e.message);

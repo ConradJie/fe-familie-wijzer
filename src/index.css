@@ -154,6 +154,12 @@ h2 {
     line-height: 1.1;
 }
 
+h3 {
+    font-size: var(--size-m);
+    padding: var(--size-m) var(--size-s);
+    line-height: 1.1;
+}
+
 button {
     border-radius: var(--size-radius-m);
     border: 1px solid transparent;
