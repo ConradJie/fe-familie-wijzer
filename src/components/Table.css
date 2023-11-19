@@ -1,0 +1,12 @@
+.Table th {
+    font-size: small;
+}
+
+.Table th,
+.Table tr {
+    padding: var(--size-padding-m);
+}
+
+.Table tr td {
+    padding: var(--size-padding-s) var(--size-padding-m);
+}
