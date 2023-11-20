@@ -1,9 +1,9 @@
 import './PersonDetail.css';
-import {useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import Table from "../../components/Table.jsx";
 import getEventTypeLabel from "../../helpers/getEventTypeLabel.js";
 import getSexLabel from "../../helpers/getSexLabel.js";
-import {UserRectangle} from "@phosphor-icons/react";
+import {ArrowLeft, ImagesSquare, UserRectangle} from "@phosphor-icons/react";
 import datesToText from "../../helpers/datesToText.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetEvents from "../../hooks/useGetEvents.js";
@@ -30,6 +30,7 @@ function PersonDetail() {
 
     return (
         <main className="main-person-detail">
+            <Link to={'/persons'}><ArrowLeft width={24} height={24}/></Link>
             <h2>Detail</h2>
             {person?.id &&
                 <form className="detail-person-form">
@@ -80,6 +81,9 @@ function PersonDetail() {
                                 <td>{datesToText(e.beginDate, e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
+                                <td onClick={() => navigate(`/personDetailMedia/${e.id}`)}>
+                                    <ImagesSquare width={24} height={24}/>
+                                </td>
                             </tr>)
                     })}
             />

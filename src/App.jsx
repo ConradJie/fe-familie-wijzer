@@ -10,6 +10,7 @@ import PersonNew from "./pages/personsPage/PersonNew.jsx";
 import PersonUpdate from "./pages/personsPage/PersonUpdate.jsx";
 import PersonDelete from "./pages/personsPage/PersonDelete.jsx";
 import PersonDetail from "./pages/personsPage/PersonDetail.jsx";
+import PersonDetailMedia from "./pages/personsPage/PersonDetailMedia.jsx";
 import Trees from "./pages/treesPage/Trees.jsx";
 import SignUp from "./pages/signUpPage/SignUp.jsx";
 import Login from "./pages/loginPage/Login.jsx";
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/personUpdate/:id" element={<PersonUpdate/>}/>
                 <Route path="/personDelete/:id" element={<PersonDelete/>}/>
                 <Route path="/personDetail/:id" element={<PersonDetail/>}/>
+                <Route path="/personDetailMedia/:id" element={<PersonDetailMedia/>}/>
                 <Route path="/personEvents/:id" element={<PersonEvents/>}/>
                 <Route path="/personEventNew/:pid" element={<PersonEventNew/>}/>
                 <Route path="/personEventUpdate/:pid/:id" element={<PersonEventUpdate/>}/>
