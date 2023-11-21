@@ -15,18 +15,6 @@ function Navigation() {
                                  className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
                     >Personen</NavLink>
                     </li>
-                    <li><NavLink to="/relations"
-                                 className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                    >Relaties</NavLink>
-                    </li>
-                    <li><NavLink to="/children"
-                                 className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                    >Kinderen</NavLink>
-                    </li>
-                    <li><NavLink to="/trees"
-                                 className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                    >Stambomen</NavLink>
-                    </li>
                 </ul>
             </div>
         </nav>

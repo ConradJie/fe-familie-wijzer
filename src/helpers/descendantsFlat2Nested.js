@@ -8,6 +8,8 @@ function descendantsFlat2Nested(data) {
         level === 0 ? tree.push(d)
             : (childOf[relationParent] = childOf[relationParent] || []).push(d);
     });
+    console.log("descendantsFlat2Nested: data",data)
+    console.log("descendantsFlat2Nested: tree",tree)
     return tree;
 }
 

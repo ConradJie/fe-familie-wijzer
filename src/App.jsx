@@ -11,7 +11,6 @@ import PersonUpdate from "./pages/personsPage/PersonUpdate.jsx";
 import PersonDelete from "./pages/personsPage/PersonDelete.jsx";
 import PersonDetail from "./pages/personsPage/PersonDetail.jsx";
 import PersonDetailMedia from "./pages/personsPage/PersonDetailMedia.jsx";
-import Trees from "./pages/treesPage/Trees.jsx";
 import SignUp from "./pages/signUpPage/SignUp.jsx";
 import Login from "./pages/loginPage/Login.jsx";
 import PersonEvents from "./pages/eventsPage/PersonEvents.jsx";
