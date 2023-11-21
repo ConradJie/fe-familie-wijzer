@@ -30,6 +30,7 @@ import ChildDelete from "./pages/childrenPage/ChildDelete.jsx";
 import RelationEvents from "./pages/eventsPage/RelationEvents.jsx";
 import RelationEventNew from "./pages/eventsPage/RelationEventNew.jsx";
 import RelationEventUpdate from "./pages/eventsPage/RelationEventUpdate.jsx";
+import TreeDescendants from "./pages/treesPage/TreeDescendants.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -76,7 +77,7 @@ function App() {
                 <Route path="/children/:pid/:rid/:sid" element={<Children/>}/>
                 <Route path="/childNew/:pid/:rid/:sid" element={<ChildNew/>}/>
                 <Route path="/childDelete/:pid/:rid/:sid/:id" element={<ChildDelete/>}/>
-                <Route path="/trees" element={<Trees/>}/>
+                <Route path="/treeDescendants/:pid" element={<TreeDescendants/>}/>
                 <Route path="/signin" element={<SignUp/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<NotFound/>}/>
