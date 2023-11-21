@@ -9,17 +9,11 @@ function Descendants({descendant}) {
             </ul>
         );
     }
-    console.log(descendant)
     return (
         <li key={descendant.id} className="couple">
-            <span>{descendant.givenNames} {descendant.surname}
-                {descendant.lifePeriod ?
-                    <article className="tooltip"><span className={descendant.relationPeriod}></span></article>
-                    : <span></span>}
-            </span>
-            <span>{descendant.spouseGivenNames} {descendant.spouseSurname}
-                {descendant.spouseLifePeriod ? <span> ({descendant.spouseLifePeriod}) </span> : <p></p>}
-            </span>
+            <span>{descendant.givenNames} {descendant.surname} </span>
+            {descendant.spouseGivenNames && <span className="tree-couple">-</span>}
+            <span>{descendant.spouseGivenNames} {descendant.spouseSurname}</span>
             {childrenTree}
         </li>
     );

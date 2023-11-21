@@ -65,7 +65,7 @@ function Persons() {
                                                                                                   height={24}/></td>
                                 <td onClick={() => navigate(`/relations/${p.id}`)}><Circle width={24}
                                                                                            height={24}/></td>
-                                <td onClick={() => navigate(`/trees/${p.id}`)}><TreeStructure width={24}
+                                <td onClick={() => navigate(`/treeDescendants/${p.id}`)}><TreeStructure width={24}
                                                                                                   height={24}/></td>
                                 <td onClick={() => navigate(`/personUpdate/${p.id}`)}><Pencil width={24}
                                                                                               height={24}/></td>

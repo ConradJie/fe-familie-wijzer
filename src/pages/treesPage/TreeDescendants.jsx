@@ -4,7 +4,6 @@ import {Link, useParams} from "react-router-dom";
 import useGetData from "../../hooks/useGetData.js";
 import descendantsFlat2Nested from "../../helpers/descendantsFlat2Nested.js";
 import Descendants from "../../components/Descendants.jsx";
-import {useEffect} from "react";
 
 function TreeDescendants() {
     const {pid} = useParams();
