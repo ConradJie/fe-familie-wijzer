@@ -1,0 +1,59 @@
+:root {
+    --tree-color-line: var(--color-border-primary);
+    --tree-thickness-line: 1px;
+    --tree-length-hor-line: 0.9em;
+    --tree-length-ver-line: 0.6em;
+    --tree-hor-pos-hor-line: -1em;
+    --tree-ver-pos-hor-line: 0.6em;
+    --tree-pos-ver-line: 0;
+    --tree-child-space: 2em;
+    --tree-new-relation-line: dotted;
+}
+
+.tree,
+.tree ul,
+.tree li {
+    position: relative;
+}
+
+.tree ul {
+    list-style: none;
+    padding-left: var(--tree-child-space);
+}
+
+.tree a:link {
+    text-decoration: none;
+}
+
+.tree li::before,
+.tree li::after {
+    content: "";
+    position: absolute;
+    left: var(--tree-hor-pos-hor-line);
+}
+
+.tree li::before {
+    border-top: var(--tree-thickness-line) solid var(--tree-color-line);
+    top: var(--tree-ver-pos-hor-line);
+    width: var(--tree-length-hor-line);
+    height: 0;
+}
+
+.tree li .new-relation::before {
+    border-top: var(--tree-thickness-line) var(--tree-new-relation-line) var(--tree-color-line);
+    top: var(--tree-ver-pos-hor-line);
+    width: var(--tree-length-hor-line);
+    height: 0;
+}
+
+.tree li::after {
+    border-left: var(--tree-thickness-line) solid var(--tree-color-line);
+    height: 100%;
+    width: 0;
+    top: var(--tree-pos-ver-line);
+}
+
+.tree ul > li:last-child::after {
+    height: var(--tree-length-ver-line);
+}
+
