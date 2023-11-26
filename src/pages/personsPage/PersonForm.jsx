@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {useState} from "react";
 import Button from "../../components/Button.jsx";
+import translate from "../../helpers/translate.js";
 
 function PersonForm({pid, method, preloadedValues}) {
     const {
@@ -12,12 +13,14 @@ function PersonForm({pid, method, preloadedValues}) {
     } = useForm({
         defaultValues: preloadedValues
     });
+    const urlGoBack = "/persons";
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const [loading, toggleLoading] = useState(false);
-    // const controller = new AbortController();
+    const controller = new AbortController();
 
     async function onSubmit(data) {
+        let processed = true;
         toggleLoading(false);
         try {
             setError("");
@@ -42,18 +45,18 @@ function PersonForm({pid, method, preloadedValues}) {
                     break;
             }
         } catch (e) {
-            if (axios.isCancel) {
-                console.error("Request is canceled");
-                console.log(e)
-                setError(e.message);
-            } else {
-                setError(e.message);
-                console.error(e);
-            }
+            processed = false;
+            setError(translate(e.response.data));
         } finally {
             toggleLoading(false);
         }
-        navigate("/persons");
+        if (processed) {
+            navigate(urlGoBack);
+        }
+
+        return function cleanup() {
+            controller.abort();
+        }
     }
 
     return (
@@ -96,16 +99,15 @@ function PersonForm({pid, method, preloadedValues}) {
                     {errors.sex && <p>{errors.sex.message}</p>}
                 </label>
                 <Button type="submit" onClick={handleSubmit}>
-                    {method === "delete"? "Verwijderen" : "Opslaan"}
+                    {method === "delete" ? "Verwijderen" : "Opslaan"}
                 </Button>
                 <Button type="button" variant="cancel" onClick={(e) => {
                     e.preventDefault();
-                    navigate("/persons")
+                    navigate(urlGoBack)
                 }}>Annuleren</Button>
             </form>
-            {error &&
-                <p>Er is iets misgegaan bij het opslaan van de gegevens:{error}</p>}
             {loading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
         </section>
     );
 }

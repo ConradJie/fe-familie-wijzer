@@ -4,6 +4,7 @@ import {ArrowLeft, PlusCircle, Trash} from "@phosphor-icons/react";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
 import useGetData from "../../hooks/useGetData.js";
+import Table from "../../components/Table.jsx";
 
 function Children() {
     const {pid, rid, sid} = useParams();
@@ -24,15 +25,14 @@ function Children() {
                 <h2>Kinderen van {person.givenNames} {person.surname} en {spouse.givenNames} {spouse.surname}</h2>}
             {person?.id && sid == "null" &&
                 <h2>Kinderen van {person.givenNames} {person.surname}</h2>}
-            <table>
-                <thead>
-                <tr>
-                    <th>Kind</th>
-                    <th onClick={() => navigate(urlNew)}><PlusCircle width={24} height={24}/></th>
-                </tr>
-                </thead>
-                <tbody>
-                {data &&
+            <Table
+                header={
+                    <tr>
+                        <th>Kind</th>
+                        <th onClick={() => navigate(urlNew)}><PlusCircle width={24} height={24}/></th>
+                    </tr>
+                }
+                row={data &&
                     data.map((c) => {
                         return (
                             <tr key={c.id}>
@@ -45,10 +45,8 @@ function Children() {
                         )
                     })
                 }
-                </tbody>
-            </table>
+            />
             {(personLoading || spouseLoading || dataLoading) && <p>Loading...</p>}
-            {(personLoading || dataLoading) && <p>Loading...</p>}
             {personError && <p>Person {pid}: {personError}</p>}
             {spouseError && <p>Spouse: {spouseError}</p>}
             {dataError && <p>Children: {dataError}</p>}

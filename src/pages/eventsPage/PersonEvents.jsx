@@ -5,6 +5,7 @@ import localDateNumeric from "../../helpers/localDateNumeric.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetData from "../../hooks/useGetData.js";
 import getEventTypeLabel from "../../helpers/getEventTypeLabel.js";
+import Table from "../../components/Table.jsx";
 
 function PersonEvents() {
     const {id} = useParams();
@@ -17,18 +18,17 @@ function PersonEvents() {
         <main className="main-person-events">
             <Link to="/persons"><ArrowLeft width={24} height={24}/></Link>
             {person && <h2>Gebeurtenissen van {person.givenNames} {person.surname}</h2>}
-            <table>
-                <thead>
-                <tr>
-                    <th>Begindatum</th>
-                    <th>Einddatum</th>
-                    <th>Type</th>
-                    <th>Omschrijving</th>
-                    <th onClick={() => navigate(`/personEventNew/${id}`)}><PlusCircle width={24} height={24}/></th>
-                </tr>
-                </thead>
-                <tbody>
-                {Object.keys(data).length > 0 &&
+            <Table
+                header={
+                    <tr>
+                        <th>Begindatum</th>
+                        <th>Einddatum</th>
+                        <th>Type</th>
+                        <th>Omschrijving</th>
+                        <th onClick={() => navigate(`/personEventNew/${id}`)}><PlusCircle width={24} height={24}/></th>
+                    </tr>
+                }
+                row={Object.keys(data).length > 0 &&
                     data.map((e) => {
                         return (
                             <tr key={e.id}>
@@ -48,8 +48,7 @@ function PersonEvents() {
                             </tr>)
                     })
                 }
-                </tbody>
-            </table>
+            />
             {(dataLoading || personLoading) && <p>Loading..</p>}
             {personError && <p>{personError}</p>}
             {dataError && <p>{dataError}</p>}

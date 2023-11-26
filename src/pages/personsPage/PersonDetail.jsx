@@ -14,6 +14,7 @@ import useGetData from "../../hooks/useGetData.js";
 
 function PersonDetail() {
     const {id} = useParams();
+    const urlGoBack="/persons";
     const urlPerson = `http://localhost:8080/persons/${id}`;
     const urlEvents = `http://localhost:8080/persons/${id}/events`;
     const urlSpouses = `http://localhost:8080/relations/persons/${id}`;
@@ -172,7 +173,7 @@ function PersonDetail() {
             {personsError && <p>{personsError}</p>}
             {relationsEventsError && <p>{relationsEventsError}</p>}
             {dataError && <p>{dataError}</p>}
-            <button type="button" onClick={() => navigate("/persons")}>Sluiten</button>
+            <button type="button" onClick={() => navigate(urlGoBack)}>Sluiten</button>
         </main>
     );
 }
