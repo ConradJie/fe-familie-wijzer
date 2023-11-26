@@ -4,17 +4,19 @@ import axios from 'axios';
 const useGetData = (url) => {
 
     const [data, setData] = useState([]);
-    const [dataLoading,toggleDataLoading] = useState(true);
+    const [dataLoading, toggleDataLoading] = useState(false);
     const [dataError, setDataError] = useState("");
 
     useEffect(() => {
         const controller = new AbortController();
+
         async function getData() {
             try {
                 setDataError("");
-                const response = await axios.get(url,{});
+                toggleDataLoading(true);
+                const response = await axios.get(url, {});
                 setData(response.data);
-            } catch(e) {
+            } catch (e) {
                 if (axios.isCancel) {
                     console.error("Request is canceled");
                     setDataError(e.message);
@@ -25,14 +27,17 @@ const useGetData = (url) => {
                 toggleDataLoading(false);
             }
         }
-        void getData();
+
+        if (url) {
+            void getData();
+        }
 
         return function cleanup() {
             controller.abort();
         }
 
     }, [url]);
-    return { data, dataError , dataLoading}
+    return {data, dataError, dataLoading}
 };
 
 export default useGetData;

@@ -1,5 +1,6 @@
 .Table th {
     font-size: small;
+    text-align: start;
 }
 
 .Table th,

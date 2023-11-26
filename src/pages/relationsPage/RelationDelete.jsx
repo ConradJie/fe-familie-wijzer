@@ -5,12 +5,17 @@ import Button from "../../components/Button.jsx";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {useState} from "react";
+import useGetSpouse from "../../hooks/useGetSpouse.js";
+import getSexLabel from "../../helpers/getSexLabel.js";
+import Table from "../../components/Table.jsx";
 
 function RelationDelete() {
     const {pid, rid, sid} = useParams();
     const urlPerson = `http://localhost:8080/persons/${pid}`;
+    const urlSpouse = `http://localhost:8080/persons/${sid}`;
     const urlGoBack = `/relations/${pid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
+    const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
     const [sending, toggleSending] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -39,12 +44,29 @@ function RelationDelete() {
     return (
         <main className="main-relation-delete">
             {person && <h2>Relatie van {person.givenNames} {person.surname} verwijderen</h2>}
-            <input type="text" id="spouse" disabled value={sid === null ? "-" : sid}/>
+            <Table
+                className=""
+                header={
+                    <tr>
+                        <th>Voornamen</th>
+                        <th>Achternaam</th>
+                        <th>Geslacht</th>
+                    </tr>
+                }
+                row={spouse &&
+                    <tr key={spouse.id}>
+                        <td>{spouse.givenNames}</td>
+                        <td>{spouse.surname}</td>
+                        <td>{getSexLabel(spouse.sex)}</td>
+                    </tr>
+                }
+            />
             <Button type="button" onClick={handleSubmit}>Verwijderen</Button>
             <Button type="button" variant="cancel" onClick={() => navigate(urlGoBack)}>Annuleren</Button>
-            {personLoading && <p>Loading...</p>}
-            {personError && <p>{personError}</p>}
+            {(personLoading || spouseLoading) && <p>Loading...</p>}
             {sending && <p>Sending...</p>}
+            {personError && <p>{personError}</p>}
+            {spouseError && <p>{urlSpouse}:{spouseError}</p>}
             {error && <p>{error}</p>}
         </main>
     );
