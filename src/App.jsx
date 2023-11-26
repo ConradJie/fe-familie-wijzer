@@ -75,7 +75,7 @@ function App() {
                 <Route path="/relationEventDelete/:pid/:rid/:sid/:id" element={<RelationDelete/>}/>
                 <Route path="/children/:pid/:rid/:sid" element={<Children/>}/>
                 <Route path="/childNew/:pid/:rid/:sid" element={<ChildNew/>}/>
-                <Route path="/childDelete/:pid/:rid/:sid/:id" element={<ChildDelete/>}/>
+                <Route path="/childDelete/:pid/:rid/:sid/:cpid/:id" element={<ChildDelete/>}/>
                 <Route path="/treeDescendants/:pid" element={<TreeDescendants/>}/>
                 <Route path="/signin" element={<SignUp/>}/>
                 <Route path="/login" element={<Login/>}/>
