@@ -15,6 +15,7 @@ function RelationNew() {
     const [error, setError] = useState("");
     const [sending, toggleSending] = useState(false);
     const navigate = useNavigate();
+    const controller = new AbortController();
 
     const [choice, setChoice] = useState("");
     const [buttonVariant, setButtonVariant] = useState("disabled");
@@ -51,6 +52,11 @@ function RelationNew() {
         if (processed) {
             navigate(urlGoBack);
         }
+
+        return function cleanup() {
+            controller.abort();
+        }
+
     }
 
 
@@ -65,6 +71,7 @@ function RelationNew() {
                         setError("ongeldige keuze") : handleSubmit()}>Opslaan</Button>
             <Button type="button" variant="cancel" onClick={() => navigate(urlGoBack)}>Annuleren</Button>
             {personLoading && <p>Loading...</p>}
+            {sending && <p>Sending...</p>}
             {personError && <p>url:{urlPerson}<br/>{personError}</p>}
             {error && <p>{error}</p>}
         </main>

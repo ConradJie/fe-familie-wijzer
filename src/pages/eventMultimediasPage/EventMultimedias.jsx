@@ -3,38 +3,35 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {ArrowLeft, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
 import useGetEvent from "../../hooks/useGetEvent.js";
 import useGetData from "../../hooks/useGetData.js";
+import Table from "../../components/Table.jsx";
 
 function EventMultimedias() {
     const {t, tid, eid} = useParams();
+    const urlGoBack = `/personEvents/${tid}`;
     const navigate = useNavigate();
     const urlEvent = (typeof tid === 'string') && (typeof eid === 'string') ?
         `http://localhost:8080/persons/${tid}/events/${eid}` : "";
     const urlMultimedias = (typeof tid === 'string') ?
         `http://localhost:8080/events/${eid}/multimedias` : "";
 
-    // const urlGoBack = `/personEvents/${tid}/${eid}`;
-
-    const urlGoBack = `/personEvents/${tid}`;
-
-    const {event, eventError} = useGetEvent(urlEvent);
-    const {data, dataError} = useGetData(urlMultimedias);
+    const {event, eventError,eventLoading} = useGetEvent(urlEvent);
+    const {data, dataError,dataLoading} = useGetData(urlMultimedias);
 
     return (
         <main className="main-event-multimedias">
             <Link to={urlGoBack}><ArrowLeft width={24} height={24}/></Link>
             {event && <h2>Multimedia over gebeurtenis {event.description}</h2>}
-            <table>
-                <thead>
-                <tr>
-                    <th>Omschrijving</th>
-                    <th>Bestandsnaam</th>
-                    <th onClick={() => navigate(`/EventMultimediaNew/${t}/${tid}/${eid}`)}><PlusCircle width={24}
-                                                                                                       height={24}/>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {data &&
+            <Table
+                header={
+                    <tr>
+                        <th>Omschrijving</th>
+                        <th>Bestandsnaam</th>
+                        <th onClick={() => navigate(`/EventMultimediaNew/${t}/${tid}/${eid}`)}><PlusCircle width={24}
+                                                                                                           height={24}/>
+                        </th>
+                    </tr>
+                }
+                row={data &&
                     data.map((m) => {
                             return (
                                 <tr key={m.id}>
@@ -53,8 +50,8 @@ function EventMultimedias() {
                         }
                     )
                 }
-                </tbody>
-            </table>
+            />
+            {(eventLoading || dataLoading) && <p></p>}
             {eventError && <p>{eventError}</p>}
             {dataError && <p>{dataError}</p>}
         </main>

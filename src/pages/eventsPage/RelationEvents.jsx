@@ -6,6 +6,7 @@ import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
 import useGetData from "../../hooks/useGetData.js";
 import getEventTypeLabel from "../../helpers/getEventTypeLabel.js";
+import Table from "../../components/Table.jsx";
 
 function RelationEvents() {
     const {pid, rid, sid} = useParams();
@@ -20,20 +21,19 @@ function RelationEvents() {
             {person?.id && spouse?.id && <h2>Gebeurtenissen
                 van {person.givenNames} {person.surname} en {spouse.givenNames} {spouse.surname}</h2>}
             {person?.id && sid === "null" && <h2>Gebeurtenissen van {person.givenNames} {person.surname}</h2>}
-            <table>
-                <thead>
-                <tr>
-                    <th>Begindatum</th>
-                    <th>Einddatum</th>
-                    <th>Type</th>
-                    <th>Omschrijving</th>
-                    <th onClick={() => navigate(`/relationEventNew/${pid}/${rid}/${sid}`)}><PlusCircle width={24}
-                                                                                                height={24}/>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {Object.keys(data).length > 0 &&
+            <Table
+                header={
+                    <tr>
+                        <th>Begindatum</th>
+                        <th>Einddatum</th>
+                        <th>Type</th>
+                        <th>Omschrijving</th>
+                        <th onClick={() => navigate(`/relationEventNew/${pid}/${rid}/${sid}`)}><PlusCircle width={24}
+                                                                                                           height={24}/>
+                        </th>
+                    </tr>
+                }
+                row={Object.keys(data).length > 0 &&
                     data.map((e) => {
                         return (
                             <tr key={e.id}>
@@ -41,17 +41,18 @@ function RelationEvents() {
                                 <td>{localDateNumeric(e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td onClick={() => navigate(`/relationEventUpdate/${pid}/${rid}/${sid}/${e.id}`)}><Pencil width={24}
-                                                                                                          height={24}/>
+                                <td onClick={() => navigate(`/relationEventUpdate/${pid}/${rid}/${sid}/${e.id}`)}>
+                                    <Pencil width={24}
+                                            height={24}/>
                                 </td>
-                                <td onClick={() => navigate(`/relationEventDelete/${pid}/${rid}/${sid}/${e.id}`)}><Trash width={24}
-                                                                                                         height={24}/>
+                                <td onClick={() => navigate(`/relationEventDelete/${pid}/${rid}/${sid}/${e.id}`)}><Trash
+                                    width={24}
+                                    height={24}/>
                                 </td>
                             </tr>)
                     })
                 }
-                </tbody>
-            </table>
+            />
             {(personLoading || spouseLoading || dataLoading) && <p>Loading..</p>}
             {personError && <p>{personError}</p>}
             {spouseError && <p>{spouseError}</p>}

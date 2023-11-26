@@ -8,6 +8,8 @@ import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonEventDelete() {
     const {pid, id} = useParams();
+    const urlGoBack = "/persons";
+    const urlGoBackCancel = `/personEvents/${id}`;
     const navigate = useNavigate();
     const controller = new AbortController();
     const [response, setResponse] = useState([]);
@@ -26,7 +28,7 @@ function PersonEventDelete() {
         } catch (e) {
             setError(e.message);
         }
-        navigate("/persons")
+        navigate(urlGoBack);
 
         return function cleanup() {
             controller.abort();
@@ -93,7 +95,7 @@ function PersonEventDelete() {
                             Verwijderen
                         </Button>
                         <Button type="button" variant="cancel"
-                                onClick={() => navigate(`/personEvents/${id}`)}>Annuleren</Button>
+                                onClick={() => navigate(urlGoBackCancel)}>Annuleren</Button>
                     </form>
                 </main>
                 :

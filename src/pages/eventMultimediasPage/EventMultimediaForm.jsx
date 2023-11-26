@@ -20,6 +20,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
     const [disabled, toggleDisabled] = useState(false);
     const [buttonVariant, setButtonVariant] = useState("primary");
     const navigate = useNavigate();
+    const controller = new AbortController();
 
     function disableSaveButton() {
         toggleDisabled(true);
@@ -92,6 +93,10 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
         }
 
         navigate(urlGoBack);
+
+        return function cleanup() {
+            controller.abort();
+        }
     }
 
     async function sendFile() {

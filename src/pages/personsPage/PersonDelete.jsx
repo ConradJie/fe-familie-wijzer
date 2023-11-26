@@ -7,6 +7,7 @@ import useGetPerson from "../../hooks/useGetPerson.js";
 
 function PersonDelete() {
     const {id} = useParams();
+    const urlGoBack="/persons";
     const [response, setResponse] = useState([]);
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ function PersonDelete() {
         } catch (e) {
             setError(e.message);
         }
-        navigate("/persons")
+        navigate(urlGoBack);
 
         return function cleanup() {
             controller.abort();
@@ -72,7 +73,7 @@ function PersonDelete() {
                             Verwijderen
                         </Button>
                         <Button type="button" variant="cancel"
-                                onClick={() => navigate("/persons")}>Annuleren</Button>
+                                onClick={() => navigate(urlGoBack)}>Annuleren</Button>
                     </form>
                 </main>
                 : <p> Loading...</p>
