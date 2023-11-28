@@ -91,7 +91,7 @@ function Login() {
         }
 
         if (processed) {
-            navigate('/personNew');
+            navigate(urlHomePage);
         }
 
         return function cleanup() {
@@ -125,7 +125,7 @@ function Login() {
                     />
                 </label>
                 <Button type="submit" onClick={handleSubmit}>Opslaan</Button>
-                <Button type="button" variant="cancel">Annuleren</Button>
+                <Button type="button" variant="cancel" onClick={()=> navigate("/")}>Annuleren</Button>
             </form>
             {sending && <p>Sending...</p>}
             {error && <p>error</p>}

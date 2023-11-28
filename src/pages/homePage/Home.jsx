@@ -7,7 +7,7 @@ function Home() {
     const token = localStorage.getItem('token');
     if (token) {
         localStorage.setItem('token', '');
-        this.forceUpdate();
+        window.location.reload(false);
     }
 
     return (
