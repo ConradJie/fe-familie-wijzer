@@ -2,6 +2,14 @@ import './Home.css';
 import logo from '../../assets/familiewijzer.svg';
 
 function Home() {
+
+    localStorage.setItem('role', '');
+    const token = localStorage.getItem('token');
+    if (token) {
+        localStorage.setItem('token', '');
+        this.forceUpdate();
+    }
+
     return (
         <main className="outer-content-container section-home-branding">
             <figure>

@@ -33,20 +33,33 @@ import TreeDescendants from "./pages/treesPage/TreeDescendants.jsx";
 
 function App() {
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
 
     return (
         <div className="main-app">
             <nav className="outer-content-container main-navigation">
                 <ul className="outer-content-container main-navigation-links">
-                    <li><Link to="/"><img id="nav-logo" src={logo}
-                                          alt="Home pagina Familie Wijzer"/></Link></li>
-                    <li><Link to="/persons">Personen</Link></li>
-                    <li><Link to="/overviews">Overzichten</Link></li>
+                    {role !== "" &&
+                        <>
+                            <li><Link to="/"><img id="nav-logo" src={logo}
+                                                  alt="Home pagina Familie Wijzer"/></Link></li>
+                            <li><Link to="/persons">Personen</Link></li>
+                        </>
+                    }
+                    {role == "ADMIN" &&
+                        <li><Link to="/overviews">Overzichten</Link></li>
+                    }
                 </ul>
-                <ul className="outer-content-container main-navigation-login">
-                    <li><Link to="/signin">Registreren</Link></li>
-                    <li><Link to="/login">Login</Link></li>
-                </ul>
+                {role === "" ?
+                    <ul className="outer-content-container main-navigation-login">
+                        <li><Link to="/signin">Registreren</Link></li>
+                        <li className="login-link"><Link to="/login">Login</Link></li>
+                    </ul>
+                    :
+                    <ul className="outer-content-container main-navigation-login">
+                        <li className="logout-link"><Link to="/">Logout</Link></li>
+                    </ul>
+                }
             </nav>
 
             <Routes>

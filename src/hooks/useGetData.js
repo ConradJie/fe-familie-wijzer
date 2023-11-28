@@ -11,18 +11,21 @@ const useGetData = (url) => {
         const controller = new AbortController();
 
         async function getData() {
+            const token = localStorage.getItem('token');
             try {
                 setDataError("");
                 toggleDataLoading(true);
-                const response = await axios.get(url, {});
+                const response = await axios.get(url, {
+                    // signal: controller.signal,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setData(response.data);
             } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setDataError(e.message);
-                } else {
-                    setDataError(e.message);
-                }
+                console.error(e)
+                setDataError(e.message);
             } finally {
                 toggleDataLoading(false);
             }

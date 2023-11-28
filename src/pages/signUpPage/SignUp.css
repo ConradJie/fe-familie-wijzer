@@ -1,3 +1,6 @@
 .section-signup {
-    text-align: center;
+    padding: var(--size-padding-l)
+}
+.section-signup p {
+    padding: var(--size-padding-l)
 }
