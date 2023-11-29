@@ -30,6 +30,9 @@ import RelationEvents from "./pages/eventsPage/RelationEvents.jsx";
 import RelationEventNew from "./pages/eventsPage/RelationEventNew.jsx";
 import RelationEventUpdate from "./pages/eventsPage/RelationEventUpdate.jsx";
 import TreeDescendants from "./pages/treesPage/TreeDescendants.jsx";
+import UserNew from "./pages/usersPage/UserNew.jsx";
+import Users from "./pages/usersPage/Users.jsx";
+import UserDelete from "./pages/usersPage/UserDelete.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -39,18 +42,21 @@ function App() {
         <div className="main-app">
             <nav className="outer-content-container main-navigation">
                 <ul className="outer-content-container main-navigation-links">
-                    {role !== "" &&
+                    {role !== '' &&
                         <>
                             <li><Link to="/"><img id="nav-logo" src={logo}
                                                   alt="Home pagina Familie Wijzer"/></Link></li>
                             <li><Link to="/persons">Personen</Link></li>
                         </>
                     }
-                    {role == "ADMIN" &&
-                        <li><Link to="/overviews">Overzichten</Link></li>
+                    {role === 'ADMIN' &&
+                        <>
+                            <li><Link to="/overviews">Overzichten</Link></li>
+                            <li><Link to="/users">Gebruikers</Link></li>
+                        </>
                     }
                 </ul>
-                {role === "" ?
+                {role === '' ?
                     <ul className="outer-content-container main-navigation-login">
                         <li><Link to="/signin">Registreren</Link></li>
                         <li className="login-link"><Link to="/login">Login</Link></li>
@@ -90,6 +96,9 @@ function App() {
                 <Route path="/childNew/:pid/:rid/:sid" element={<ChildNew/>}/>
                 <Route path="/childDelete/:pid/:rid/:sid/:cpid/:id" element={<ChildDelete/>}/>
                 <Route path="/treeDescendants/:pid" element={<TreeDescendants/>}/>
+                <Route path="/users" element={<Users/>}/>
+                <Route path="/userNew" element={<UserNew/>}/>
+                <Route path="/userDelete/:username" element={<UserDelete/>}/>
                 <Route path="/signin" element={<SignUp/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<NotFound/>}/>

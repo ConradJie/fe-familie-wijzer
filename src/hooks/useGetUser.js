@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const useGetData = (url) => {
+const useGetUser = (url) => {
 
-    const [data, setData] = useState([]);
-    const [dataLoading, toggleDataLoading] = useState(false);
-    const [dataError, setDataError] = useState("");
+    const [user, setUser] = useState([]);
+    const [userLoading, toggleUserLoading] = useState(false);
+    const [userError, setUserError] = useState("");
 
     useEffect(() => {
         const controller = new AbortController();
@@ -13,8 +13,8 @@ const useGetData = (url) => {
         async function getData() {
             const token = localStorage.getItem('token');
             try {
-                setDataError("");
-                toggleDataLoading(true);
+                setUserError("");
+                toggleUserLoading(true);
                 const response = await axios.get(url, {
                     signal: controller.signal,
                     headers: {
@@ -22,12 +22,12 @@ const useGetData = (url) => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                setData(response.data);
+                setUser(response.data);
             } catch (e) {
                 console.error(e)
-                setDataError(e.message);
+                setUserError(e.message);
             } finally {
-                toggleDataLoading(false);
+                toggleUserLoading(false);
             }
         }
 
@@ -40,7 +40,7 @@ const useGetData = (url) => {
         }
 
     }, [url]);
-    return {data, dataError, dataLoading}
+    return {user, userError, userLoading}
 };
 
-export default useGetData;
+export default useGetUser;
