@@ -18,6 +18,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
     const [error, setError] = useState("");
     const [sending, toggleSending] = useState(false);
     const navigate = useNavigate();
+    const controller = new AbortController();
     let processed = true;
 
     function isValidBeginDate(date) {
@@ -29,7 +30,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
     }
 
     async function onSubmit(data) {
-
+        const token = localStorage.getItem('token');
         toggleSending(false);
         try {
             setError("");
@@ -45,6 +46,13 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                             text: data.text,
                             beginDate: data.beginDate,
                             endDate: data.endDate
+                        },
+                        {
+                            signal: controller.signal,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`
+                            }
                         });
                     break;
                 case "put":
@@ -55,6 +63,13 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                             text: data.text,
                             beginDate: data.beginDate,
                             endDate: data.endDate
+                        },
+                        {
+                            signal: controller.signal,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`
+                            }
                         });
                     break;
             }

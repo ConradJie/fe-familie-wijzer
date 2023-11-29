@@ -8,16 +8,21 @@ const useGetPerson = (url) => {
 
     useEffect(() => {
         const controller = new AbortController();
+        const token = localStorage.getItem('token');
         async function getData() {
             try {
                 setPersonError("");
-                const response = await axios.get(url,{});
+                const response = await axios.get(url,{
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setPerson(response.data);
-            } catch(e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setPersonError(e.message);
-                } else {
+            } catch (e) {
+                console.error(e)
+                if (!axios.isCancel) {
                     setPersonError(e.message);
                 }
             } finally {

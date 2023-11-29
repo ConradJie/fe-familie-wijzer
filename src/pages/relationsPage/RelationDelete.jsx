@@ -19,15 +19,23 @@ function RelationDelete() {
     const [sending, toggleSending] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
+    const controller = new AbortController();
 
     async function handleSubmit() {
+        const token = localStorage.getItem('token');
         try {
             toggleSending(true);
             setError("");
             const urlDelete = `http://localhost:8080/relations/${rid}`;
-            const response = await axios.delete(urlDelete, {});
-        } catch (e) {
+            const response = await axios.delete(urlDelete,
+                {
+                    signal: controller.signal,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+        } catch
+            (e) {
             if (axios.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);

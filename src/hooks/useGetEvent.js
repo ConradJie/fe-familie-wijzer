@@ -11,18 +11,23 @@ const useGetEvent = (url) => {
         const controller = new AbortController();
 
         async function getEvent() {
+            const token = localStorage.getItem('token');
             try {
                 setEventError("");
-                const response = await axios.get(url, {});
+                const response = await axios.get(url, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 //For dates, useForm.defaultValues only accepts the YYYY-MM-DD format!!
                 response.data.beginDate = response.data.beginDate.substring(0, 10);
                 response.data.endDate = response.data.endDate.substring(0, 10);
                 setEvent(response.data);
             } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setEventError(e.message);
-                } else {
+                console.error(e)
+                if (!axios.isCancel) {
                     setEventError(e.message);
                 }
             } finally {

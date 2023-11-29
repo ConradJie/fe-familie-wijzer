@@ -124,7 +124,7 @@ function Login() {
                         })}
                     />
                 </label>
-                <Button type="submit" onClick={handleSubmit}>Opslaan</Button>
+                <Button type="submit" onClick={handleSubmit}>Inloggen</Button>
                 <Button type="button" variant="cancel" onClick={()=> navigate("/")}>Annuleren</Button>
             </form>
             {sending && <p>Sending...</p>}

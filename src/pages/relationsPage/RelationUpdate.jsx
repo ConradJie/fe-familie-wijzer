@@ -33,6 +33,8 @@ function RelationUpdate() {
     }
 
     async function handleSubmit() {
+        const controller = new AbortController();
+        const token = localStorage.getItem('token');
         try {
             setError("");
             if (choice === "") {
@@ -43,38 +45,47 @@ function RelationUpdate() {
                     id: rid,
                     personId: pid,
                     spouseId: choice
+                },
+                {
+                    signal: controller.signal,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
                 });
-        } catch (e) {
-            if (axios.isCancel) {
-                console.log(e)
-                console.error("Request is canceled");
-                setError(e.message);
-            } else {
-                setError(e.message);
-                console.error(e);
+        } catch
+            (e)
+            {
+                if (axios.isCancel) {
+                    console.log(e)
+                    console.error("Request is canceled");
+                    setError(e.message);
+                } else {
+                    setError(e.message);
+                    console.error(e);
+                }
             }
+            navigate(urlGoBack);
         }
-        navigate(urlGoBack);
+
+        return (
+            <main>
+                {person && <h2>Relatie van {person.givenNames} {person.surname} wijzigen</h2>}
+                {spouse &&
+                    <ChoosePerson
+                        choose={choose}
+                    />
+                }
+                <Button type="button" disabled={disabled} variant={buttonVariant}
+                        onClick={() => (choice !== "" && isNaN(Number(choice))) ?
+                            setError("ongeldige keuze") : handleSubmit()}>Opslaan</Button>
+                <Button type="button" variant="cancel" onClick={() => navigate(urlGoBack)}>Annuleren</Button>
+                {(personLoading || spouseLoading) && <p>Loading...</p>}
+                {personError && <p>url:{urlPerson}<br/>{personError}</p>}
+                {spouseError && <p>{urlSpouse}:{spouseError}</p>}
+                {error && <p>{error}</p>}
+            </main>
+        );
     }
 
-    return (
-        <main>
-            {person && <h2>Relatie van {person.givenNames} {person.surname} wijzigen</h2>}
-            {spouse &&
-            <ChoosePerson
-                choose={choose}
-            />
-            }
-            <Button type="button" disabled={disabled} variant={buttonVariant}
-                    onClick={() => (choice !== "" && isNaN(Number(choice))) ?
-                        setError("ongeldige keuze") : handleSubmit()}>Opslaan</Button>
-            <Button type="button" variant="cancel" onClick={() => navigate(urlGoBack)}>Annuleren</Button>
-            {(personLoading || spouseLoading) && <p>Loading...</p>}
-            {personError && <p>url:{urlPerson}<br/>{personError}</p>}
-            {spouseError && <p>{urlSpouse}:{spouseError}</p>}
-            {error && <p>{error}</p>}
-        </main>
-    );
-}
-
-export default RelationUpdate;
+    export default RelationUpdate;

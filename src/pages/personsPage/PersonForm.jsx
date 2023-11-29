@@ -20,6 +20,7 @@ function PersonForm({pid, method, preloadedValues}) {
     const controller = new AbortController();
 
     async function onSubmit(data) {
+        const token = localStorage.getItem('token');
         let processed = true;
         toggleLoading(false);
         try {
@@ -33,6 +34,13 @@ function PersonForm({pid, method, preloadedValues}) {
                             givenNames: data.givenNames,
                             surname: data.surname,
                             sex: data.sex
+                        },
+                        {
+                            signal: controller.signal,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`
+                            }
                         });
                     break;
                 case "put":
@@ -41,6 +49,13 @@ function PersonForm({pid, method, preloadedValues}) {
                             givenNames: data.givenNames,
                             surname: data.surname,
                             sex: data.sex
+                        },
+                        {
+                            signal: controller.signal,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`
+                            }
                         });
                     break;
             }
@@ -82,8 +97,8 @@ function PersonForm({pid, method, preloadedValues}) {
                             required: "Dit veld is verplicht"
                         })}
                     />
+                    {errors.surname && <p>{errors.surname.message}</p>}
                 </label>
-                {errors.surname && <p>{errors.surname.message}</p>}
                 <label htmlFor="sex-field">
                     Geslacht:
                     <select
