@@ -11,16 +11,21 @@ const useGetSpouse = (sid, url) => {
         const controller = new AbortController();
 
         async function getData() {
+            const token = localStorage.getItem('token');
             try {
                 toggleSpouseLoading(true);
                 setSpouseError("");
-                const response = await axios.get(url, {});
+                const response = await axios.get(url, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setSpouse(response.data);
             } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setSpouseError(e.message);
-                } else {
+                console.error(e)
+                if (!axios.isCancel) {
                     setSpouseError(e.message);
                 }
             } finally {

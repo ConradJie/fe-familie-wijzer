@@ -7,7 +7,7 @@ import useGetPerson from "../../hooks/useGetPerson.js";
 
 function PersonDelete() {
     const {id} = useParams();
-    const urlGoBack="/persons";
+    const urlGoBack = "/persons";
     const [response, setResponse] = useState([]);
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -17,11 +17,17 @@ function PersonDelete() {
 
     async function deleteData(e) {
         e.preventDefault();
+        const token = localStorage.getItem('token');
 
         try {
             setError("");
             const response = await axios.delete(`http://localhost:8080/persons/${id}`,
-                {});
+                {
+                    signal: controller.signal,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
             setResponse(response.data);
         } catch (e) {
             setError(e.message);
@@ -79,8 +85,8 @@ function PersonDelete() {
                 : <p> Loading...</p>
             }
             {personError && <p>{personError}</p>}
-            {error && <o>{error}</o>}
-            {response && <o>{response}</o>}
+            {error && <p>{error}</p>}
+            {response && <p>{response}</p>}
         </>
     );
 }

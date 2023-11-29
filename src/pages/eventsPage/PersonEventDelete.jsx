@@ -8,8 +8,7 @@ import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonEventDelete() {
     const {pid, id} = useParams();
-    const urlGoBack = "/persons";
-    const urlGoBackCancel = `/personEvents/${id}`;
+    const urlGoBack = `/personEvents/${pid}`;
     const navigate = useNavigate();
     const controller = new AbortController();
     const [response, setResponse] = useState([]);
@@ -19,11 +18,17 @@ function PersonEventDelete() {
 
     async function deleteData(e) {
         e.preventDefault();
+        const token = localStorage.getItem('token');
 
         try {
             setError("");
             const response = await axios.delete(`http://localhost:8080/persons/${pid}/events/${id}`,
-                {});
+                {
+                    signal: controller.signal,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
             setResponse(response.data);
         } catch (e) {
             setError(e.message);
@@ -95,7 +100,7 @@ function PersonEventDelete() {
                             Verwijderen
                         </Button>
                         <Button type="button" variant="cancel"
-                                onClick={() => navigate(urlGoBackCancel)}>Annuleren</Button>
+                                onClick={() => navigate(urlGoBack)}>Annuleren</Button>
                     </form>
                 </main>
                 :

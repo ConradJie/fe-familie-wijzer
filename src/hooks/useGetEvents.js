@@ -11,9 +11,16 @@ const useGetEvents = (url) => {
         const controller = new AbortController();
 
         async function getEvent() {
+            const token = localStorage.getItem('token');
             try {
                 setEventsError("");
-                const response = await axios.get(url, {});
+                const response = await axios.get(url, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setEvents(response.data);
             } catch (e) {
                 if (axios.isCancel) {

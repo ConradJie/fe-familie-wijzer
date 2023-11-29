@@ -32,6 +32,7 @@ function RelationNew() {
     }
 
     async function handleSubmit() {
+        const token = localStorage.getItem('token');
         let processed = true;
         try {
             setError("");
@@ -42,7 +43,14 @@ function RelationNew() {
                 {
                     personId: pid,
                     spouseId: choice
-                });
+                },
+                {
+                    signal: controller.signal,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                }
+            });
         } catch (e) {
             processed = false;
             setError(translate(e.response.data));

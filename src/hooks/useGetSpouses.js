@@ -11,16 +11,21 @@ const useGetSpouses = (url) => {
         const controller = new AbortController();
 
         async function getData() {
+            const token = localStorage.getItem('token');
             try {
                 toggleSpousesLoading(true);
                 setSpousesError("");
-                const response = await axios.get(url, {});
+                const response = await axios.get(url, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setSpouses(response.data);
             } catch (e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setSpousesError(e.message);
-                } else {
+                console.error(e)
+                if (!axios.isCancel) {
                     setSpousesError(e.message);
                 }
             } finally {

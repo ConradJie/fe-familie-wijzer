@@ -50,6 +50,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
 
     async function onSubmit(e) {
         e.preventDefault();
+        const token = localStorage.getItem('token');
         toggleSending(false);
         try {
             setError("");
@@ -62,6 +63,13 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                             eventId: eid,
                             description: descriptionValue,
                             filename: file
+                        },
+                        {
+                            signal: controller.signal,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`
+                            }
                         });
                     break;
                 case "put":
@@ -72,11 +80,19 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                                 eventId: eid,
                                 description: descriptionValue,
                                 filename: file
+                            },
+                            {
+                                signal: controller.signal,
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${token}`
+                                }
                             });
                     }
                     break;
             }
-        } catch (e) {
+        } catch
+            (e) {
             if (axios.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
@@ -169,7 +185,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                 }}>Annuleren</Button>
             </form>
             {sending && <p>Sending...</p>}
-            {sendingFile && <p>Sendng file...</p>}
+            {sendingFile && <p>Sending file...</p>}
             {error && <p>{error}</p>}
         </main>
     )
