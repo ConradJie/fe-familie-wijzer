@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const useGetUser = (url) => {
 
-    const [user, setUser] = useState([]);
+    const [userData, setUserData] = useState([]);
     const [userLoading, toggleUserLoading] = useState(false);
     const [userError, setUserError] = useState("");
 
@@ -16,16 +16,18 @@ const useGetUser = (url) => {
                 setUserError("");
                 toggleUserLoading(true);
                 const response = await axios.get(url, {
-                    signal: controller.signal,
+                    // signal: controller.signal,
                     headers: {
                         'Accept': 'application/json',
                         Authorization: `Bearer ${token}`
                     }
                 });
-                setUser(response.data);
+                setUserData(response.data);
             } catch (e) {
-                console.error(e)
-                setUserError(e.message);
+                console.error(e);
+                if (!axios.isCancel) {
+                    setUserError(e.message);
+                }
             } finally {
                 toggleUserLoading(false);
             }
@@ -40,7 +42,8 @@ const useGetUser = (url) => {
         }
 
     }, [url]);
-    return {user, userError, userLoading}
+
+    return {userData, userError, userLoading}
 };
 
 export default useGetUser;

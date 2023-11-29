@@ -7,14 +7,14 @@ import useGetUser from "../../hooks/useGetUser.js";
 
 function UserDelete() {
     const {username} = useParams();
-    const urlGoBack = "/admin";
+    const urlGoBack = "/users";
     const [response, setResponse] = useState([]);
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const controller = new AbortController();
     const token = localStorage.getItem('token');
 
-    const {user, userError, userLoading} = useGetUser(`http://localhost:8080/users/${username}`);
+    const {userData, userError, userLoading} = useGetUser(`http://localhost:8080/users/${username}`);
 
     async function deleteData(e) {
         e.preventDefault();
@@ -41,7 +41,7 @@ function UserDelete() {
 
     return (
         <>
-            {user?.id &&
+            {userData?.username &&
                 <main>
                     <h2>Gebruiker verwijderen</h2>
                     <form className="user-delete-form">
@@ -51,7 +51,7 @@ function UserDelete() {
                                 type="text"
                                 id="username-field"
                                 disabled
-                                value={user.username}
+                                value={userData.username}
                             />
                         </label>
                         <label htmlFor="password-field">
@@ -60,7 +60,7 @@ function UserDelete() {
                                 type="text"
                                 id="password-field"
                                 disabled
-                                value={user.password}
+                                value={userData.password}
                             />
                         </label>
                         <label htmlFor="email-field">
@@ -69,7 +69,7 @@ function UserDelete() {
                                 type="text"
                                 id="email-field"
                                 disabled
-                                value={user.email}
+                                value={userData.email}
                             />
                         </label>
                         <Button type="button" onClick={deleteData}>
@@ -81,7 +81,7 @@ function UserDelete() {
                 </main>
             }
             {userLoading && <p>Loading...</p>}
-            {userError && <p>{user}</p>}
+            {userError && <p>{userError}</p>}
             {error && <p>{error}</p>}
             {response && <p>{response}</p>}
         </>

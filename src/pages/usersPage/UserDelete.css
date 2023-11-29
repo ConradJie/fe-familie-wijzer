@@ -1,0 +1,4 @@
+.user-delete-form input,
+.user-delete-form select {
+    background-color: var(--color-background-secondary);
+}
