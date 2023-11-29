@@ -25,7 +25,9 @@ const useGetData = (url) => {
                 setData(response.data);
             } catch (e) {
                 console.error(e)
-                setDataError(e.message);
+                if (!axios.isCancel) {
+                    setDataError(e.message);
+                }
             } finally {
                 toggleDataLoading(false);
             }
