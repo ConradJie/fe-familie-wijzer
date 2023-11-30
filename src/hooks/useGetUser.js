@@ -16,7 +16,7 @@ const useGetUser = (url) => {
                 setUserError("");
                 toggleUserLoading(true);
                 const response = await axios.get(url, {
-                    // signal: controller.signal,
+                    signal: controller.signal,
                     headers: {
                         'Accept': 'application/json',
                         Authorization: `Bearer ${token}`
