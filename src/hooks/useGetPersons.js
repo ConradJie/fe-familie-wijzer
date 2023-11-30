@@ -3,27 +3,35 @@ import axios from "axios";
 
 const useGetPersons = (url) => {
     const [persons, setPerson] = useState([]);
-    const [personsLoading,togglePersonsLoading] = useState(true);
+    const [personsLoading, togglePersonsLoading] = useState(true);
     const [personsError, setPersonsError] = useState("");
 
     useEffect(() => {
         const controller = new AbortController();
+
         async function getData() {
+            const token = localStorage.getItem('token');
+
             try {
                 setPersonsError("");
-                const response = await axios.get(url,{});
+                const response = await axios.get(url, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setPerson(response.data);
-            } catch(e) {
-                if (axios.isCancel) {
-                    console.error("Request is canceled");
-                    setPersonsError(e.message);
-                } else {
+            } catch (e) {
+                console.error(e)
+                if (!axios.isCancel) {
                     setPersonsError(e.message);
                 }
             } finally {
                 togglePersonsLoading(false);
             }
         }
+
         void getData();
 
         return function cleanup() {
@@ -31,7 +39,7 @@ const useGetPersons = (url) => {
         }
 
     }, [url]);
-    return { persons, personsError , personsLoading}
+    return {persons, personsError, personsLoading}
 };
 
 export default useGetPersons;

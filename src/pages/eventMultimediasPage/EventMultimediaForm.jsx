@@ -21,6 +21,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
     const [buttonVariant, setButtonVariant] = useState("primary");
     const navigate = useNavigate();
     const controller = new AbortController();
+    const token = localStorage.getItem('token');
 
     function disableSaveButton() {
         toggleDisabled(true);
@@ -50,7 +51,6 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
 
     async function onSubmit(e) {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         toggleSending(false);
         try {
             setError("");
@@ -123,7 +123,10 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
             toggleSendingFile(true);
             const result = await axios.post(urlPutFile, formData,
                 {
-                    headers: {"Content-Type": "multipart/form-data"},
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`
+                    },
                 })
         } catch (e) {
             console.error(e);

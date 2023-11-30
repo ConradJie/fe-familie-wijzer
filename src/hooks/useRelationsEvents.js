@@ -11,9 +11,17 @@ const useGetRelationsEvents = (url) => {
         const controller = new AbortController();
 
         async function getEvent() {
+            const token = localStorage.getItem('token');
+
             try {
                 setRelationsEventsError("");
-                const response = await axios.get(url, {});
+                const response = await axios.get(url, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setRelationsEvents(response.data);
             } catch (e) {
                 if (axios.isCancel) {
