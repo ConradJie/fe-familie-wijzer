@@ -42,12 +42,9 @@ function App() {
         <div className="main-app">
             <nav className="outer-content-container main-navigation">
                 <ul className="outer-content-container main-navigation-links">
+                    <li><img id="nav-logo" src={logo} alt="Home pagina Familie Wijzer"/></li>
                     {role !== '' &&
-                        <>
-                            <li><Link to="/"><img id="nav-logo" src={logo}
-                                                  alt="Home pagina Familie Wijzer"/></Link></li>
-                            <li><Link to="/persons">Personen</Link></li>
-                        </>
+                        <li><Link to="/persons">Personen</Link></li>
                     }
                     {role === 'ADMIN' &&
                         <>

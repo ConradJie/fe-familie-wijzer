@@ -8,6 +8,7 @@ import Table from "../../components/Table.jsx";
 
 function Persons() {
     const MAXROWS = 10;
+    const role = localStorage.getItem('role');
     const [filterGivenNames, setFilterGivenNames] = useState('');
     const [filterSurname, setFilterSurname] = useState('');
     const [queryGivenNames, setQueryGivenNames] = useState('');
@@ -29,7 +30,10 @@ function Persons() {
                         <th>Voornamen</th>
                         <th>Achternaam</th>
                         <th>Geslacht</th>
-                        <th onClick={() => navigate('/personNew')}><PlusCircle width={24} height={24}/></th>
+                        {role === 'ADMIN' &&
+                            <th className="icon" onClick={() => navigate('/personNew')}><PlusCircle width={24}
+                                                                                                    height={24}/></th>
+                        }
                     </tr>
                 }
                 filter={
@@ -62,19 +66,32 @@ function Persons() {
                                 <td>{p.givenNames}</td>
                                 <td>{p.surname}</td>
                                 <td>{getSexLabel(p.sex)}</td>
-                                <td onClick={() => navigate(`/personDetail/${p.id}`)}><UserRectangle width={24}
-                                                                                                     height={24}/></td>
-                                <td onClick={() => navigate(`/personEvents/${p.id}`)}><BellSimple width={24}
-                                                                                                  height={24}/></td>
-                                <td onClick={() => navigate(`/relations/${p.id}`)}><Circle width={24}
-                                                                                           height={24}/></td>
-                                <td onClick={() => navigate(`/treeDescendants/${p.id}`)}><TreeStructure width={24}
-                                                                                                        height={24}/>
+                                <td className="icon" onClick={() => navigate(`/personDetail/${p.id}`)}><UserRectangle
+                                    width={24}
+                                    height={24}/></td>
+                                <td className="icon" onClick={() => navigate(`/personEvents/${p.id}`)}><BellSimple
+                                    width={24}
+                                    height={24}/></td>
+                                {role === 'ADMIN' &&
+                                    <td className="icon" onClick={() => navigate(`/relations/${p.id}`)}><Circle
+                                        width={24}
+                                        height={24}/>
+                                    </td>
+                                }
+                                <td className="icon" onClick={() => navigate(`/treeDescendants/${p.id}`)}><TreeStructure
+                                    width={24}
+                                    height={24}/>
                                 </td>
-                                <td onClick={() => navigate(`/personUpdate/${p.id}`)}><Pencil width={24}
-                                                                                              height={24}/></td>
-                                <td onClick={() => navigate(`/personDelete/${p.id}`)}><Trash width={24}
-                                                                                             height={24}/></td>
+                                {role === 'ADMIN' &&
+                                    <td className="icon" onClick={() => navigate(`/personUpdate/${p.id}`)}><Pencil
+                                        width={24}
+                                        height={24}/></td>
+                                }
+                                {role === 'ADMIN' &&
+                                    <td className="icon" onClick={() => navigate(`/personDelete/${p.id}`)}><Trash
+                                        width={24}
+                                        height={24}/></td>
+                                }
                             </tr>)
                     })
                 }

@@ -8,6 +8,7 @@ import Table from "../../components/Table.jsx";
 
 function Children() {
     const {pid, rid, sid} = useParams();
+    const role = localStorage.getItem('role');
     const urlGoBack = `/relations/${pid}`;
     const urlNew = `/childNew/${pid}/${rid}/${sid}`;
     const urlPerson = `http://localhost:8080/persons/${pid}`;
@@ -29,7 +30,10 @@ function Children() {
                 header={
                     <tr>
                         <th>Kind</th>
-                        <th onClick={() => navigate(urlNew)}><PlusCircle width={24} height={24}/></th>
+                        {role === 'ADMIN' &&
+                            <th className="icon" onClick={() => navigate(urlNew)}><PlusCircle width={24} height={24}/>
+                            </th>
+                        }
                     </tr>
                 }
                 row={data &&
@@ -38,9 +42,12 @@ function Children() {
                             <tr key={c.id}>
                                 <td>{c.givenNames}</td>
                                 <td>{c.surname}</td>
-                                <td onClick={() => navigate(`/childDelete/${pid}/${rid}/${sid}/${c.id}`)}><Trash
-                                    width={24}
-                                    height={24}/></td>
+                                {role === 'ADMIN' &&
+                                    <td className="icon"
+                                        onClick={() => navigate(`/childDelete/${pid}/${rid}/${sid}/${c.id}`)}><Trash
+                                        width={24}
+                                        height={24}/></td>
+                                }
                             </tr>
                         )
                     })
