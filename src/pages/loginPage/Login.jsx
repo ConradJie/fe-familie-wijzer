@@ -117,7 +117,7 @@ function Login() {
                 <label htmlFor="password-field">
                     Wachtwoord:
                     <input
-                        type="text"
+                        type="password"
                         id="password-field"
                         {...register("password", {
                             required: "Dit veld is verplicht"

@@ -82,7 +82,7 @@ function PersonDetail() {
                                 <td>{datesToText(e.beginDate, e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td onClick={() => navigate(`/personDetailMedia/${e.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/personDetailMedia/${e.id}`)}>
                                     <ImagesSquare width={24} height={24}/>
                                 </td>
                             </tr>)
@@ -103,7 +103,7 @@ function PersonDetail() {
                                 <td>{p.givenNames}</td>
                                 <td>{p.surname}</td>
                                 <td>{getSexLabel(p.sex)}</td>
-                                <td onClick={() => navigate(`/personDetail/${p.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/personDetail/${p.id}`)}>
                                     <UserRectangle width={24} height={24}/>
                                 </td>
                             </tr>)
@@ -122,7 +122,7 @@ function PersonDetail() {
                             <tr key={s.id}>
                                 <td>{s.spouseGivenNames}</td>
                                 <td>{s.spouseSurname}</td>
-                                <td onClick={() => navigate(`/personDetail/${s.spouseId}`)}>
+                                <td className="icon" onClick={() => navigate(`/personDetail/${s.spouseId}`)}>
                                     <UserRectangle width={24} height={24}/>
                                 </td>
                             </tr>)
@@ -159,7 +159,7 @@ function PersonDetail() {
                             <tr key={p.id}>
                                 <td>{p.givenNames}</td>
                                 <td>{p.surname}</td>
-                                <td onClick={() => navigate(`/personDetail/${p.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/personDetail/${p.id}`)}>
                                     <UserRectangle width={24} height={24}/>
                                 </td>
                             </tr>)

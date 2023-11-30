@@ -9,7 +9,7 @@ import Table from "../../components/Table.jsx";
 
 function PersonEvents() {
     const {id} = useParams();
-
+    const role = localStorage.getItem('role');
     const navigate = useNavigate();
     const {person, personError, personLoading} = useGetPerson(`http://localhost:8080/persons/${id}`);
     const {data, dataError, dataLoading} = useGetData(`http://localhost:8080/persons/${id}/events`);
@@ -25,7 +25,10 @@ function PersonEvents() {
                         <th>Einddatum</th>
                         <th>Type</th>
                         <th>Omschrijving</th>
-                        <th onClick={() => navigate(`/personEventNew/${id}`)}><PlusCircle width={24} height={24}/></th>
+                        {role === 'ADMIN' &&
+                            <th onClick={() => navigate(`/personEventNew/${id}`)}><PlusCircle width={24} height={24}/>
+                            </th>
+                        }
                     </tr>
                 }
                 row={Object.keys(data).length > 0 &&
@@ -36,15 +39,21 @@ function PersonEvents() {
                                 <td>{localDateNumeric(e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}>
                                     <Images width={24} height={24}/>
                                 </td>
-                                <td onClick={() => navigate(`/personEventUpdate/${id}/${e.id}`)}><Pencil width={24}
-                                                                                                         height={24}/>
-                                </td>
-                                <td onClick={() => navigate(`/personEventDelete/${id}/${e.id}`)}><Trash width={24}
-                                                                                                        height={24}/>
-                                </td>
+                                {role === 'ADMIN' &&
+                                    <td className="icon" onClick={() => navigate(`/personEventUpdate/${id}/${e.id}`)}>
+                                        <Pencil width={24}
+                                                height={24}/>
+                                    </td>
+                                }
+                                {role === 'ADMIN' &&
+                                    <td className="icon" onClick={() => navigate(`/personEventDelete/${id}/${e.id}`)}>
+                                        <Trash width={24}
+                                               height={24}/>
+                                    </td>
+                                }
                             </tr>)
                     })
                 }

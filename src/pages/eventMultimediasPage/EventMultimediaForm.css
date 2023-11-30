@@ -5,3 +5,11 @@
 .pdf-preview {
     width: 60%;
 }
+
+.field-disabled {
+    background-color: var(--color-background-secondary);
+}
+
+.field-enabled {
+    background-color: var(--color-white);
+}

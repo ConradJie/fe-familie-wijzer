@@ -5,6 +5,7 @@ import axios from "axios";
 import Button from "../../components/Button.jsx";
 
 function EventMultimediaForm({t, tid, eid, id, method, description = "", filename = ""}) {
+    const role = localStorage.getItem('role');
     const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
     const urlPost = `http://localhost:8080/events/${eid}/multimedias`;
     const urlPut = `http://localhost:8080/events/${eid}/multimedias/${id}`;
@@ -147,6 +148,8 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                         id="description-field"
                         name="description-field"
                         value={descriptionValue}
+                        className={role === 'USER' && method==='put'? "field-disabled" : "field-enabled"}
+                        disabled={role === 'USER' && method==='put'}
                         onChange={(e) => setDescriptionValue(e.target.value)}
                         onBlur={(e) => {
                             if (e.target.value === "") {

@@ -1,12 +1,13 @@
 import './EventMultimedias.css';
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {ArrowLeft, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
+import {ArrowLeft, Image, PlusCircle, Trash} from "@phosphor-icons/react";
 import useGetEvent from "../../hooks/useGetEvent.js";
 import useGetData from "../../hooks/useGetData.js";
 import Table from "../../components/Table.jsx";
 
 function EventMultimedias() {
     const {t, tid, eid} = useParams();
+    const role = localStorage.getItem('role');
     const urlGoBack = `/personEvents/${tid}`;
     const navigate = useNavigate();
     const urlEvent = (typeof tid === 'string') && (typeof eid === 'string') ?
@@ -26,7 +27,7 @@ function EventMultimedias() {
                     <tr>
                         <th>Omschrijving</th>
                         <th>Bestandsnaam</th>
-                        <th onClick={() => navigate(`/EventMultimediaNew/${t}/${tid}/${eid}`)}><PlusCircle width={24}
+                        <th className="icon" onClick={() => navigate(`/EventMultimediaNew/${t}/${tid}/${eid}`)}><PlusCircle width={24}
                                                                                                            height={24}/>
                         </th>
                     </tr>
@@ -37,15 +38,17 @@ function EventMultimedias() {
                                 <tr key={m.id}>
                                     <td>{m.description}</td>
                                     <td>{m.filename}</td>
-                                    <td onClick={() => navigate(`/eventMultimediaUpdate/person/${tid}/${eid}/${m.id}`)}>
-                                        <Pencil
+                                    <td className="icon" onClick={() => navigate(`/eventMultimediaUpdate/person/${tid}/${eid}/${m.id}`)}>
+                                        <Image
                                             width={24}
                                             height={24}/>
                                     </td>
-                                    <td onClick={() => navigate(`/eventMultimediaDelete/person/${tid}/${eid}/${m.id}`)}>
+                                    {role === 'ADMIN' &&
+                                    <td className="icon" onClick={() => navigate(`/eventMultimediaDelete/person/${tid}/${eid}/${m.id}`)}>
                                         <Trash
                                             width={24}
                                             height={24}/></td>
+                                    }
                                 </tr>)
                         }
                     )
