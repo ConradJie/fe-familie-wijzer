@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import axios from "axios";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import {useForm} from "react-hook-form";
 import Button from "../../components/Button.jsx";
 
@@ -26,7 +26,7 @@ function RelationEventForm({pid, rid, sid, id, method, preloadedValues}) {
             let response = null;
             switch (method) {
                 case "post":
-                    response = await axios.post(`http://localhost:8080/relations/${rid}/events`,
+                    response = await axiosAuth.post(`/relations/${rid}/events`,
                         {
                             eventType: data.eventType,
                             description: data.description,
@@ -36,7 +36,7 @@ function RelationEventForm({pid, rid, sid, id, method, preloadedValues}) {
                         });
                     break;
                 case "put":
-                    response = await axios.put(`http://localhost:8080/relations/${rid}/events/${id}`,
+                    response = await axiosAuth.put(`/relations/${rid}/events/${id}`,
                         {
                             eventType: data.eventType,
                             description: data.description,
@@ -47,7 +47,7 @@ function RelationEventForm({pid, rid, sid, id, method, preloadedValues}) {
                     break;
             }
         } catch (e) {
-            if (axios.isCancel) {
+            if (axiosAuth.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
             } else {

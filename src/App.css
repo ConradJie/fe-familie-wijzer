@@ -17,7 +17,7 @@
 
 .main-navigation {
     background-color: var(--color-primary);
-    padding: 16px 0;
+    padding: var(--size-m) var(--size-l) var(--size-m) var(--size-l);
     justify-content: space-between;
     border-radius: var(--size-radius-l) var(--size-radius-l) 0 0;
 }

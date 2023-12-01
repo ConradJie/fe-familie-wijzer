@@ -27,14 +27,14 @@ function Login() {
         try {
             setError("");
             toggleSending(true);
-            response = await axios.post("http://localhost:8080/authenticate",
+            response = await axiosAuth.post("/authenticate",
                 {
                     signal: controller.signal,
                     username: data['user-name'],
                     password: data.password
                 });
-            localStorage.setItem('token', response.data.jwt);
-            await getAuthorities(data['user-name'])
+            localStorage.setItem('token',response.data.jwt);
+            await getAuthorities(data['user-name'], response.data.jwt)
         } catch (e) {
             processed = false;
             setError(translate(e.response.data));
@@ -51,21 +51,16 @@ function Login() {
         }
     }
 
-    async function getAuthorities(username) {
+    async function getAuthorities(username, token) {
         let processed = true;
         let response = "";
         try {
             setError("");
             toggleSending(true);
+            axiosAuth.defaults.headers = {'Authorization': `Bearer ${token}`};
             response = await axiosAuth.get(`/users/${username}/authorities`, {
-                    signal: controller.signal});
-            // response = await axios.get(`http://localhost:8080/users/${username}/authorities`, {
-            //     signal: controller.signal,
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         Authorization: `Bearer ${token}`
-            //     }
-            // });
+                signal: controller.signal
+            });
             localStorage.setItem('role', response.data[0].authority.substring(5));
         } catch (e) {
             processed = false;
@@ -115,7 +110,7 @@ function Login() {
                     />
                 </label>
                 <Button type="submit" onClick={handleSubmit}>Inloggen</Button>
-                <Button type="button" variant="cancel" onClick={()=> navigate("/")}>Annuleren</Button>
+                <Button type="button" variant="cancel" onClick={() => navigate("/")}>Annuleren</Button>
             </form>
             {sending && <p>Sending...</p>}
             {error && <p>error</p>}

@@ -53,14 +53,14 @@ function App() {
                         </>
                     }
                 </ul>
-                {role === '' ?
+                {role ?
                     <ul className="outer-content-container main-navigation-login">
-                        <li><Link to="/signin">Registreren</Link></li>
-                        <li className="login-link"><Link to="/login">Login</Link></li>
+                        <li className="logout-link"><Link to="/">Logout</Link></li>
                     </ul>
                     :
                     <ul className="outer-content-container main-navigation-login">
-                        <li className="logout-link"><Link to="/">Logout</Link></li>
+                        <li><Link to="/signin">Registreren</Link></li>
+                        <li className="login-link"><Link to="/login">Login</Link></li>
                     </ul>
                 }
             </nav>

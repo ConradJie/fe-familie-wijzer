@@ -1,6 +1,6 @@
 import './PersonDelete.css';
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import {useNavigate, useParams} from 'react-router-dom';
-import axios from "axios";
 import Button from "../../components/Button.jsx";
 import {useState} from "react";
 import useGetPerson from "../../hooks/useGetPerson.js";
@@ -13,21 +13,15 @@ function PersonDelete() {
     const navigate = useNavigate();
     const controller = new AbortController();
 
-    const {person, personError} = useGetPerson(`http://localhost:8080/persons/${id}`);
+    const {person, personError} = useGetPerson(`/persons/${id}`);
 
     async function deleteData(e) {
         e.preventDefault();
-        const token = localStorage.getItem('token');
 
         try {
             setError("");
-            const response = await axios.delete(`http://localhost:8080/persons/${id}`,
-                {
-                    signal: controller.signal,
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            const response = await axiosAuth.delete(`/persons/${id}`,
+                {signal: controller.signal});
             setResponse(response.data);
         } catch (e) {
             setError(e.message);

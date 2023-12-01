@@ -2,10 +2,15 @@
 .main-person-detail select {
     background-color: var(--color-background-secondary);
 }
+
 .main-person-detail button {
     width: 100%;
 }
 
-.Test{
-    background-color: red;
+.main-person-detail h3 {
+    margin: var(--size-margin-l) 0 0 0;
+}
+
+.detail-person-form label {
+    margin: 0 var(--size-margin-m) 0 var(--size-margin-m);
 }

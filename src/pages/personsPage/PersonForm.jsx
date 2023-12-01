@@ -1,9 +1,9 @@
 import {useForm} from "react-hook-form";
 import {useNavigate} from 'react-router-dom';
-import axios from "axios";
 import {useState} from "react";
 import Button from "../../components/Button.jsx";
 import translate from "../../helpers/translate.js";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 
 function PersonForm({pid, method, preloadedValues}) {
     const {
@@ -20,7 +20,6 @@ function PersonForm({pid, method, preloadedValues}) {
     const controller = new AbortController();
 
     async function onSubmit(data) {
-        const token = localStorage.getItem('token');
         let processed = true;
         toggleLoading(false);
         try {
@@ -29,34 +28,22 @@ function PersonForm({pid, method, preloadedValues}) {
             let response = null;
             switch (method) {
                 case "post":
-                    response = await axios.post("http://localhost:8080/persons",
+                    response = await axiosAuth.post("/persons",
                         {
                             givenNames: data.givenNames,
                             surname: data.surname,
                             sex: data.sex
                         },
-                        {
-                            signal: controller.signal,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`
-                            }
-                        });
+                        {signal: controller.signal});
                     break;
                 case "put":
-                    response = await axios.put(`http://localhost:8080/persons/${pid}`,
+                    response = await axiosAuth.put(`/persons/${pid}`,
                         {
                             givenNames: data.givenNames,
                             surname: data.surname,
                             sex: data.sex
                         },
-                        {
-                            signal: controller.signal,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`
-                            }
-                        });
+                        {signal: controller.signal});
                     break;
             }
         } catch (e) {

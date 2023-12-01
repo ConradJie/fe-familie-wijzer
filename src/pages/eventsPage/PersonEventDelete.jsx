@@ -1,10 +1,10 @@
 import './PersonEventDelete.css';
 import {useNavigate, useParams} from 'react-router-dom';
-import axios from "axios";
 import Button from "../../components/Button.jsx";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import {useState} from "react";
 import useGetEvent from "../../hooks/useGetEvent.js";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 
 function PersonEventDelete() {
     const {pid, id} = useParams();
@@ -13,22 +13,16 @@ function PersonEventDelete() {
     const controller = new AbortController();
     const [response, setResponse] = useState([]);
     const [error, setError] = useState("");
-    const {person, personError} = useGetPerson(`http://localhost:8080/persons/${pid}`);
-    const {event, eventError} = useGetEvent(`http://localhost:8080/persons/${pid}/events/${id}`);
+    const {person, personError} = useGetPerson(`/persons/${pid}`);
+    const {event, eventError} = useGetEvent(`/persons/${pid}/events/${id}`);
 
     async function deleteData(e) {
         e.preventDefault();
-        const token = localStorage.getItem('token');
 
         try {
             setError("");
-            const response = await axios.delete(`http://localhost:8080/persons/${pid}/events/${id}`,
-                {
-                    signal: controller.signal,
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            const response = await axiosAuth.delete(`/persons/${pid}/events/${id}`,
+                {signal: controller.signal});
             setResponse(response.data);
         } catch (e) {
             setError(e.message);

@@ -14,13 +14,15 @@ const useGetData = (url) => {
             try {
                 setDataError("");
                 toggleDataLoading(true);
+                const token=localStorage.getItem('token');
+                axiosAuth.defaults.headers = {'Authorization': `Bearer ${token}`};
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
                 setData(response.data);
             } catch (e) {
                 console.error(e)
-                if (!axiosAuth.isCancel) {
+                if (!axiosAuth.isCancel && e.message !== 'canceled') {
                     setDataError(e.message);
                 }
             } finally {
