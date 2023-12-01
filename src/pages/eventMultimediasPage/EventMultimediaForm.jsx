@@ -1,15 +1,15 @@
 import './EventMultimediaForm.css';
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import axios from "axios";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
 
 function EventMultimediaForm({t, tid, eid, id, method, description = "", filename = ""}) {
     const role = localStorage.getItem('role');
     const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
-    const urlPost = `http://localhost:8080/events/${eid}/multimedias`;
-    const urlPut = `http://localhost:8080/events/${eid}/multimedias/${id}`;
-    const urlPutFile = `http://localhost:8080/multimedias/${id}/media`;
+    const urlPost = `/events/${eid}/multimedias`;
+    const urlPut = `/events/${eid}/multimedias/${id}`;
+    const urlPutFile = `/multimedias/${id}/media`;
     const [error, setError] = useState("");
     const [sending, toggleSending] = useState(false);
     const [descriptionValue, setDescriptionValue] = useState(description);
@@ -22,7 +22,6 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
     const [buttonVariant, setButtonVariant] = useState("primary");
     const navigate = useNavigate();
     const controller = new AbortController();
-    const token = localStorage.getItem('token');
 
     function disableSaveButton() {
         toggleDisabled(true);
@@ -59,42 +58,30 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
             let response = null;
             switch (method) {
                 case "post":
-                    response = await axios.post(urlPost,
+                    response = await axiosAuth.post(urlPost,
                         {
                             eventId: eid,
                             description: descriptionValue,
                             filename: file
                         },
-                        {
-                            signal: controller.signal,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`
-                            }
-                        });
+                        {signal: controller.signal});
                     break;
                 case "put":
                     if (description !== descriptionValue) {
-                        response = await axios.post(urlPut,
+                        response = await axiosAuth.post(urlPut,
                             {
                                 id: id,
                                 eventId: eid,
                                 description: descriptionValue,
                                 filename: file
                             },
-                            {
-                                signal: controller.signal,
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${token}`
-                                }
-                            });
+                            {signal: controller.signal});
                     }
                     break;
             }
         } catch
             (e) {
-            if (axios.isCancel) {
+            if (axiosAuth.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
                 console.error(e);
@@ -122,14 +109,11 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
         try {
             setErrorFile("");
             toggleSendingFile(true);
-            const result = await axios.post(urlPutFile, formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        Authorization: `Bearer ${token}`
-                    },
-                })
-        } catch (e) {
+            const result = await axiosAuth.post(urlPutFile, formData,
+                {signal: controller.signal}
+            )
+        } catch
+            (e) {
             console.error(e);
             setErrorFile(e.message);
         } finally {
@@ -148,8 +132,8 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                         id="description-field"
                         name="description-field"
                         value={descriptionValue}
-                        className={role === 'USER' && method==='put'? "field-disabled" : "field-enabled"}
-                        disabled={role === 'USER' && method==='put'}
+                        className={role === 'USER' && method === 'put' ? "field-disabled" : "field-enabled"}
+                        disabled={role === 'USER' && method === 'put'}
                         onChange={(e) => setDescriptionValue(e.target.value)}
                         onBlur={(e) => {
                             if (e.target.value === "") {

@@ -2,15 +2,15 @@ import './ChildNew.css';
 import {useNavigate, useParams} from "react-router-dom";
 import ChoosePerson from "../../components/ChoosePerson.jsx";
 import {useState} from "react";
-import axios from "axios";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
 
 function ChildNew() {
     const {pid, rid, sid} = useParams();
-    const urlPerson = `http://localhost:8080/persons/${pid}`;
-    const urlSpouse = `http://localhost:8080/persons/${sid}`;
+    const urlPerson = `/persons/${pid}`;
+    const urlSpouse = `/persons/${sid}`;
     const urlGoBack = `/children/${pid}/${rid}/${sid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
@@ -34,13 +34,13 @@ function ChildNew() {
     async function handleSubmit() {
         try {
             setError("");
-            const response = await axios.post(`http://localhost:8080/relations/${rid}/children`,
+            const response = await axiosAuth.post(`/relations/${rid}/children`,
                 {
                     relationId: rid,
                     personId: choice
                 });
         } catch (e) {
-            if (axios.isCancel) {
+            if (axiosAuth.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
             } else {

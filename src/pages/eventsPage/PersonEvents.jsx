@@ -11,8 +11,8 @@ function PersonEvents() {
     const {id} = useParams();
     const role = localStorage.getItem('role');
     const navigate = useNavigate();
-    const {person, personError, personLoading} = useGetPerson(`http://localhost:8080/persons/${id}`);
-    const {data, dataError, dataLoading} = useGetData(`http://localhost:8080/persons/${id}/events`);
+    const {person, personError, personLoading} = useGetPerson(`/persons/${id}`);
+    const {data, dataError, dataLoading} = useGetData(`/persons/${id}/events`);
 
     return (
         <main className="main-person-events">

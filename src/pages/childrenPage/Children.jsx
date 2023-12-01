@@ -11,9 +11,9 @@ function Children() {
     const role = localStorage.getItem('role');
     const urlGoBack = `/relations/${pid}`;
     const urlNew = `/childNew/${pid}/${rid}/${sid}`;
-    const urlPerson = `http://localhost:8080/persons/${pid}`;
-    const urlSpouse = `http://localhost:8080/persons/${sid}`;
-    const urlChildren = `http://localhost:8080/relations/${rid}/children`;
+    const urlPerson = `/persons/${pid}`;
+    const urlSpouse = `/persons/${sid}`;
+    const urlChildren = `/relations/${rid}/children`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
     const {data, dataError, dataLoading} = useGetData(urlChildren);

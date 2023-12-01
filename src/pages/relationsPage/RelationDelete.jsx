@@ -3,11 +3,11 @@ import {useParams} from "react-router-dom";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import Button from "../../components/Button.jsx";
 import {useNavigate} from 'react-router-dom';
-import axios from "axios";
 import {useState} from "react";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
 import getSexLabel from "../../helpers/getSexLabel.js";
 import Table from "../../components/Table.jsx";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 
 function RelationDelete() {
     const {pid, rid, sid} = useParams();
@@ -22,21 +22,17 @@ function RelationDelete() {
     const controller = new AbortController();
 
     async function handleSubmit() {
-        const token = localStorage.getItem('token');
         try {
             toggleSending(true);
             setError("");
-            const urlDelete = `http://localhost:8080/relations/${rid}`;
-            const response = await axios.delete(urlDelete,
+            const urlDelete = `/relations/${rid}`;
+            const response = await axiosAuth.delete(urlDelete,
                 {
-                    signal: controller.signal,
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                    signal: controller.signal
                 });
         } catch
             (e) {
-            if (axios.isCancel) {
+            if (axiosAuth.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
             } else {

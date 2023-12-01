@@ -11,9 +11,9 @@ import Table from "../../components/Table.jsx";
 function RelationEvents() {
     const {pid, rid, sid} = useParams();
     const navigate = useNavigate();
-    const {person, personError, personLoading} = useGetPerson(`http://localhost:8080/persons/${pid}`);
-    const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, `http://localhost:8080/persons/${sid}`);
-    const {data, dataError, dataLoading} = useGetData(`http://localhost:8080/relations/${rid}/events`);
+    const {person, personError, personLoading} = useGetPerson(`/persons/${pid}`);
+    const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, `/persons/${sid}`);
+    const {data, dataError, dataLoading} = useGetData(`/relations/${rid}/events`);
 
     return (
         <main className="main-person-events">

@@ -1,6 +1,6 @@
 import './RelationEventDelete.css';
 import {useNavigate, useParams} from 'react-router-dom';
-import axios from "axios";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
 import {useState} from "react";
 import useGetPerson from "../../hooks/useGetPerson.js";
@@ -29,7 +29,7 @@ function RelationEventDelete() {
 
         try {
             setError("");
-            const response = await axios.delete(urlEvent, {});
+            const response = await axiosAuth.delete(urlEvent, {});
             setResponse(response.data);
         } catch (e) {
             setError(e.message);

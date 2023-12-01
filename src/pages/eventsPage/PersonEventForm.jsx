@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import axios from "axios";
 import {useForm} from "react-hook-form";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
 import translate from "../../helpers/translate.js";
 
@@ -30,7 +30,6 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
     }
 
     async function onSubmit(data) {
-        const token = localStorage.getItem('token');
         toggleSending(false);
         try {
             setError("");
@@ -39,7 +38,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
             processed = true;
             switch (method) {
                 case "post":
-                    response = await axios.post(`http://localhost:8080/persons/${pid}/events`,
+                    response = await axiosAuth.post(`/persons/${pid}/events`,
                         {
                             eventType: data.eventType,
                             description: data.description,
@@ -47,16 +46,10 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                             beginDate: data.beginDate,
                             endDate: data.endDate
                         },
-                        {
-                            signal: controller.signal,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`
-                            }
-                        });
+                        {signal: controller.signal});
                     break;
                 case "put":
-                    response = await axios.put(`http://localhost:8080/persons/${pid}/events/${id}`,
+                    response = await axiosAuth.put(`/persons/${pid}/events/${id}`,
                         {
                             eventType: data.eventType,
                             description: data.description,
@@ -64,13 +57,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                             beginDate: data.beginDate,
                             endDate: data.endDate
                         },
-                        {
-                            signal: controller.signal,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`
-                            }
-                        });
+                        {signal: controller.signal});
                     break;
             }
         } catch (e) {

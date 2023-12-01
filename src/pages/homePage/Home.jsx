@@ -3,10 +3,9 @@ import logo from '../../assets/familiewijzer.svg';
 
 function Home() {
 
-    localStorage.setItem('role', '');
-    const token = localStorage.getItem('token');
-    if (token) {
-        localStorage.setItem('token', '');
+    const role = localStorage.getItem('role');
+    if (role) {
+        localStorage.removeItem('role');
         window.location.reload(false);
     }
 

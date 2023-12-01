@@ -2,7 +2,7 @@ import './EventMultimediaDelete.css';
 import Button from "../../components/Button.jsx";
 import useGetData from "../../hooks/useGetData.js";
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "axios";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import {useState} from "react";
 
 function EventMultimediaDelete() {
@@ -19,15 +19,10 @@ function EventMultimediaDelete() {
 
     async function onSubmit(e) {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         try {
             setError("");
-            const response = await axios.delete(urlDelete, {
-                signal: controller.signal,
-                headers: {
-                    'Accept': 'application/json',
-                    Authorization: `Bearer ${token}`
-                }
+            const response = await axiosAuth.delete(urlDelete, {
+                signal: controller.signal
             });
             setResponseData(response.data);
         } catch (e) {

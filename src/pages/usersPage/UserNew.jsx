@@ -3,8 +3,8 @@ import Button from "../../components/Button.jsx";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import axios from "axios";
 import translate from "../../helpers/translate.js";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 
 function UserNew() {
     const {
@@ -24,8 +24,7 @@ function UserNew() {
         try {
             setError("");
             toggleLoading(true);
-            const token = localStorage.getItem('token');
-            const response = await axios.post("http://localhost:8080/users",
+            const response = await axiosAuth.post("/users",
                 {
                     username: data.username,
                     password: data.password,
@@ -33,13 +32,7 @@ function UserNew() {
                     enabled: false,
                     apikey: null
                 },
-                {
-                    signal: controller.signal,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+                {signal: controller.signal}
             )
         } catch (e) {
             processed = false;

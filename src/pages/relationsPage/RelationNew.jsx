@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import ChoosePerson from "../../components/ChoosePerson.jsx";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import {useState} from "react";
-import axios from "axios";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
 import translate from "../../helpers/translate.js";
 
@@ -32,25 +32,18 @@ function RelationNew() {
     }
 
     async function handleSubmit() {
-        const token = localStorage.getItem('token');
         let processed = true;
         try {
             setError("");
             if (choice === "") {
                 setChoice(null);
             }
-            const response = await axios.post("http://localhost:8080/relations",
+            const response = await axiosAuth.post("/relations",
                 {
                     personId: pid,
                     spouseId: choice
                 },
-                {
-                    signal: controller.signal,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                }
-            });
+                {signal: controller.signal});
         } catch (e) {
             processed = false;
             setError(translate(e.response.data));

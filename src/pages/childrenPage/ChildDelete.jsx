@@ -1,6 +1,6 @@
 import './ChildDelete.jsx.css';
 import {useState} from "react";
-import axios from "axios";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 import useGetPerson from "../../hooks/useGetPerson.js";
@@ -24,10 +24,10 @@ function ChildDelete() {
     async function handleSubmit() {
         try {
             setError("");
-            const urlDelete = `http://localhost:8080/relations/${rid}/children/${id}`;
-            const response = await axios.delete(urlDelete, {});
+            const urlDelete = `/relations/${rid}/children/${id}`;
+            const response = await axiosAuth.delete(urlDelete, {});
         } catch (e) {
-            if (axios.isCancel) {
+            if (axiosAuth.isCancel) {
                 console.error("Request is canceled");
                 setError(e.message);
             } else {

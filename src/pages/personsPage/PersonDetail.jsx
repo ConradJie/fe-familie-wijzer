@@ -15,12 +15,12 @@ import useGetData from "../../hooks/useGetData.js";
 function PersonDetail() {
     const {id} = useParams();
     const urlGoBack="/persons";
-    const urlPerson = `http://localhost:8080/persons/${id}`;
-    const urlEvents = `http://localhost:8080/persons/${id}/events`;
-    const urlSpouses = `http://localhost:8080/relations/persons/${id}`;
-    const urlRelationEvents = `http://localhost:8080/persons/${id}/relationEvents`;
-    const urlChildren = `http://localhost:8080/persons/children/${id}`;
-    const urlParents = `http://localhost:8080/persons/parents/${id}`;
+    const urlPerson = `/persons/${id}`;
+    const urlEvents = `/persons/${id}/events`;
+    const urlSpouses = `/relations/persons/${id}`;
+    const urlRelationEvents = `/persons/${id}/relationEvents`;
+    const urlChildren = `/persons/children/${id}`;
+    const urlParents = `/persons/parents/${id}`;
     const navigate = useNavigate();
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const {events, eventsError, eventsLoading} = useGetEvents(urlEvents);

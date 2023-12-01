@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import axios from 'axios';
+import {axiosAuth} from "../helpers/axiosAuth.js";
 
 const useGetEvent = (url) => {
 
@@ -11,15 +11,12 @@ const useGetEvent = (url) => {
         const controller = new AbortController();
 
         async function getEvent() {
-            const token = localStorage.getItem('token');
             try {
                 setEventError("");
-                const response = await axios.get(url, {
-                    signal: controller.signal,
-                    headers: {
-                        'Accept': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
+                const token=localStorage.getItem('token');
+                axiosAuth.defaults.headers = {'Authorization': `Bearer ${token}`};
+                const response = await axiosAuth.get(url, {
+                    signal: controller.signal
                 });
                 //For dates, useForm.defaultValues only accepts the YYYY-MM-DD format!!
                 response.data.beginDate = response.data.beginDate.substring(0, 10);
@@ -27,7 +24,7 @@ const useGetEvent = (url) => {
                 setEvent(response.data);
             } catch (e) {
                 console.error(e)
-                if (!axios.isCancel) {
+                if (!axiosAuth.isCancel && e.message !== 'canceled') {
                     setEventError(e.message);
                 }
             } finally {
