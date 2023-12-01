@@ -13,11 +13,16 @@ function Persons() {
     const [filterSurname, setFilterSurname] = useState('');
     const [queryGivenNames, setQueryGivenNames] = useState('');
     const [querySurname, setQuerySurname] = useState('');
+    // const urlData = (queryGivenNames && querySurname)
+    //     ? `http://localhost:8080/persons/contains?${queryGivenNames}&${querySurname}`
+    //     : queryGivenNames ? `http://localhost:8080/persons/contains?${queryGivenNames}`
+    //         : querySurname ? `http://localhost:8080/persons/contains?${querySurname}`
+    //             : "http://localhost:8080/persons";
     const urlData = (queryGivenNames && querySurname)
-        ? `http://localhost:8080/persons/contains?${queryGivenNames}&${querySurname}`
-        : queryGivenNames ? `http://localhost:8080/persons/contains?${queryGivenNames}`
-            : querySurname ? `http://localhost:8080/persons/contains?${querySurname}`
-                : "http://localhost:8080/persons";
+        ? `/persons/contains?${queryGivenNames}&${querySurname}`
+        : queryGivenNames ? `/persons/contains?${queryGivenNames}`
+            : querySurname ? `/persons/contains?${querySurname}`
+                : "/persons";
     const {data, dataError, dataLoading} = useGetData(urlData);
     const navigate = useNavigate();
 

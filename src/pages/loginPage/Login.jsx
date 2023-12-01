@@ -5,6 +5,7 @@ import Button from "../../components/Button.jsx";
 import axios from "axios";
 import translate from "../../helpers/translate.js";
 import {useNavigate} from "react-router-dom";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
 
 
 function Login() {
@@ -51,31 +52,20 @@ function Login() {
     }
 
     async function getAuthorities(username) {
-        const token = localStorage.getItem('token');
-        const authAxios = axios.create({
-            baseURL: 'http://localhost:8080',
-            withCredentials: true,
-            headers: {
-                // 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Origin': 'http://localhost:8080',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            }
-        });
         let processed = true;
         let response = "";
         try {
             setError("");
             toggleSending(true);
-            // response = await authAxios.get(`/users/${username}/authorities`, {
-            //         signal: controller.signal});
-            response = await axios.get(`http://localhost:8080/users/${username}/authorities`, {
-                signal: controller.signal,
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            response = await axiosAuth.get(`/users/${username}/authorities`, {
+                    signal: controller.signal});
+            // response = await axios.get(`http://localhost:8080/users/${username}/authorities`, {
+            //     signal: controller.signal,
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         Authorization: `Bearer ${token}`
+            //     }
+            // });
             localStorage.setItem('role', response.data[0].authority.substring(5));
         } catch (e) {
             processed = false;
