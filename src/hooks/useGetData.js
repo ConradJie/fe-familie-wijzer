@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import axios from 'axios';
+import {axiosAuth} from "../helpers/axiosAuth.js";
 
 const useGetData = (url) => {
 
@@ -11,21 +11,16 @@ const useGetData = (url) => {
         const controller = new AbortController();
 
         async function getData() {
-            const token = localStorage.getItem('token');
             try {
                 setDataError("");
                 toggleDataLoading(true);
-                const response = await axios.get(url, {
-                    signal: controller.signal,
-                    headers: {
-                        'Accept': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
+                const response = await axiosAuth.get(url, {
+                    signal: controller.signal
                 });
                 setData(response.data);
             } catch (e) {
                 console.error(e)
-                if (!axios.isCancel) {
+                if (!axiosAuth.isCancel) {
                     setDataError(e.message);
                 }
             } finally {
