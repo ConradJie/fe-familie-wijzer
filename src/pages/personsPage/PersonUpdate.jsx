@@ -5,17 +5,19 @@ import useGetPerson from "../../hooks/useGetPerson.js";
 
 function PersonUpdate() {
     const {id} = useParams();
-    const {person,personError} = useGetPerson(`http://localhost:8080/persons/${id}`)
+    const {person, personError, personLoading} = useGetPerson(`/persons/${id}`)
 
     return (
         <main>
             <h2>Persoon wijzigen</h2>
-            {person?.id ? <PersonForm
-                method="put"
-                preloadedValues={person}
-                pid={id}
+            {person?.id &&
+                <PersonForm
+                    method="put"
+                    preloadedValues={person}
+                    pid={id}
                 />
-                : <p>Loading...</p>}
+            }
+            {personLoading && <p>Loading...</p>}
             {personError && <p>{personError}</p>}
         </main>
     );

@@ -33,7 +33,6 @@ function Login() {
                     password: data.password
                 });
             localStorage.setItem('token',response.data.jwt);
-            const cookies = new Cookies();
             await getAuthorities(data['user-name'], response.data.jwt)
         } catch (e) {
             processed = false;

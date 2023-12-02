@@ -7,11 +7,6 @@ function PersonNew() {
             <h2>Persoon toevoegen</h2>
             <PersonForm
                 method="post"
-                preloadedValues={{
-                        givenNames: "",
-                        surname: "",
-                        sex: "M"
-                }}
                 id={0}
             />
         </main>
