@@ -12,8 +12,6 @@ const useGetPersons = (url) => {
         async function getData() {
             try {
                 setPersonsError("");
-                const token=localStorage.getItem('token');
-                axiosAuth.defaults.headers = {'Authorization': `Bearer ${token}`};
                 const response = await axiosAuth.get(url, {                    signal: controller.signal
                 });
                 setPerson(response.data);

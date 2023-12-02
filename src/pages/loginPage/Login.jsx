@@ -2,7 +2,6 @@ import './Login.css';
 import {useForm} from "react-hook-form";
 import {useState} from "react";
 import Button from "../../components/Button.jsx";
-import axios from "axios";
 import translate from "../../helpers/translate.js";
 import {useNavigate} from "react-router-dom";
 import {axiosAuth} from "../../helpers/axiosAuth.js";
@@ -34,6 +33,7 @@ function Login() {
                     password: data.password
                 });
             localStorage.setItem('token',response.data.jwt);
+            const cookies = new Cookies();
             await getAuthorities(data['user-name'], response.data.jwt)
         } catch (e) {
             processed = false;

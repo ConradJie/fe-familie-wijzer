@@ -14,8 +14,6 @@ const useGetSpouse = (sid, url) => {
             try {
                 toggleSpouseLoading(true);
                 setSpouseError("");
-                const token=localStorage.getItem('token');
-                axiosAuth.defaults.headers = {'Authorization': `Bearer ${token}`};
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
