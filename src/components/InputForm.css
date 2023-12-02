@@ -1,0 +1,11 @@
+.form-control-input input {
+    background-color: var(--color-white);
+}
+
+.form-control-input-disabled input {
+    background-color: var(--color-background-secondary);
+}
+
+.form-control-input-disabled select {
+    background-color: var(--color-background-secondary);
+}

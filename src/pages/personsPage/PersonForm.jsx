@@ -1,6 +1,7 @@
 import {useForm} from "react-hook-form";
 import {useNavigate} from 'react-router-dom';
 import {useState} from "react";
+import InputForm from "../../components/InputForm.jsx";
 import Button from "../../components/Button.jsx";
 import translate from "../../helpers/translate.js";
 import {axiosAuth} from "../../helpers/axiosAuth.js";
@@ -25,27 +26,18 @@ function PersonForm({pid, method, preloadedValues}) {
         try {
             setError("");
             toggleLoading(true);
-            let response = null;
-            switch (method) {
-                case "post":
-                    response = await axiosAuth.post("/persons",
-                        {
-                            givenNames: data.givenNames,
-                            surname: data.surname,
-                            sex: data.sex
-                        },
-                        {signal: controller.signal});
-                    break;
-                case "put":
-                    response = await axiosAuth.put(`/persons/${pid}`,
-                        {
-                            givenNames: data.givenNames,
-                            surname: data.surname,
-                            sex: data.sex
-                        },
-                        {signal: controller.signal});
-                    break;
-            }
+            const url = (method === 'post') ? `/persons` : `/persons/${pid}`;
+            const response = await axiosAuth({
+                method: `${method}`,
+                url: `${url}`,
+                data: (method === 'delete') ? {} :
+                    {
+                        givenNames: `${data.givenNames}`,
+                        surname: `${data.surname}`,
+                        sex: `${data.sex}`
+                    }
+            });
+            console.log(response);
         } catch (e) {
             processed = false;
             setError(translate(e.response.data));
@@ -64,42 +56,47 @@ function PersonForm({pid, method, preloadedValues}) {
     return (
         <section>
             <form className="person-form" onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="givenNames-field">
-                    Voornamen:
-                    <input
-                        type="text"
-                        id="givenNames-field"
-                        {...register("givenNames", {
-                            required: "Dit veld is verplicht"
-                        })}
-                    />
-                    {errors.givenNames && <p>{errors.givenNames.message}</p>}
-                </label>
-                <label htmlFor="surname-field">
-                    Achternaam:
-                    <input
-                        type="text"
-                        id="surname-field"
-                        {...register("surname", {
-                            required: "Dit veld is verplicht"
-                        })}
-                    />
-                    {errors.surname && <p>{errors.surname.message}</p>}
-                </label>
-                <label htmlFor="sex-field">
-                    Geslacht:
-                    <select
-                        id="sex-field"
-                        {...register("sex", {
-                            required: "Dit veld is verplicht"
-                        })}
-                    >
-                        <option value="M">Man</option>
-                        <option value="F">Vrouw</option>
-                        <option value="X">Onbekend</option>
-                    </select>
-                    {errors.sex && <p>{errors.sex.message}</p>}
-                </label>
+                <InputForm
+                    type="text"
+                    name="givenNames"
+                    label="Voornamen:"
+                    disabled={method === 'delete'}
+                    errors={errors}
+                    register={register}
+                    validationSchema={{
+                        required: "Dit veld is verplicht"
+                    }}
+                    required
+                />
+                <InputForm
+                    type="text"
+                    name="surname"
+                    label="Achternaam:"
+                    disabled={method === 'delete'}
+                    errors={errors}
+                    register={register}
+                    validationSchema={{
+                        required: "Dit veld is verplicht"
+                    }}
+                    required
+                />
+                <InputForm
+                    type="select"
+                    name="sex"
+                    label="Geslacht:"
+                    disabled={method === 'delete'}
+                    errors={errors}
+                    register={register}
+                    validationSchema={{
+                        required: "Dit veld is verplicht"
+                    }}
+                    required
+                >
+                    <option value="M">Man</option>
+                    <option value="F">Vrouw</option>
+                    <option value="X">Onbekend</option>
+                </InputForm>
+
                 <Button type="submit" onClick={handleSubmit}>
                     {method === "delete" ? "Verwijderen" : "Opslaan"}
                 </Button>
