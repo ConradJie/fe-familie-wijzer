@@ -14,8 +14,6 @@ const useGetData = (url) => {
             try {
                 setDataError("");
                 toggleDataLoading(true);
-                const token=localStorage.getItem('token');
-                axiosAuth.defaults.headers = {'Authorization': `Bearer ${token}`};
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
