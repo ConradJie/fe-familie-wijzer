@@ -5,20 +5,22 @@ import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonEventUpdate() {
-    const {pid,id} = useParams();
-    const {person, personError} = useGetPerson(`/persons/${pid}`);
-    const {event,eventError} = useGetEvent(`/persons/${pid}/events/${id}`);
+    const {pid, id} = useParams();
+    const {person, personError, personLoading} = useGetPerson(`/persons/${pid}`);
+    const {event, eventError, eventLoading} = useGetEvent(`/persons/${pid}/events/${id}`);
 
     return (
         <main>
             {person?.id && <h2>Gebeurtenis van {person.givenNames} {person.surname} wijzigen</h2>}
-            {event?.id ? <PersonEventForm
+            {event?.id &&
+                <PersonEventForm
                     method="put"
                     preloadedValues={event}
                     pid={pid}
                     id={id}
                 />
-                : <p>Loading...</p>}
+            }
+            {(personLoading || eventLoading) && <p>Loading...</p>}
             {personError && <p>{personError}</p>}
             {eventError && <p>{eventError}</p>}
         </main>

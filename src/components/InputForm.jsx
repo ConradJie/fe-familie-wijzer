@@ -16,14 +16,20 @@ function InputForm({type, name, label, disabled, children, register, required, v
                 >
                     {children}
                 </select>
-                :
-                <input
-                    type={type}
-                    id={name}
-                    name={name}
-                    disabled={disabled}
-                    {...register(name, validationSchema)}
-                />
+                : type === 'select' ?
+                    <textarea
+                        id={name}
+                        {...register(name)}
+                    >
+                    </textarea>
+                    :
+                    <input
+                        type={type}
+                        id={name}
+                        name={name}
+                        disabled={disabled}
+                        {...register(name, validationSchema)}
+                    />
             }
             {errors && errors[name]?.type === "required" &&
                 <p className="error">{errors[name]?.message}</p>}
