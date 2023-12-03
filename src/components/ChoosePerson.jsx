@@ -11,9 +11,9 @@ function ChoosePerson({choose}) {
     const [queryGivenNames, setQueryGivenNames] = useState('');
     const [querySurname, setQuerySurname] = useState('');
     const urlData = (queryGivenNames && querySurname)
-        ? `http://localhost:8080/persons/contains?${queryGivenNames}&${querySurname}`
-        : queryGivenNames ? `http://localhost:8080/persons/contains?${queryGivenNames}`
-            : querySurname ? `http://localhost:8080/persons/contains?${querySurname}`
+        ? `/persons/contains?${queryGivenNames}&${querySurname}`
+        : queryGivenNames ? `/persons/contains?${queryGivenNames}`
+            : querySurname ? `/persons/contains?${querySurname}`
                 : "";
     const {data, dataError, dataLoading} = useGetData(urlData);
 
