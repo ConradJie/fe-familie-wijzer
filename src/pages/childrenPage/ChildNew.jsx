@@ -1,9 +1,10 @@
 import './ChildNew.css';
 import {useNavigate, useParams} from "react-router-dom";
-import ChoosePerson from "../../components/ChoosePerson.jsx";
 import {useState} from "react";
-import {axiosAuth} from "../../helpers/axiosAuth.js";
+import ChoosePerson from "../../components/ChoosePerson.jsx";
 import Button from "../../components/Button.jsx";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
+import translate from "../../helpers/translate.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
 
@@ -32,6 +33,7 @@ function ChildNew() {
     }
 
     async function handleSubmit() {
+        let processed = true;
         try {
             setError("");
             const response = await axiosAuth.post(`/relations/${rid}/children`,
@@ -40,15 +42,19 @@ function ChildNew() {
                     personId: choice
                 });
         } catch (e) {
-            if (axiosAuth.isCancel) {
-                console.error("Request is canceled");
-                setError(e.message);
-            } else {
-                setError(e.message);
-                console.error(e);
+            processed = false;
+            console.error(e)
+            if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                if (e.response?.data) {
+                    setError(translate(e.response.data));
+                } else {
+                    setError(e.message);
+                }
             }
         }
-        navigate(urlGoBack);
+        if (processed) {
+            navigate(urlGoBack);
+        }
     }
 
     return (

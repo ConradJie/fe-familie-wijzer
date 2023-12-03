@@ -49,7 +49,11 @@ function RelationForm({pid, rid, sid, method}) {
             processed = false;
             console.error(e)
             if (!axiosAuth.isCancel && e.message !== 'canceled') {
-                setError(translate(e.message));
+                if (e.response?.data) {
+                    setError(translate(e.response.data));
+                } else {
+                    setError(translate(e.message));
+                }
             }
         } finally {
             toggleSending(false);

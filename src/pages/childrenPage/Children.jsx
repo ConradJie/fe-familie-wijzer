@@ -44,7 +44,7 @@ function Children() {
                                 <td>{c.surname}</td>
                                 {role === 'ADMIN' &&
                                     <td className="icon"
-                                        onClick={() => navigate(`/childDelete/${pid}/${rid}/${sid}/${c.id}`)}><Trash
+                                        onClick={() => navigate(`/childDelete/${pid}/${rid}/${sid}/${c.personId}/${c.id}`)}><Trash
                                         width={24}
                                         height={24}/></td>
                                 }
