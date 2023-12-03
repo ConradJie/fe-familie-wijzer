@@ -8,8 +8,8 @@ import useGetSpouses from "../../hooks/useGetSpouses.js";
 function Relations() {
     const {pid} = useParams();
     const role = localStorage.getItem('role');
-    const urlPerson = `http://localhost:8080/persons/${pid}`;
-    const urlSpouses = `http://localhost:8080/relations/persons/${pid}`;
+    const urlPerson = `/persons/${pid}`;
+    const urlSpouses = `/relations/persons/${pid}`;
     const urlNew = `/relationNew/${pid}`;
     const navigate = useNavigate();
     const urlGoBack = "/persons";

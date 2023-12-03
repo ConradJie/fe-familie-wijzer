@@ -20,7 +20,7 @@ const useGetSpouse = (sid, url) => {
                 setSpouse(response.data);
             } catch (e) {
                 console.error(e)
-                if (!axiosAuth.isCancel) {
+                if (!axiosAuth.isCancel && e.message !== 'canceled') {
                     setSpouseError(e.message);
                 }
             } finally {

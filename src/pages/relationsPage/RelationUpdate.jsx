@@ -1,82 +1,31 @@
 import './RelationUpdate.css';
 import {useParams} from "react-router-dom";
 import useGetPerson from "../../hooks/useGetPerson.js";
-import Button from "../../components/Button.jsx";
-import {useNavigate} from 'react-router-dom';
-import axios from "axios";
-import {useState} from "react";
-import ChoosePerson from "../../components/ChoosePerson.jsx";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
-import {axiosAuth} from "../../helpers/axiosAuth.js";
+import RelationForm from "./RelationForm.jsx";
 
 function RelationUpdate() {
     const {pid, rid, sid} = useParams();
     const urlPerson = `/persons/${pid}`;
     const urlSpouse = `/persons/${sid}`;
-    const urlGoBack = `/relations/${pid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
-
-    const [choice, setChoice] = useState(sid);
-    const [buttonVariant, setButtonVariant] = useState("disabled");
-    const [disabled, toggleDisabled] = useState(true);
-    const choose = (choice) => {
-        setChoice(choice);
-        if (choice === "") {
-            toggleDisabled(true);
-            setButtonVariant("disabled");
-        } else {
-            toggleDisabled(false);
-            setButtonVariant("primary");
-        }
-    }
-
-    async function handleSubmit() {
-        const controller = new AbortController();
-        try {
-            setError("");
-            if (choice === "") {
-                setChoice(null);
-            }
-            const response = await axiosAuth.put(`/relations/${rid}`,
-                {
-                    id: rid,
-                    personId: pid,
-                    spouseId: choice
-                },
-                {signal: controller.signal});
-        } catch
-            (e) {
-            if (axiosAuth.isCancel) {
-                console.log(e)
-                console.error("Request is canceled");
-                setError(e.message);
-            } else {
-                setError(e.message);
-                console.error(e);
-            }
-        }
-        navigate(urlGoBack);
-    }
 
     return (
         <main>
-            {person && <h2>Relatie van {person.givenNames} {person.surname} wijzigen</h2>}
+            {person && spouse &&
+                <h2>Relatie {spouse.givenNames} {spouse.surname} van {person.givenNames} {person.surname} wijzigen</h2>}
             {spouse &&
-                <ChoosePerson
-                    choose={choose}
+                <RelationForm
+                    method='put'
+                    pid={pid}
+                    rid={rid}
+                    sid={sid}
                 />
             }
-            <Button type="button" disabled={disabled} variant={buttonVariant}
-                    onClick={() => (choice !== "" && isNaN(Number(choice))) ?
-                        setError("ongeldige keuze") : handleSubmit()}>Opslaan</Button>
-            <Button type="button" variant="cancel" onClick={() => navigate(urlGoBack)}>Annuleren</Button>
             {(personLoading || spouseLoading) && <p>Loading...</p>}
-            {personError && <p>url:{urlPerson}<br/>{personError}</p>}
-            {spouseError && <p>{urlSpouse}:{spouseError}</p>}
-            {error && <p>{error}</p>}
+            {personError && <p>{personError}</p>}
+            {spouseError && spouseError !== 'canceled' && <p>{spouseError}</p>}
         </main>
     );
 }

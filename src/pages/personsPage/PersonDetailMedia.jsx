@@ -5,7 +5,7 @@ import {ArrowLeft} from "@phosphor-icons/react";
 
 function PersonDetailMedia() {
     const {id} = useParams();
-    const urlEventMultimedias = `http://localhost:8080/events/${id}/multimedias`;
+    const urlEventMultimedias = `/events/${id}/multimedias`;
     const {data, dataError, dataLoading} = useGetData(urlEventMultimedias);
 
     return (
