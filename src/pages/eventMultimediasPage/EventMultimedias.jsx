@@ -10,13 +10,11 @@ function EventMultimedias() {
     const role = localStorage.getItem('role');
     const urlGoBack = `/personEvents/${tid}`;
     const navigate = useNavigate();
-    const urlEvent = (typeof tid === 'string') && (typeof eid === 'string') ?
-        `http://localhost:8080/persons/${tid}/events/${eid}` : "";
-    const urlMultimedias = (typeof tid === 'string') ?
-        `http://localhost:8080/events/${eid}/multimedias` : "";
+    const urlEvent = (typeof tid === 'string') && (typeof eid === 'string') ? `/persons/${tid}/events/${eid}` : "";
+    const urlMultimedias = (typeof tid === 'string') ? `/events/${eid}/multimedias` : "";
 
-    const {event, eventError,eventLoading} = useGetEvent(urlEvent);
-    const {data, dataError,dataLoading} = useGetData(urlMultimedias);
+    const {event, eventError, eventLoading} = useGetEvent(urlEvent);
+    const {data, dataError, dataLoading} = useGetData(urlMultimedias);
 
     return (
         <main className="main-event-multimedias">
@@ -27,8 +25,9 @@ function EventMultimedias() {
                     <tr>
                         <th>Omschrijving</th>
                         <th>Bestandsnaam</th>
-                        <th className="icon" onClick={() => navigate(`/EventMultimediaNew/${t}/${tid}/${eid}`)}><PlusCircle width={24}
-                                                                                                           height={24}/>
+                        <th className="icon" onClick={() => navigate(`/EventMultimediaNew/${t}/${tid}/${eid}`)}>
+                            <PlusCircle width={24}
+                                        height={24}/>
                         </th>
                     </tr>
                 }
@@ -38,16 +37,18 @@ function EventMultimedias() {
                                 <tr key={m.id}>
                                     <td>{m.description}</td>
                                     <td>{m.filename}</td>
-                                    <td className="icon" onClick={() => navigate(`/eventMultimediaUpdate/person/${tid}/${eid}/${m.id}`)}>
+                                    <td className="icon"
+                                        onClick={() => navigate(`/eventMultimediaUpdate/person/${tid}/${eid}/${m.id}`)}>
                                         <Image
                                             width={24}
                                             height={24}/>
                                     </td>
                                     {role === 'ADMIN' &&
-                                    <td className="icon" onClick={() => navigate(`/eventMultimediaDelete/person/${tid}/${eid}/${m.id}`)}>
-                                        <Trash
-                                            width={24}
-                                            height={24}/></td>
+                                        <td className="icon"
+                                            onClick={() => navigate(`/eventMultimediaDelete/person/${tid}/${eid}/${m.id}`)}>
+                                            <Trash
+                                                width={24}
+                                                height={24}/></td>
                                     }
                                 </tr>)
                         }

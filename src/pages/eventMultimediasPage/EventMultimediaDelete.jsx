@@ -7,9 +7,9 @@ import {useState} from "react";
 
 function EventMultimediaDelete() {
     const {t, tid, eid, id} = useParams();
-    const url = (t === 'person') ? `http://localhost:8080/events/${eid}/multimedias/${id}`
-        : `http://localhost:8080/multimedias/${id}`;
-    const urlDelete = `http://localhost:8080/events/${eid}/multimedias/${id}`;
+    const url = (t === 'person') ? `/events/${eid}/multimedias/${id}`
+        : `/multimedias/${id}`;
+    const urlDelete = `/events/${eid}/multimedias/${id}`;
     const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
     const {data, dataError, dataLoading} = useGetData(url);
     const [error, setError] = useState("");

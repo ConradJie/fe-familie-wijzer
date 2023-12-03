@@ -7,9 +7,9 @@ import useGetSpouse from "../../hooks/useGetSpouse.js";
 
 function RelationEventUpdate() {
     const {pid, rid, sid, id} = useParams();
-    const urlPerson = `http://localhost:8080/persons/${pid}`;
-    const urlSpouse = `http://localhost:8080/persons/${sid}`;
-    const urlEvent = `http://localhost:8080/relations/${rid}/events/${id}`;
+    const urlPerson = `/persons/${pid}`;
+    const urlSpouse = `/persons/${sid}`;
+    const urlEvent = `/relations/${rid}/events/${id}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
     const {event, eventError, eventLoading} = useGetEvent(urlEvent);

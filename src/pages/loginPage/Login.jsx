@@ -26,13 +26,17 @@ function Login() {
         try {
             setError("");
             toggleSending(true);
+            axiosAuth.defaults.headers = {'Authorization': ''};
             response = await axiosAuth.post("/authenticate",
                 {
-                    signal: controller.signal,
                     username: data['user-name'],
                     password: data.password
-                });
-            localStorage.setItem('token',response.data.jwt);
+                },
+                {
+                    signal: controller.signal
+                }
+            );
+            localStorage.setItem('token', response.data.jwt);
             await getAuthorities(data['user-name'], response.data.jwt)
         } catch (e) {
             processed = false;

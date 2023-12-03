@@ -5,7 +5,7 @@ import useGetData from "../../hooks/useGetData.js";
 import {useNavigate} from "react-router-dom";
 
 function Users() {
-    const urlData = "http://localhost:8080/users";
+    const urlData = "/users";
     const {data, dataError, dataLoading} = useGetData(urlData);
     const navigate = useNavigate();
 

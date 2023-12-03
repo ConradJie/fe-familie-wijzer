@@ -6,8 +6,8 @@ import useGetSpouse from "../../hooks/useGetSpouse.js";
 
 function RelationEventNew() {
     const {pid, rid, sid} = useParams();
-    const urlPerson = `http://localhost:8080/persons/${pid}`;
-    const urlSpouse = `http://localhost:8080/persons/${sid}`;
+    const urlPerson = `/persons/${pid}`;
+    const urlSpouse = `/persons/${sid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
 
