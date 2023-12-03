@@ -4,6 +4,7 @@ const translateNL = {
     'The person and spouse are the same person': 'De persoom en toegevoegde partner zijn dezelfde persoon',
     'The relation already Exists': 'Deze relatie bestaat reeds',
     'There already exists such a person with the same given names and surname and gender': 'Er bestaat reeds een persoon met dezelfde voor- en achternaam',
+    'Parent and child are the same person': 'Ouder en kind zijn dezelfde persoon',
 };
 
 function translate(key) {

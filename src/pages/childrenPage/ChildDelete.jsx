@@ -1,12 +1,12 @@
-import './ChildDelete.jsx.css';
+import './ChildDelete.css';
 import {useState} from "react";
-import {axiosAuth} from "../../helpers/axiosAuth.js";
-import Button from "../../components/Button.jsx";
 import {useNavigate, useParams} from "react-router-dom";
+import Button from "../../components/Button.jsx";
+import Table from "../../components/Table.jsx";
+import {axiosAuth} from "../../helpers/axiosAuth.js";
+import getSexLabel from "../../helpers/getSexLabel.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
-import Table from "../../components/Table.jsx";
-import getSexLabel from "../../helpers/getSexLabel.js";
 import useGetData from "../../hooks/useGetData.js";
 
 function ChildDelete() {

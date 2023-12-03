@@ -37,10 +37,13 @@ function PersonForm({pid, method, preloadedValues}) {
                         sex: `${data.sex}`
                     }
             });
-            console.log(response);
         } catch (e) {
             processed = false;
-            setError(translate(e.response.data));
+            if (e.response?.data) {
+                setError(translate(e.response.data));
+            } else {
+                setError(translate(e.message));
+            }
         } finally {
             toggleLoading(false);
         }
