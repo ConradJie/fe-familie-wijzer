@@ -11,9 +11,9 @@ import useGetData from "../../hooks/useGetData.js";
 
 function ChildDelete() {
     const {pid, rid, sid, cpid, id} = useParams();
-    const urlPerson = `http://localhost:8080/persons/${pid}`;
-    const urlSpouse = `http://localhost:8080/persons/${sid}`;
-    const urlChildPerson = `http://localhost:8080/persons/${cpid}`;
+    const urlPerson = `/persons/${pid}`;
+    const urlSpouse = `/persons/${sid}`;
+    const urlChildPerson = `/persons/${cpid}`;
     const urlGoBack = `/children/${pid}/${rid}/${sid}`;
     const {person, personError, personLoading} = useGetPerson(urlPerson);
     const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);

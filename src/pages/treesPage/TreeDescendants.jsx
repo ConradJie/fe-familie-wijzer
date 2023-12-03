@@ -8,7 +8,7 @@ import Descendants from "../../components/Descendants.jsx";
 function TreeDescendants() {
     const {pid} = useParams();
     const urlGoBack = "/persons";
-    const urlDescendants = `http://localhost:8080/descendants/${pid}`;
+    const urlDescendants = `/descendants/${pid}`;
     const {data, dataError, dataLoading} = useGetData(urlDescendants);
     const descendantsList = (data) ? descendantsFlat2Nested(data) : [];
 

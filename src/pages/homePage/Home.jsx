@@ -5,6 +5,7 @@ function Home() {
 
     const role = localStorage.getItem('role');
     if (role) {
+        localStorage.removeItem('token');
         localStorage.removeItem('role');
         window.location.reload(false);
     }
