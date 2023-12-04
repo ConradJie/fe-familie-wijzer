@@ -2,10 +2,9 @@
     background-color: var(--color-white);
 }
 
-.form-control-input-disabled input {
-    background-color: var(--color-background-secondary);
-}
-
-.form-control-input-disabled select {
+.form-control-input-disabled input,
+.form-control-input-disabled select,
+.form-control-input-disabled textarea
+{
     background-color: var(--color-background-secondary);
 }

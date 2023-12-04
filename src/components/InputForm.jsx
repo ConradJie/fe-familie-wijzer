@@ -1,6 +1,7 @@
 import './InputForm.css';
 
-function InputForm({type, name, label, disabled, children, register, required, validationSchema, errors}) {
+function InputForm({type, name, label, disabled, rows, cols,maxLength,
+                       children, register, required, validationSchema, errors}) {
 
     return (
         <label htmlFor={name} className={disabled ? "form-control-input-disabled" : "form-control-input"}>
@@ -16,8 +17,12 @@ function InputForm({type, name, label, disabled, children, register, required, v
                 >
                     {children}
                 </select>
-                : type === 'select' ?
+                : type === 'textarea' ?
                     <textarea
+                        rows={rows}
+                        cols={cols}
+                        maxLength={maxLength}
+                        disabled={disabled}
                         id={name}
                         {...register(name)}
                     >
@@ -27,6 +32,7 @@ function InputForm({type, name, label, disabled, children, register, required, v
                         type={type}
                         id={name}
                         name={name}
+                        maxLength={maxLength}
                         disabled={disabled}
                         {...register(name, validationSchema)}
                     />
@@ -34,6 +40,8 @@ function InputForm({type, name, label, disabled, children, register, required, v
             {errors && errors[name]?.type === "required" &&
                 <p className="error">{errors[name]?.message}</p>}
             {errors && errors[name]?.type === "minLength" &&
+                <p className="error">{errors[name]?.message}</p>}
+            {errors && errors[name]?.type === "validate" &&
                 <p className="error">{errors[name]?.message}</p>}
         </label>
     );

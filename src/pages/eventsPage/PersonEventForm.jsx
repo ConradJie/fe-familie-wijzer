@@ -46,7 +46,8 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                         text: data.text,
                         beginDate: data.beginDate,
                         endDate: data.endDate
-                    }
+                    },
+                signal: controller.signal
             });
         } catch (e) {
             processed = false;
@@ -92,6 +93,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                         type="text"
                         name="description"
                         label="Omschrijving:"
+                        maxLength="1024"
                         disabled={method === 'delete'}
                         errors={errors}
                         register={register}
@@ -105,9 +107,11 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                         required
                     />
                 <InputForm
-                    type="area"
+                    type="textarea"
                     name="text"
                     label="Tekst:"
+                    rows="5"
+                    maxLength="10240"
                     disabled={method === 'delete'}
                     errors={errors}
                     register={register}
