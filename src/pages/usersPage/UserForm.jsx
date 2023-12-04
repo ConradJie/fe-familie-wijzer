@@ -37,7 +37,8 @@ function UserForm({method, username, preloadedValues}) {
                         email: `${data.email}`,
                         enabled: false,
                         apikey: null
-                    }
+                    },
+                signal: controller.signal
             });
         } catch (e) {
             processed = false;

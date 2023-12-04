@@ -43,7 +43,8 @@ function RelationForm({pid, rid, sid, method}) {
                         id: rid,
                         personId: pid,
                         spouseId: choice
-                    }
+                    },
+                signal: controller.signal
             });
         } catch (e) {
             processed = false;

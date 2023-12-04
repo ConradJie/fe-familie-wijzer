@@ -1,120 +1,40 @@
 import './RelationEventDelete.css';
-import {useNavigate, useParams} from 'react-router-dom';
-import {axiosAuth} from "../../helpers/axiosAuth.js";
-import Button from "../../components/Button.jsx";
-import {useState} from "react";
+import {useParams} from 'react-router-dom';
+import RelationEventForm from "./RelationEventForm.jsx";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetEvent from "../../hooks/useGetEvent.js";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
 
 function RelationEventDelete() {
     const {pid, rid, sid, id} = useParams();
-    const urlGoBack = `/relationEvents/${pid}/${rid}/${sid}`;
     const urlPerson = `/persons/${pid}`;
     const urlSpouse = `/persons/${sid}`;
     const urlEvent = `/relations/${rid}/events/${id}`;
-    console.log("urlPerson", urlPerson)
     const {person, personError, personLoading} = useGetPerson(urlPerson);
-    console.log("urlSpouse", urlSpouse)
     const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
-    console.log("urlEvent", urlEvent)
     const {event, eventError, eventLoading} = useGetEvent(urlEvent);
-    const navigate = useNavigate();
-    const controller = new AbortController();
-    const [response, setResponse] = useState([]);
-    const [error, setError] = useState("");
-
-    async function deleteData(e) {
-        e.preventDefault();
-
-        try {
-            setError("");
-            const response = await axiosAuth.delete(urlEvent, {});
-            setResponse(response.data);
-        } catch (e) {
-            setError(e.message);
-        }
-        navigate(urlGoBack)
-
-        return function cleanup() {
-            controller.abort();
-        }
-    }
 
     return (
-        <>
-            <main>
-                {person?.id && spouse?.id && <h2>Gebeurtenis
-                    van {person.givenNames} {person.surname} en {spouse.givenNames} {spouse.surname} verwijderen</h2>}
-                {person && sid === "null" &&
-                    <h2>Gebeurtenis van {person.givenNames} {person.surname} verwijderen</h2>}
-                {event?.id &&
-                    <form className="person-event-delete-form">
-                        <label htmlFor="event-type-field">
-                            Eventtype:
-                            <select
-                                id="event-type-field"
-                                disabled
-                                value={event.eventType}
-                            >
-                                <option value="MARRIAGE">Huwelijk</option>
-                                <option value="DIVORCE">Scheiding</option>
-                                <option value="MIGRATION">Migratie</option>
-                                <option value="CELEBRATION">Viering</option>
-                                <option value="OTHERS">Anders</option>
-                            </select>
-                        </label>
-                        <label htmlFor=" description-field">
-                            Omschrijving:
-                            <input
-                                type=" text"
-                                id="description-field"
-                                disabled
-                                placeholder={event.description}
-                            />
-                        </label>
-                        <label htmlFor=" text-field">
-                            Tekst:
-                            <textarea
-                                id="text-field"
-                                disabled
-                                value={event.text}
-                            >
-                    </textarea>
-                        </label>
-                        <label htmlFor="beginDate-field">
-                            Begindatum:
-                            <input
-                                type="date"
-                                id=" beginDate-field"
-                                disabled
-                                value={event.beginDate.substring(0, 10)}
-                            />
-                        </label>
-                        <label htmlFor=" endDate-field">
-                            Einddatum:
-                            <input
-                                type="date"
-                                id=" endDate-field"
-                                disabled
-                                value={event.endDate.substring(0, 10)}
-                            />
-                        </label>
-                        <Button type="button" onClick={deleteData}>
-                            Verwijderen
-                        </Button>
-                        <Button type="button" variant="cancel"
-                                onClick={() => navigate(urlGoBack)}>Annuleren</Button>
-                    </form>
-                }
-            </main>
+        <main>
+            {person?.id && spouse?.id && <h2>Gebeurtenis
+                van {person.givenNames} {person.surname} en {spouse.givenNames} {spouse.surname} verwijderen</h2>}
+            {person && sid === "null" &&
+                <h2>Gebeurtenis van {person.givenNames} {person.surname} verwijderen</h2>}
+            {event?.id && spouse?.id &&
+                <RelationEventForm
+                    method="delete"
+                    preloadedValues={event}
+                    pid={pid}
+                    rid={rid}
+                    sid={sid}
+                    id={id}
+                />
+            }
             {(personLoading || spouseLoading || eventLoading) && <p>Loading...</p>}
             {personError && <p>{personError}</p>}
             {spouseError && <p>{spouseError}</p>}
             {eventError && <p>{eventError}</p>}
-            {error && <p>{error}</p>}
-            {response && <p>{response}</p>}
-        </>
+        </main>
     );
 }
 

@@ -35,7 +35,8 @@ function PersonForm({pid, method, preloadedValues}) {
                         givenNames: `${data.givenNames}`,
                         surname: `${data.surname}`,
                         sex: `${data.sex}`
-                    }
+                    },
+                signal: controller.signal
             });
         } catch (e) {
             processed = false;
