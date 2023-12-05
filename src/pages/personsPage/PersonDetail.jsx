@@ -82,7 +82,7 @@ function PersonDetail() {
                                 <td>{datesToText(e.beginDate, e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td className="icon" onClick={() => navigate(`/personDetailMedia/${e.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/personDetailMedia/${id}/${e.id}`)}>
                                     <ImagesSquare width={24} height={24}/>
                                 </td>
                             </tr>)

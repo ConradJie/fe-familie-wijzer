@@ -73,7 +73,7 @@ function App() {
                 <Route path="/personUpdate/:id" element={<PersonUpdate/>}/>
                 <Route path="/personDelete/:id" element={<PersonDelete/>}/>
                 <Route path="/personDetail/:id" element={<PersonDetail/>}/>
-                <Route path="/personDetailMedia/:id" element={<PersonDetailMedia/>}/>
+                <Route path="/personDetailMedia/:pid/:id" element={<PersonDetailMedia/>}/>
                 <Route path="/personEvents/:id" element={<PersonEvents/>}/>
                 <Route path="/personEventNew/:pid" element={<PersonEventNew/>}/>
                 <Route path="/personEventUpdate/:pid/:id" element={<PersonEventUpdate/>}/>

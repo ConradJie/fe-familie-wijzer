@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
+import translate from "../../helpers/translate.js";
 
 function EventMultimediaForm({t, tid, eid, id, method, description = "", filename = ""}) {
     const role = localStorage.getItem('role');
@@ -51,6 +52,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
 
     async function onSubmit(e) {
         e.preventDefault();
+        let processed = true;
         toggleSending(false);
         try {
             setError("");
@@ -68,7 +70,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                     break;
                 case "put":
                     if (description !== descriptionValue) {
-                        response = await axiosAuth.post(urlPut,
+                        response = await axiosAuth.put(urlPut,
                             {
                                 id: id,
                                 eventId: eid,
@@ -79,24 +81,22 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                     }
                     break;
             }
-        } catch
-            (e) {
-            if (axiosAuth.isCancel) {
-                console.error("Request is canceled");
-                setError(e.message);
-                console.error(e);
-            } else {
-                setError(e.message);
-                console.error(e);
+        } catch (e) {
+            processed = false;
+            console.error(method,e);
+            if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                setError(translate(e.message));
             }
         } finally {
             toggleSending(false);
         }
-        if (method === "put") {
+        if (method === 'put' && error === '') {
             await sendFile();
         }
 
-        navigate(urlGoBack);
+        if (processed) {
+            navigate(urlGoBack);
+        }
 
         return function cleanup() {
             controller.abort();
@@ -112,8 +112,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
             const result = await axiosAuth.post(urlPutFile, formData,
                 {signal: controller.signal}
             )
-        } catch
-            (e) {
+        } catch (e) {
             console.error(e);
             setErrorFile(e.message);
         } finally {
@@ -132,6 +131,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                         id="description-field"
                         name="description-field"
                         value={descriptionValue}
+                        maxLength='128'
                         className={role === 'USER' && method === 'put' ? "field-disabled" : "field-enabled"}
                         disabled={role === 'USER' && method === 'put'}
                         onChange={(e) => setDescriptionValue(e.target.value)}
