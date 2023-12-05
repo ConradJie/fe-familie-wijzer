@@ -1,35 +1,39 @@
 import './PersonDetailMedia.css';
-import useGetData from "../../hooks/useGetData.js";
 import {Link, useParams} from "react-router-dom";
 import {ArrowLeft} from "@phosphor-icons/react";
+import useGetBlobData from "../../hooks/useGetBlobData.js";
+import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonDetailMedia() {
-    const {id} = useParams();
-    const urlEventMultimedias = `/events/${id}/multimedias`;
-    const {data, dataError, dataLoading} = useGetData(urlEventMultimedias);
+    const {pid, id} = useParams();
+    const urlEvent = `/persons/${pid}/events/${id}`;
+    const urlEventMultimediablobs = `/events/${id}/multimediablobs`;
+    const {event, eventError, eventLoading} = useGetEvent(urlEvent);
+    const {blobData, blobDataError, blobDataLoading} = useGetBlobData(urlEventMultimediablobs);
 
     return (
         <main className="main-person-detail-media">
             <Link to={`/personDetail/${id}`}><ArrowLeft width={24} height={24}/></Link>
-            <h3>Media van event</h3>
+            {event && <h3>{event.description}</h3>}
             {
-                Object.keys(data).length > 0 &&
-                data.map((m) => {
-                    return (m.media.contentType === "application/pdf") ?
+                Object.keys(blobData).length > 0 &&
+                blobData.map((m) => {
+                    return (m.contentType === "application/pdf") ?
                         <div className="media-document">
-                            <object data={m.media.url} type="application/pdf">
+                            <object data={`data:application/pdf;base64,${m.blob}`} type="application/pdf">
                             </object>
                             <p>{m.description}</p>
                         </div>
-                        : <figure key={m.id} className="media-figure">
-                            <img src={m.media.url} alt={m.description}/>
+                        :
+                        <figure key={m.id} className="media-figure">
+                            <img src={`data:${m.contentType};base64,${m.blob}`} alt={m.description}/>
                             <figcaption>{m.description}</figcaption>
                         </figure>
-
                 })
             }
-            {dataLoading && <p>Loading...</p>}
-            {dataError && <p>{dataError}</p>}
+            {(blobDataLoading || eventLoading) && <p>Loading...</p>}
+            {eventError && <p>{eventError}</p>}
+            {blobDataError && <p>{blobDataError}</p>}
         </main>
     );
 }

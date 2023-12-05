@@ -21,7 +21,7 @@ const useGetRelationsEvents = (url) => {
                 if (!axiosAuth.isCancel && e.message !== 'canceled') {
                     console.error("Request is canceled");
                 }
-                setRelationsEventsError(e.response.message);
+                setRelationsEventsError(e.message);
             } finally {
                 toggleRelationsEventsLoading(false);
             }

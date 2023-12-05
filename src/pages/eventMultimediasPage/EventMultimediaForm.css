@@ -13,3 +13,7 @@
 .field-enabled {
     background-color: var(--color-white);
 }
+
+#description-field {
+    overflow-wrap: break-word;
+}
