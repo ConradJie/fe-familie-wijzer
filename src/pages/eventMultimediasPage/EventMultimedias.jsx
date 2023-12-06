@@ -19,7 +19,7 @@ function EventMultimedias() {
     return (
         <main className="main-event-multimedias">
             <Link to={urlGoBack}><ArrowLeft width={24} height={24}/></Link>
-            {event && <h2>Multimedia over gebeurtenis {event.description}</h2>}
+            {event && <h2>Foto&apos;s / documenten over gebeurtenis {event.description}</h2>}
             <Table
                 header={
                     <tr>

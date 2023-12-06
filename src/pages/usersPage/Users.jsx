@@ -17,7 +17,7 @@ function Users() {
                     <tr>
                         <th>Gebruikersnaam</th>
                         <th>E-mail</th>
-                        <th onClick={() => navigate('/UserNew')}><PlusCircle width={24} height={24}/></th>
+                        <th className="icon" onClick={() => navigate('/UserNew')}><PlusCircle width={24} height={24}/></th>
                     </tr>
                 }
                 row={data &&
@@ -26,7 +26,7 @@ function Users() {
                             <tr key={u.username}>
                                 <td>{u.username}</td>
                                 <td>{u.email}</td>
-                                <td onClick={() => navigate(`/userDelete/${u.username}`)}><Trash width={24}
+                                <td className="icon" onClick={() => navigate(`/userDelete/${u.username}`)}><Trash width={24}
                                                                                                height={24}/></td>
                             </tr>)
                     })

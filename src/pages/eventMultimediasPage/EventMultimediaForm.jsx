@@ -15,7 +15,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
     const [sending, toggleSending] = useState(false);
     const [descriptionValue, setDescriptionValue] = useState(description);
     const [errorDescription, setErrorDescription] = useState("");
-    const [file, setFile] = useState(filename);
+    const [file2Upload, setFile2Upload] = useState(filename);
     const [previewUrl, setPreviewUrl] = useState('');
     const [sendingFile, toggleSendingFile] = useState(false);
     const [errorFile, setErrorFile] = useState("");
@@ -36,7 +36,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
 
     function handleChangeFile(e) {
         const uploadedFile = e.target.files[0];
-        setFile(uploadedFile);
+        setFile2Upload(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
         if (e.target.files[0].type !== "application/pdf" && !e.target.files[0].type.startsWith("image")) {
             disableSaveButton();
@@ -54,6 +54,12 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
         e.preventDefault();
         let processed = true;
         toggleSending(false);
+        if (descriptionValue === '') {
+            setErrorDescription("Dit veld is verplicht");
+            disableSaveButton();
+            return;
+        }
+
         try {
             setError("");
             toggleSending(true);
@@ -64,18 +70,19 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                         {
                             eventId: eid,
                             description: descriptionValue,
-                            filename: file
+                            filename: file2Upload
                         },
                         {signal: controller.signal});
                     break;
                 case "put":
                     if (description !== descriptionValue) {
+                        const fileName = (typeof file2Upload === 'string') ? file2Upload : file2Upload.name;
                         response = await axiosAuth.put(urlPut,
                             {
                                 id: id,
                                 eventId: eid,
                                 description: descriptionValue,
-                                filename: file
+                                filename: fileName
                             },
                             {signal: controller.signal});
                     }
@@ -83,7 +90,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
             }
         } catch (e) {
             processed = false;
-            console.error(method,e);
+            console.error(method, e);
             if (!axiosAuth.isCancel && e.message !== 'canceled') {
                 setError(translate(e.message));
             }
@@ -105,7 +112,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
 
     async function sendFile() {
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", file2Upload);
         try {
             setErrorFile("");
             toggleSendingFile(true);
@@ -125,19 +132,20 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
         <main>
             <form className="event-multimedia-form" onSubmit={onSubmit}>
                 <label htmlFor="description-field">
-                    Omschrijving:
+                    Omschrijving:*
                     <input
                         type=" text"
                         id="description-field"
                         name="description-field"
                         value={descriptionValue}
+                        minLength='1'
                         maxLength='128'
                         className={role === 'USER' && method === 'put' ? "field-disabled" : "field-enabled"}
                         disabled={role === 'USER' && method === 'put'}
                         onChange={(e) => setDescriptionValue(e.target.value)}
                         onBlur={(e) => {
-                            if (e.target.value === "") {
-                                setErrorDescription("Omschrijving is niet ingevuld");
+                            if (e.target.value.trim() === "") {
+                                setErrorDescription("Dit veld is verplicht");
                                 disableSaveButton();
                             } else {
                                 setErrorDescription("");
@@ -159,13 +167,13 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                     </label>
                 }
                 {errorFile && <p className="errorFile">{errorFile}</p>}
-                {previewUrl && file.type.startsWith("image") &&
+                {previewUrl && file2Upload.type.startsWith("image") &&
                     <label>
                         Preview:
                         <img src={previewUrl} alt="Preview image" className="image-preview"/>
                     </label>
                 }
-                {previewUrl && file.type.startsWith("application/pdf") &&
+                {previewUrl && file2Upload.type.startsWith("application/pdf") &&
                     <embed src={previewUrl} className="pdf-preview"/>
                 }
                 <Button type="submit" disabled={disabled} variant={buttonVariant}>Opslaan</Button>

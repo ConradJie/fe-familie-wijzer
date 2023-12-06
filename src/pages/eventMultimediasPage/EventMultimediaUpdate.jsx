@@ -10,7 +10,7 @@ function EventMultimediaUpdate() {
 
     return (
         <main>
-            <h2>Multimediabestand koppelen gebeurtenis</h2>
+            <h2>Foto / document koppelen aan gebeurtenis</h2>
             {data?.id &&
                 <EventMultimediaForm
                     t={t}
