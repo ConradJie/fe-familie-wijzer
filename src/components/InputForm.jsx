@@ -41,7 +41,7 @@ function InputForm({type, name, label, disabled, rows, cols,maxLength,
                 <p className="error">{errors[name]?.message}</p>}
             {errors && errors[name]?.type === "minLength" &&
                 <p className="error">{errors[name]?.message}</p>}
-            {errors && errors[name]?.type === "validate" &&
+            {errors && errors[name]?.type === "pattern" &&
                 <p className="error">{errors[name]?.message}</p>}
         </label>
     );
