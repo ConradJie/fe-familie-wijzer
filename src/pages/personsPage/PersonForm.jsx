@@ -40,6 +40,7 @@ function PersonForm({pid, method, preloadedValues}) {
             });
         } catch (e) {
             processed = false;
+            console.log(e)
             if (e.response?.data) {
                 setError(translate(e.response.data));
             } else {
@@ -64,11 +65,16 @@ function PersonForm({pid, method, preloadedValues}) {
                     type="text"
                     name="givenNames"
                     label="Voornamen:"
+                    maxLength="120"
                     disabled={method === 'delete'}
                     errors={errors}
                     register={register}
                     validationSchema={{
-                        required: "Dit veld is verplicht"
+                        required: "Dit veld is verplicht",
+                        pattern: {
+                            value: /(.|\s)*\S(.|\s)*/,
+                            message: "Het veld moet leesbare karakters bevatten"
+                        }
                     }}
                     required
                 />
@@ -76,11 +82,16 @@ function PersonForm({pid, method, preloadedValues}) {
                     type="text"
                     name="surname"
                     label="Achternaam:"
+                    maxLength="120"
                     disabled={method === 'delete'}
                     errors={errors}
                     register={register}
                     validationSchema={{
-                        required: "Dit veld is verplicht"
+                        required: "Dit veld is verplicht",
+                        pattern: {
+                            value: /(.|\s)*\S(.|\s)*/,
+                            message: "Het veld moet leesbare karakters bevatten"
+                        }
                     }}
                     required
                 />
