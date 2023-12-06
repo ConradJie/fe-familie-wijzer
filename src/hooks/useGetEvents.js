@@ -12,14 +12,15 @@ const useGetEvents = (url) => {
 
         async function getEvent() {
             try {
-                setEventsError("");
+                toggleEventsLoading(true);
+                setEventsError('');
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
                 setEvents(response.data);
             } catch (e) {
-                console.error(e)
-                if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e)
                     setEventsError(e.message);
                 }
             } finally {
@@ -27,7 +28,9 @@ const useGetEvents = (url) => {
             }
         }
 
-        void getEvent();
+        if (url) {
+            void getEvent();
+        }
 
         return function cleanup() {
             controller.abort();
