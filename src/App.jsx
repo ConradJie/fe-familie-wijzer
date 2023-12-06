@@ -44,7 +44,7 @@ function App() {
             <nav className="outer-content-container main-navigation">
                 <ul className="outer-content-container main-navigation-links">
                     <li><img id="nav-logo" src={logo} alt="Home pagina Familie Wijzer"/></li>
-                    {role !== '' &&
+                    {role &&
                         <li><Link to="/persons">Personen</Link></li>
                     }
                     {role === 'ADMIN' &&

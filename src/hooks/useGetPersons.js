@@ -11,13 +11,15 @@ const useGetPersons = (url) => {
 
         async function getData() {
             try {
-                setPersonsError("");
-                const response = await axiosAuth.get(url, {                    signal: controller.signal
+                togglePersonsLoading(true);
+                setPersonsError('');
+                const response = await axiosAuth.get(url, {
+                    signal: controller.signal
                 });
                 setPerson(response.data);
             } catch (e) {
-                console.error(e)
-                if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e)
                     setPersonsError(e.message);
                 }
             } finally {
@@ -25,7 +27,9 @@ const useGetPersons = (url) => {
             }
         }
 
-        void getData();
+        if (url) {
+            void getData();
+        }
 
         return function cleanup() {
             controller.abort();

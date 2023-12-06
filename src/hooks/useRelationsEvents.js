@@ -12,22 +12,25 @@ const useGetRelationsEvents = (url) => {
 
         async function getEvent() {
             try {
-                setRelationsEventsError("");
+                toggleRelationsEventsLoading(true);
+                setRelationsEventsError('');
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
                 setRelationsEvents(response.data);
             } catch (e) {
-                if (!axiosAuth.isCancel && e.message !== 'canceled') {
-                    console.error("Request is canceled");
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e);
+                    setRelationsEventsError(e.message);
                 }
-                setRelationsEventsError(e.message);
             } finally {
                 toggleRelationsEventsLoading(false);
             }
         }
 
-        void getEvent();
+        if (url) {
+            void getEvent();
+        }
 
         return function cleanup() {
             controller.abort();

@@ -12,7 +12,8 @@ const useGetEvent = (url) => {
 
         async function getEvent() {
             try {
-                setEventError("");
+                toggleEventLoading(true);
+                setEventError('');
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
@@ -21,8 +22,8 @@ const useGetEvent = (url) => {
                 response.data.endDate = response.data.endDate.substring(0, 10);
                 setEvent(response.data);
             } catch (e) {
-                console.error(e)
-                if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e)
                     setEventError(e.message);
                 }
             } finally {
@@ -30,7 +31,9 @@ const useGetEvent = (url) => {
             }
         }
 
-        void getEvent();
+        if (url) {
+            void getEvent();
+        }
 
         return function cleanup() {
             controller.abort();

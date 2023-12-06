@@ -12,15 +12,15 @@ const useGetData = (url) => {
 
         async function getData() {
             try {
-                setDataError("");
                 toggleDataLoading(true);
+                setDataError('');
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
                 setData(response.data);
             } catch (e) {
-                console.error(e)
-                if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e)
                     setDataError(e.message);
                 }
             } finally {

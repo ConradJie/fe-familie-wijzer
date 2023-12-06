@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import axios from "axios";
+import {axiosAuth} from "../helpers/axiosAuth.js";
 
 const useGetBlobData = (url) => {
 
@@ -16,7 +17,7 @@ const useGetBlobData = (url) => {
                 setBlobDataError("");
                 toggleBlobDataLoading(true);
                 const response = await axios.get(url, {
-                    // signal: controller.signal,
+                    signal: controller.signal,
                     baseURL: 'http://localhost:8080',
                     headers: {
                         'responseType': 'blob',
@@ -25,8 +26,8 @@ const useGetBlobData = (url) => {
                 });
                 setBlobData(response.data);
             } catch (e) {
-                console.error(e)
-                if (!axios.isCancel && e.message !== 'canceled') {
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e)
                     setBlobDataError(e.message);
                 }
             } finally {

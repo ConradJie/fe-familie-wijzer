@@ -13,14 +13,14 @@ const useGetSpouses = (url) => {
         async function getData() {
             try {
                 toggleSpousesLoading(true);
-                setSpousesError("");
+                setSpousesError('');
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
                 setSpouses(response.data);
             } catch (e) {
-                console.error(e)
-                if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e)
                     setSpousesError(e.message);
                 }
             } finally {
@@ -28,7 +28,9 @@ const useGetSpouses = (url) => {
             }
         }
 
-        void getData();
+        if (url) {
+            void getData();
+        }
 
         return function cleanup() {
             controller.abort();

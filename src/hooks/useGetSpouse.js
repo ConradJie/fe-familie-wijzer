@@ -13,14 +13,14 @@ const useGetSpouse = (sid, url) => {
         async function getData() {
             try {
                 toggleSpouseLoading(true);
-                setSpouseError("");
+                setSpouseError('');
                 const response = await axiosAuth.get(url, {
                     signal: controller.signal
                 });
                 setSpouse(response.data);
             } catch (e) {
-                console.error(e)
-                if (!axiosAuth.isCancel && e.message !== 'canceled') {
+                if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
+                    console.error(e)
                     setSpouseError(e.message);
                 }
             } finally {
