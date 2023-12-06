@@ -28,7 +28,7 @@ function RelationEvents() {
                         <th>Einddatum</th>
                         <th>Type</th>
                         <th>Omschrijving</th>
-                        <th onClick={() => navigate(`/relationEventNew/${pid}/${rid}/${sid}`)}><PlusCircle width={24}
+                        <th className="icon" onClick={() => navigate(`/relationEventNew/${pid}/${rid}/${sid}`)}><PlusCircle width={24}
                                                                                                            height={24}/>
                         </th>
                     </tr>
@@ -41,11 +41,11 @@ function RelationEvents() {
                                 <td>{localDateNumeric(e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td onClick={() => navigate(`/relationEventUpdate/${pid}/${rid}/${sid}/${e.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/relationEventUpdate/${pid}/${rid}/${sid}/${e.id}`)}>
                                     <Pencil width={24}
                                             height={24}/>
                                 </td>
-                                <td onClick={() => navigate(`/relationEventDelete/${pid}/${rid}/${sid}/${e.id}`)}><Trash
+                                <td className="icon" onClick={() => navigate(`/relationEventDelete/${pid}/${rid}/${sid}/${e.id}`)}><Trash
                                     width={24}
                                     height={24}/>
                                 </td>

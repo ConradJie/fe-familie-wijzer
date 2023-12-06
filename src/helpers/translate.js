@@ -5,6 +5,8 @@ const translateNL = {
     'The relation already Exists': 'Deze relatie bestaat reeds',
     'There already exists such a person with the same given names and surname and gender': 'Er bestaat reeds een persoon met dezelfde voor- en achternaam',
     'Parent and child are the same person': 'Ouder en kind zijn dezelfde persoon',
+    'Such an event (BIRTH) already exists': 'Er bestaat al een geboortegebeurtenis voor deze persoon',
+    'Such an event (DEATH) already exists': 'Er bestaat al een overlijdingsgebeurtenis voor deze persoon',
 };
 
 function translate(key) {

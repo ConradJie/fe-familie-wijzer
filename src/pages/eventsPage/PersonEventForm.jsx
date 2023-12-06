@@ -100,8 +100,8 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                         validationSchema={{
                             required: "Dit veld is verplicht",
                             pattern: {
-                                value: /[a-zA-Z0-9]+/,
-                                message: "De omschrijving moet letters of cijfers bevatten",
+                                value: /(.|\s)*\S(.|\s)*/,
+                                message: "Het veld moet leesbare karakters bevatten"
                             },
                         }}
                         required
@@ -144,7 +144,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
                             value: true,
                             message: "Dit veld is verplicht"
                         },
-                        validate: (value) => isValidEndDate(value) || 'Einddatum komt voor einddatum',
+                        validate: (value) => isValidEndDate(value) || 'Einddatum komt voor begindatum',
                     }}
                     required
                 />

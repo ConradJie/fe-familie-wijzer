@@ -26,7 +26,7 @@ function PersonEvents() {
                         <th>Type</th>
                         <th>Omschrijving</th>
                         {role === 'ADMIN' &&
-                            <th onClick={() => navigate(`/personEventNew/${id}`)}><PlusCircle width={24} height={24}/>
+                            <th className="icon" onClick={() => navigate(`/personEventNew/${id}`)}><PlusCircle width={24} height={24}/>
                             </th>
                         }
                     </tr>
