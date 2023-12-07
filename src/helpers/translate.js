@@ -1,6 +1,7 @@
 const translateNL = {
+    'The date of birth occurs after previous events': 'De geboortedatum is na een vorige gebeurtenis van deze persoon',
     'The event occurred before the date of birth': 'Deze gebeurtenis vindt plaats voor de geboortedatum',
-    'The event occurrs after the date of death': 'Deze gebeurtenis vindt plaats na de sterfdatum',
+    'The event occurs after the date of death': 'Deze gebeurtenis vindt plaats na de sterfdatum',
     'The person and spouse are the same person': 'De persoom en toegevoegde partner zijn dezelfde persoon',
     'The relation already Exists': 'Deze relatie bestaat reeds',
     'There already exists such a person with the same given names and surname and gender': 'Er bestaat reeds een persoon met dezelfde voor- en achternaam',

@@ -15,7 +15,7 @@ function Login() {
     } = useForm({});
 
     const navigate = useNavigate();
-    const urlHomePage = "/persons";
+    const urlHomePage = "/overviewEventMonthDay";
     const [error, setError] = useState("");
     const [sending, toggleSending] = useState(false);
     const controller = new AbortController();

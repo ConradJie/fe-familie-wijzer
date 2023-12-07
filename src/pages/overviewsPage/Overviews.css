@@ -1,0 +1,11 @@
+.section-overview a {
+    margin: 0 var(--size-margin-l);
+    font-weight:bold;
+}
+
+.section-overview a:link,
+.section-overview a:visited,
+.section-overview a:active {
+    color: var(--color-tertiary);
+}
+
