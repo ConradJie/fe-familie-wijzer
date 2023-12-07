@@ -34,6 +34,8 @@ import UserNew from "./pages/usersPage/UserNew.jsx";
 import Users from "./pages/usersPage/Users.jsx";
 import UserDelete from "./pages/usersPage/UserDelete.jsx";
 import RelationEventDelete from "./pages/eventsPage/RelationEventDelete.jsx";
+import Overviews from "./pages/overviewsPage/Overviews.jsx";
+import OverviewEventMonthDay from "./pages/overviewsPage/OverviewEventMonthDay.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -45,13 +47,13 @@ function App() {
                 <ul className="outer-content-container main-navigation-links">
                     <li><img id="nav-logo" src={logo} alt="Home pagina Familie Wijzer"/></li>
                     {role &&
-                        <li><Link to="/persons">Personen</Link></li>
+                        <>
+                            <li><Link to="/persons">Personen</Link></li>
+                            <li><Link to="/overviews">Overzichten</Link></li>
+                        </>
                     }
                     {role === 'ADMIN' &&
-                        <>
-                            <li><Link to="/overviews">Overzichten</Link></li>
-                            <li><Link to="/users">Gebruikers</Link></li>
-                        </>
+                        <li><Link to="/users">Gebruikers</Link></li>
                     }
                 </ul>
                 {role ?
@@ -94,6 +96,8 @@ function App() {
                 <Route path="/childNew/:pid/:rid/:sid" element={<ChildNew/>}/>
                 <Route path="/childDelete/:pid/:rid/:sid/:cpid/:id" element={<ChildDelete/>}/>
                 <Route path="/treeDescendants/:pid" element={<TreeDescendants/>}/>
+                <Route path="/overviews" element={<Overviews/>}/>
+                <Route path="/overviewEventMonthDay" element={<OverviewEventMonthDay/>}/>
                 <Route path="/users" element={<Users/>}/>
                 <Route path="/userNew" element={<UserNew/>}/>
                 <Route path="/userDelete/:username" element={<UserDelete/>}/>
