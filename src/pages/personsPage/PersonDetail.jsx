@@ -122,9 +122,11 @@ function PersonDetail() {
                             <tr key={s.id}>
                                 <td>{s.spouseGivenNames}</td>
                                 <td>{s.spouseSurname}</td>
-                                <td className="icon" onClick={() => navigate(`/personDetail/${s.spouseId}`)}>
-                                    <UserRectangle width={24} height={24}/>
-                                </td>
+                                {s.spouseId &&
+                                    <td className="icon" onClick={() => navigate(`/personDetail/${s.spouseId}`)}>
+                                        <UserRectangle width={24} height={24}/>
+                                    </td>
+                                }
                             </tr>)
                     })}
             />

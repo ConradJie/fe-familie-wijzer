@@ -36,6 +36,7 @@ import UserDelete from "./pages/usersPage/UserDelete.jsx";
 import RelationEventDelete from "./pages/eventsPage/RelationEventDelete.jsx";
 import Overviews from "./pages/overviewsPage/Overviews.jsx";
 import OverviewEventMonthDay from "./pages/overviewsPage/OverviewEventMonthDay.jsx";
+import OverviewRelationsWithoutSpouses from "./pages/overviewsPage/OverviewRelationsWithoutSpouses.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -98,6 +99,7 @@ function App() {
                 <Route path="/treeDescendants/:pid" element={<TreeDescendants/>}/>
                 <Route path="/overviews" element={<Overviews/>}/>
                 <Route path="/overviewEventMonthDay" element={<OverviewEventMonthDay/>}/>
+                <Route path="/overviewRelationsWithoutSpouses" element={<OverviewRelationsWithoutSpouses/>}/>
                 <Route path="/users" element={<Users/>}/>
                 <Route path="/userNew" element={<UserNew/>}/>
                 <Route path="/userDelete/:username" element={<UserDelete/>}/>

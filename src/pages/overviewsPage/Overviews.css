@@ -1,5 +1,5 @@
 .section-overview a {
-    margin: 0 var(--size-margin-l);
+    margin: var(--size-margin-m) 0;
     font-weight:bold;
 }
 

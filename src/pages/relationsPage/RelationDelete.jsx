@@ -25,14 +25,14 @@ function RelationDelete() {
         try {
             toggleSending(true);
             setError("");
-            const urlDelete = `/relations/${rid}`;
+            const urlDelete = (sid === 'null')? `/relations/${rid}` : `/relations/${rid}/${sid}`;
             const response = await axiosAuth.delete(urlDelete,
                 {
                     signal: controller.signal
                 });
         } catch (e) {
             console.error(e)
-            if (!axiosAuth.isCancel && e.message !== 'canceled') {
+            if (!axiosAuth.isCancel && e.code !== 'ERR_CANCELED') {
                 setError(e.message);
             }
         } finally {
