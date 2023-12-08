@@ -37,6 +37,8 @@ import RelationEventDelete from "./pages/eventsPage/RelationEventDelete.jsx";
 import Overviews from "./pages/overviewsPage/Overviews.jsx";
 import OverviewEventMonthDay from "./pages/overviewsPage/OverviewEventMonthDay.jsx";
 import OverviewRelationsWithoutSpouses from "./pages/overviewsPage/OverviewRelationsWithoutSpouses.jsx";
+import OverviewPersonsWithoutRelationsOrChildOf
+    from "./pages/overviewsPage/OverviewPersonsWithoutRelationsOrChildOf.jsx";
 
 function App() {
     const navigate = useNavigate();
@@ -100,6 +102,7 @@ function App() {
                 <Route path="/overviews" element={<Overviews/>}/>
                 <Route path="/overviewEventMonthDay" element={<OverviewEventMonthDay/>}/>
                 <Route path="/overviewRelationsWithoutSpouses" element={<OverviewRelationsWithoutSpouses/>}/>
+                <Route path="/overviewPersonsWithoutRelationsOrChildOf" element={<OverviewPersonsWithoutRelationsOrChildOf/>}/>
                 <Route path="/users" element={<Users/>}/>
                 <Route path="/userNew" element={<UserNew/>}/>
                 <Route path="/userDelete/:username" element={<UserDelete/>}/>
