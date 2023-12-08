@@ -9,7 +9,10 @@ function Overviews() {
             <div className="inner-content-container">
                 <Link to="/OverviewEventMonthDay">Feestelijke gebeurtenis van de dag </Link>
                 {role === 'ADMIN' &&
-                    <Link to="/OverviewRelationsWithoutSpouses">Overzicht van personen met een relatie zonder partner</Link>
+                    <>
+                        <Link to="/OverviewRelationsWithoutSpouses">Overzicht van personen met een relatie zonder partner</Link>
+                        <Link to="/OverviewPersonsWithoutRelationsOrChildOf">Overzicht van personen zonder relaties of kinderen</Link>
+                    </>
                 }
             </div>
         </main>
