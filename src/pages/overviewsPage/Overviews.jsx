@@ -12,6 +12,7 @@ function Overviews() {
                     <>
                         <Link to="/OverviewRelationsWithoutSpouses">Overzicht van personen met een relatie zonder partner</Link>
                         <Link to="/OverviewPersonsWithoutRelationsOrChildOf">Overzicht van personen zonder relaties of kinderen</Link>
+                        <Link to="/OverviewMultimediaWithoutMedia">Overzicht van foto- en document-omschrijvingen zonder foto of document</Link>
                     </>
                 }
             </div>
