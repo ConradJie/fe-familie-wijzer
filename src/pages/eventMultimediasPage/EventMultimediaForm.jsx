@@ -162,6 +162,7 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                             type="file"
                             id="filename-field"
                             name="filename-field"
+                            maxLength="128"
                             onChange={handleChangeFile}
                         />
                     </label>
