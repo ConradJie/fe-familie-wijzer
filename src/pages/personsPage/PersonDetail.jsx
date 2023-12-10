@@ -115,6 +115,7 @@ function PersonDetail() {
                     <tr>
                         <th>Voornamen</th>
                         <th>Achternaam</th>
+                        <th>Geslacht</th>
                     </tr>}
                 row={spouses &&
                     spouses.map((s) => {
@@ -122,6 +123,7 @@ function PersonDetail() {
                             <tr key={s.id}>
                                 <td>{s.spouseGivenNames}</td>
                                 <td>{s.spouseSurname}</td>
+                                <td>{getSexLabel(s.spouseSex)}</td>
                                 {s.spouseId &&
                                     <td className="icon" onClick={() => navigate(`/personDetail/${s.spouseId}`)}>
                                         <UserRectangle width={24} height={24}/>
@@ -154,6 +156,7 @@ function PersonDetail() {
                     <tr>
                         <th>Voornamen</th>
                         <th>Achternaam</th>
+                        <th>Geslacht</th>
                     </tr>}
                 row={persons &&
                     persons.map((p) => {
@@ -161,6 +164,7 @@ function PersonDetail() {
                             <tr key={p.id}>
                                 <td>{p.givenNames}</td>
                                 <td>{p.surname}</td>
+                                <td>{getSexLabel(p.sex)}</td>
                                 <td className="icon" onClick={() => navigate(`/personDetail/${p.id}`)}>
                                     <UserRectangle width={24} height={24}/>
                                 </td>
