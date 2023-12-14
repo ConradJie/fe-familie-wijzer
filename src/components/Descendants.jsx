@@ -10,7 +10,8 @@ function Descendants({descendant}) {
         );
     }
     return (
-        <li key={descendant.id} className="couple">
+        <li key={descendant.id}
+            className={descendant.surname === '"'? "couple new-relation" : "couple"}>
             <span>{descendant.givenNames} {descendant.surname} </span>
             {descendant.spouseGivenNames && <span className="tree-couple">-</span>}
             <span>{descendant.spouseGivenNames} {descendant.spouseSurname}</span>
