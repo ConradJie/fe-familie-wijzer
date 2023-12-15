@@ -4,7 +4,6 @@ import Table from "../../components/Table.jsx";
 import getEventTypeLabel from "../../helpers/getEventTypeLabel.js";
 import getSexLabel from "../../helpers/getSexLabel.js";
 import {ArrowLeft, ImagesSquare, UserRectangle} from "@phosphor-icons/react";
-import datesToText from "../../helpers/datesToText.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetEvents from "../../hooks/useGetEvents.js";
 import useGetSpouses from "../../hooks/useGetSpouses.js";
@@ -79,7 +78,7 @@ function PersonDetail() {
                     events.map((e) => {
                         return (
                             <tr key={e.id}>
-                                <td>{datesToText(e.beginDate, e.endDate)}</td>
+                                <td>{e.dateText}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
                                 <td className="icon" onClick={() => navigate(`/personDetailMedia/${id}/${e.id}`)}>
@@ -144,7 +143,7 @@ function PersonDetail() {
                     relationsEvents.map((e) => {
                         return (
                             <tr key={e.id}>
-                                <td>{datesToText(e.beginDate, e.endDate)}</td>
+                                <td>{e.dateText}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
                             </tr>)
