@@ -3,7 +3,7 @@ import axios from 'axios';
 const token=localStorage.getItem('token');
 
 export const axiosAuth = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: `${import.meta.env.VITE_BASEURL}`,
     headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

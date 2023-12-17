@@ -18,7 +18,7 @@ const useGetBlobData = (url) => {
                 toggleBlobDataLoading(true);
                 const response = await axios.get(url, {
                     signal: controller.signal,
-                    baseURL: 'http://localhost:8080',
+                    baseURL: `${import.meta.env.VITE_BASEURL}`,
                     headers: {
                         'responseType': 'blob',
                         Authorization: `Bearer ${token}`
