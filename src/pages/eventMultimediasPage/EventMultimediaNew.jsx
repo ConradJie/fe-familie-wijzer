@@ -6,7 +6,7 @@ function EventMultimediaNew() {
     const {t, tid, eid} = useParams();
     return (
         <main>
-            <h2>Omschrijving foto / document</h2>
+            <h2>Omschrijving foto / document / audio</h2>
             <EventMultimediaForm
                 t={t}
                 tid={tid}

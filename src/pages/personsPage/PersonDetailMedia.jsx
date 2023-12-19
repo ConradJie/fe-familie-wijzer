@@ -18,17 +18,34 @@ function PersonDetailMedia() {
             {
                 Object.keys(blobData).length > 0 &&
                 blobData.map((m) => {
-                    return (m.contentType === "application/pdf") ?
-                        <div className="media-document">
-                            <object data={`data:application/pdf;base64,${m.blob}`} type="application/pdf">
-                            </object>
-                            <p>{m.description}</p>
-                        </div>
-                        :
-                        <figure key={m.id} className="media-figure">
-                            <img src={`data:${m.contentType};base64,${m.blob}`} alt={m.description}/>
-                            <figcaption>{m.description}</figcaption>
-                        </figure>
+                    return (
+                        <>
+                            {
+                                m.contentType === "application/pdf" &&
+                                <div key={m.id} className="media-document">
+                                    <object data={`data:application/pdf;base64,${m.blob}`} type="application/pdf">
+                                    </object>
+                                    <p>{m.description}</p>
+                                </div>
+                            }
+                            {
+                                m.contentType.startsWith("image") &&
+                                <figure key={m.id} className="media-figure">
+                                    <img src={`data:${m.contentType};base64,${m.blob}`} alt={m.description}/>
+                                    <figcaption>{m.description}</figcaption>
+                                </figure>
+                            }
+                            {
+                                m.contentType.startsWith("audio/mpeg") &&
+                                <div className="media-audio">
+                                    <audio controls key={m.id} className="media-figure">
+                                        <source src={`data:${m.contentType};base64,${m.blob}`} type="audio/mpeg"/>
+                                    </audio>
+                                    <p>{m.description}</p>
+                                </div>
+                            }
+                        </>
+                    );
                 })
             }
             {(blobDataLoading || eventLoading) && <p>Loading...</p>}
