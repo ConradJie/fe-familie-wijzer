@@ -38,9 +38,9 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
         const uploadedFile = e.target.files[0];
         setFile2Upload(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
-        if (e.target.files[0].type !== "application/pdf" && !e.target.files[0].type.startsWith("image")) {
+        if (e.target.files[0].type !== "application/pdf" && !e.target.files[0].type.startsWith("image") && e.target.files[0].type !== "audio/mpeg") {
             disableSaveButton();
-            setErrorFile("Alleen een afbeelding of een PDF-bestand is toegestaan");
+            setErrorFile("Alleen een afbeelding, eeen MP3- of PDF-bestand is toegestaan");
         } else if (e.target.files[0].size > 20_971_000) {
             disableSaveButton();
             setErrorFile("Bestand mag max. 20MB groot zijn");
@@ -176,6 +176,11 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                 }
                 {previewUrl && file2Upload.type.startsWith("application/pdf") &&
                     <embed src={previewUrl} className="pdf-preview"/>
+                }
+                {previewUrl && file2Upload.type.startsWith("audio/mpeg") &&
+                    <audio controls className="audio-preview">
+                        <source src={previewUrl} type="audio/mpeg" className="pdf-preview"/>
+                    </audio>
                 }
                 <Button type="submit" disabled={disabled} variant={buttonVariant}>Opslaan</Button>
                 <Button type="button" variant="cancel" onClick={(e) => {

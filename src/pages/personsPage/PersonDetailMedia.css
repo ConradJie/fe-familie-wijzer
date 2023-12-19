@@ -1,7 +1,11 @@
+.media-document {
+    margin: var(--size-margin-l) var(--size-padding-l) var(--size-padding-l) 0;
+}
+
 .media-document object {
     width: 100%;
     height: 50em;
-    padding: 0 var(--size-padding-l) 0 var(--size-padding-l);
+    padding: var(--size-padding-l) var(--size-padding-l) 0 var(--size-padding-l);
 }
 
 .media-document p {
@@ -18,4 +22,8 @@
 
 .media-figure figcaption {
     padding: 0 var(--size-padding-l) var(--size-padding-l) var(--size-padding-l);
+}
+
+.media-audio {
+    margin: var(--size-margin-l) var(--size-padding-l);
 }

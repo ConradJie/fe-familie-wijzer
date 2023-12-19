@@ -6,6 +6,10 @@
     width: 60%;
 }
 
+.audio-preview {
+    width: 60%;
+}
+
 .field-disabled {
     background-color: var(--color-background-secondary);
 }
