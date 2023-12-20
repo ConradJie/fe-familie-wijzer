@@ -20,6 +20,7 @@ const translateNL = {
     'The spouse does not exists': 'De partner bestaat niet',
     'There already exists such a person with the same given names and surname and gender': 'Er bestaat reeds een persoon met dezelfde voor- en achternaam',
     'This child already exists': 'Het kind bestaat al',
+    'This child already has parents': 'Dit kind heeft al ouders',
     'This event is in the future': 'De gebeurtenis vindt plaats in de toekomst',
 };
 
