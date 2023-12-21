@@ -2,10 +2,8 @@
     width: 10em;
 }
 
-.pdf-preview {
-    width: 60%;
-}
-
+.pdf-preview,
+.mp4-preview,
 .audio-preview {
     width: 60%;
 }

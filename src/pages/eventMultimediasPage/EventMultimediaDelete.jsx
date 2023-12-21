@@ -39,7 +39,7 @@ function EventMultimediaDelete() {
         <>
             {data?.id &&
                 <main>
-                    <h2>Omschrijving foto / document / audio verwijderen</h2>
+                    <h2>Foto / document / audio / film verwijderen</h2>
                     <form className="event-multimedia-delete-form" onSubmit={onSubmit}>
                         <label htmlFor="description-field">
                             Omschrijving:
