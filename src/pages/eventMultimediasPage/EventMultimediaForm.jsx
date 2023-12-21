@@ -38,12 +38,13 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
         const uploadedFile = e.target.files[0];
         setFile2Upload(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
-        if (e.target.files[0].type !== "application/pdf" && !e.target.files[0].type.startsWith("image") && e.target.files[0].type !== "audio/mpeg") {
+        if (e.target.files[0].type !== "application/pdf" && e.target.files[0].type !== "audio/mpeg"
+            && e.target.files[0].type !== "video/mp4" && !e.target.files[0].type.startsWith("image")) {
             disableSaveButton();
-            setErrorFile("Alleen een afbeelding, eeen MP3- of PDF-bestand is toegestaan");
-        } else if (e.target.files[0].size > 20_971_000) {
+            setErrorFile("Alleen een afbeelding, eeen MP3-, MP4- of PDF-bestand is toegestaan");
+        } else if (e.target.files[0].size > Number(import.meta.env.VITE_MAX_FILE_SIZE_BYTES)) {
             disableSaveButton();
-            setErrorFile("Bestand mag max. 20MB groot zijn");
+            setErrorFile(`Bestand mag max. ${import.meta.env.VITE_MAX_FILE_SIZE_MB}MB groot zijn`);
         } else {
             enableSaveButton();
             setErrorFile("");
@@ -174,12 +175,17 @@ function EventMultimediaForm({t, tid, eid, id, method, description = "", filenam
                         <img src={previewUrl} alt="Preview image" className="image-preview"/>
                     </label>
                 }
-                {previewUrl && file2Upload.type.startsWith("application/pdf") &&
+                {previewUrl && file2Upload.type === ("application/pdf") &&
                     <embed src={previewUrl} className="pdf-preview"/>
                 }
-                {previewUrl && file2Upload.type.startsWith("audio/mpeg") &&
+                {previewUrl && file2Upload.type === "video/mp4" &&
+                    <video controls className="mp4-preview">
+                        <source src={previewUrl} type="video/mp4"/>
+                    </video>
+                }
+                {previewUrl && file2Upload.type === "audio/mpeg" &&
                     <audio controls className="audio-preview">
-                        <source src={previewUrl} type="audio/mpeg" className="pdf-preview"/>
+                        <source src={previewUrl} type="audio/mpeg"/>
                     </audio>
                 }
                 <Button type="submit" disabled={disabled} variant={buttonVariant}>Opslaan</Button>

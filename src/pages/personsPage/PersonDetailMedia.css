@@ -13,7 +13,7 @@
 }
 
 .media-figure img {
-    max-width: 100%;
+    max-width: 95%;
     height: auto;
     padding: var(--size-padding-l) var(--size-padding-l) 0 var(--size-padding-l);
     margin: var(--size-margin-l) 0 0 var(--size-margin-l);
@@ -26,4 +26,14 @@
 
 .media-audio {
     margin: var(--size-margin-l) var(--size-padding-l);
+}
+
+.media-video {
+    width: 95%;
+    margin: var(--size-margin-l) var(--size-padding-l);
+}
+
+.media-video video {
+    width: 100%;
+    object-fit: fill;
 }

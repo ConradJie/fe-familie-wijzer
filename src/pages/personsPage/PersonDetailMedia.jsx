@@ -36,9 +36,18 @@ function PersonDetailMedia() {
                                 </figure>
                             }
                             {
+                                m.contentType.startsWith("video/mp4") &&
+                                <div key={m.id} className="media-video">
+                                    <video controls>
+                                        <source src={`data:${m.contentType};base64,${m.blob}`} type="audio/mpeg"/>
+                                    </video>
+                                    <p>{m.description}</p>
+                                </div>
+                            }
+                            {
                                 m.contentType.startsWith("audio/mpeg") &&
-                                <div className="media-audio">
-                                    <audio controls key={m.id} className="media-figure">
+                                <div key={m.id} className="media-audio">
+                                    <audio controls>
                                         <source src={`data:${m.contentType};base64,${m.blob}`} type="audio/mpeg"/>
                                     </audio>
                                     <p>{m.description}</p>

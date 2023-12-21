@@ -19,7 +19,7 @@ function EventMultimedias() {
     return (
         <main className="main-event-multimedias">
             <Link to={urlGoBack}><ArrowLeft width={24} height={24}/></Link>
-            {event && <h2>Foto&apos;s / documenten / audio&apos;s over gebeurtenis {event.description}</h2>}
+            {event && <h2>Multimedia over gebeurtenis {event.description}</h2>}
             <Table
                 header={
                     <tr>
@@ -37,12 +37,14 @@ function EventMultimedias() {
                                 <tr key={m.id}>
                                     <td>{m.description}</td>
                                     <td>{m.filename}</td>
-                                    <td className="icon"
-                                        onClick={() => navigate(`/eventMultimediaUpdate/person/${tid}/${eid}/${m.id}`)}>
-                                        <Image
-                                            width={24}
-                                            height={24}/>
-                                    </td>
+                                    {(role === 'ADMIN' || (role === 'USER' && `${m.filename}` === '')) &&
+                                        <td className="icon"
+                                            onClick={() => navigate(`/eventMultimediaUpdate/person/${tid}/${eid}/${m.id}`)}>
+                                            <Image
+                                                width={24}
+                                                height={24}/>
+                                        </td>
+                                    }
                                     {role === 'ADMIN' &&
                                         <td className="icon"
                                             onClick={() => navigate(`/eventMultimediaDelete/person/${tid}/${eid}/${m.id}`)}>
