@@ -40,7 +40,6 @@ function PersonForm({pid, method, preloadedValues}) {
             });
         } catch (e) {
             processed = false;
-            console.log(e)
             if (e.response?.data) {
                 setError(translate(e.response.data));
             } else {

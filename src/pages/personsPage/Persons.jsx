@@ -46,7 +46,6 @@ function Persons() {
                                        } else {
                                            setQueryGivenNames("");
                                        }
-                                       console.log(filterGivenNames)
                                    }}/></td>
                         <td><input type="text" id="filterSurname" value={filterSurname}
                                    onChange={(e) => {

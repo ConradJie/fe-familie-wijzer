@@ -14,7 +14,6 @@ function RelationForm({pid, rid, sid, method}) {
     const [choice, setChoice] = useState(sid);
     const [buttonVariant, setButtonVariant] = useState("disabled");
     const [disabled, toggleDisabled] = useState(true);
-    console.log('choice', choice)
     const choose = (choice) => {
         setChoice(choice);
         if (choice === "") {

@@ -1,62 +1,245 @@
 :root {
+    --tree-background-hover: var(--color-accent);
+    --tree-border-color-hover: var(--primarycontrast);
     --tree-color-line: var(--color-border-primary);
+    --tree-coupletext-width: 13em;
+    --tree-coupletext-width2: -6.5em;
+    --tree-radius: var(--size-radius-m);
+    --tree-text-color-hover: var(--color-text-primary);
     --tree-thickness-line: 1px;
-    --tree-length-hor-line: 0.9em;
-    --tree-length-ver-line: 0.6em;
-    --tree-hor-pos-hor-line: -1em;
-    --tree-ver-pos-hor-line: 0.6em;
-    --tree-pos-ver-line: 0;
-    --tree-child-space: 2em;
+    --tree-length-ver-line: var(--size-xs);
     --tree-new-relation-line: dotted;
 }
 
-.tree,
+.tree-person,
+.tree-spouse,
+.tree-couple {
+    display: inline-block;
+    position: relative;
+    padding: 0 var(--size-padding-s);
+}
+
+.tree-person .tree-person-text,
+.tree-spouse .tree-spouse-text,
+.tree-couple .tree-couple-text {
+    background-color: var(--color-secondary);
+    border-radius: var(--size-radius-m);
+    bottom: 100%;
+    color: var(--color-black);
+    font-size: var(--size-s);
+    left: 50%;
+    margin-left: var(--tree-coupletext-width2);
+    padding: var(--size-padding-s) 0;
+    position: absolute;
+    text-align: center;
+    visibility: hidden;
+    width: var(--tree-coupletext-width);
+    z-index: 1;
+}
+
+.tree-person .tree-person-text::after,
+.tree-spouse .tree-spouse-text::after,
+.tree-couple .tree-couple-text::after {
+    border-style: solid;
+    border-color: var(--color-secondary) transparent transparent transparent;
+    content: "";
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    margin-left: var(--size-padding-s);
+}
+
+.tree-person:hover .tree-person-text,
+.tree-spouse:hover .tree-spouse-text,
+.tree-couple:hover .tree-couple-text {
+    visibility: visible;
+}
+
 .tree ul,
 .tree li {
     position: relative;
 }
 
-.tree ul {
-    list-style: none;
-    padding-left: var(--tree-child-space);
+.tree li span {
+    color: var(--tree-color-line);
 }
 
-.tree a:link {
-    text-decoration: none;
+.tree li a:hover,
+.tree li a:hover ~ ul li a {
+    background: var(--tree-background-hover);
+    color: var(--tree-text-color-hover);
 }
 
-.tree li::before,
-.tree li::after {
-    content: "";
-    position: absolute;
-    left: var(--tree-hor-pos-hor-line);
+.tree li a:hover ~ ul li::after,
+.tree li a:hover ~ ul li::before,
+.tree li a:hover ~ ul::before,
+.tree li a:hover ~ ul ul::before {
+    border-color: var(--tree-border-color-hover);
 }
 
-.tree li::before {
-    border-top: var(--tree-thickness-line) solid var(--tree-color-line);
-    top: var(--tree-ver-pos-hor-line);
-    width: var(--tree-length-hor-line);
-    height: 0;
+@media only screen and (max-width: 800px) {
+
+    :root {
+        --tree-length-hor-line: 1em;
+        --tree-hor-pos-hor-line: -1em;
+        --tree-ver-pos-hor-line: 0.5em;
+        --tree-pos-ver-line: 0;
+        --tree-child-space: 1em;
+    }
+
+    .tree {
+        position: relative;
+    }
+
+    .tree ul {
+        list-style: none;
+        padding-left: var(--tree-child-space);
+    }
+
+    .tree a:visited {
+        color: var(--color-border-primary);
+    }
+
+    .tree a:link {
+        text-decoration: none;
+    }
+
+    .tree li::before,
+    .tree li::after {
+        content: "";
+        position: absolute;
+        left: var(--tree-hor-pos-hor-line);
+    }
+
+    .tree li::before {
+        border-top: var(--tree-thickness-line) solid var(--tree-color-line);
+        top: var(--tree-ver-pos-hor-line);
+        width: var(--tree-length-hor-line);
+        height: 0;
+    }
+
+    .tree li .new-relation::before {
+        border-top: var(--tree-thickness-line) var(--tree-new-relation-line) var(--tree-color-line);
+        top: var(--tree-ver-pos-hor-line);
+        width: var(--tree-length-hor-line);
+        height: 0;
+    }
+
+    .tree li::after {
+        border-left: var(--tree-thickness-line) solid var(--tree-color-line);
+        height: 100%;
+        width: 0;
+        top: var(--tree-pos-ver-line);
+    }
+
+    .tree ul > li:last-child::after {
+        height: var(--tree-length-ver-line);
+    }
+
+    .tree-couple {
+        padding: 0 var(--size-padding-m) 0 var(--size-padding-m);
+    }
 }
 
-.tree li .new-relation::before {
-    border-top: var(--tree-thickness-line) var(--tree-new-relation-line) var(--tree-color-line);
-    top: var(--tree-ver-pos-hor-line);
-    width: var(--tree-length-hor-line);
-    height: 0;
-}
+@media only screen and (min-width: 800px) {
+    :root {
+        --tree-thickness-line: 1px;
+        --tree-border-neg-px: -1px;
+        --tree-text-color: var(--color-text-primary);
+        --tree-cel-padding-top: var(--size-xxs);
+        --tree-cel-padding-right: var(--size-s);
+        --tree-branch-padding-top: var(--size-s);
+        --tree-branch-padding-right: var(--size-xxs);
+        --tree-branch-padding-left: var(--size-xxs);
+    }
 
-.tree li::after {
-    border-left: var(--tree-thickness-line) solid var(--tree-color-line);
-    height: 100%;
-    width: 0;
-    top: var(--tree-pos-ver-line);
-}
+    .tree {
+        white-space: nowrap;
+        overflow: auto;
+        max-height: 100vh;
+    }
 
-.tree ul > li:last-child::after {
-    height: var(--tree-length-ver-line);
-}
+    .tree ul {
+        padding-top: var(--tree-branch-padding-top);
+        transition: all 0.5s;
+    }
 
-.tree-couple {
-    padding: 0 var(--size-padding-m) 0 var(--size-padding-m);
+    .tree li {
+        text-align: center;
+        list-style-type: none;
+        padding: var(--tree-branch-padding-top) var(--tree-branch-padding-right) 0 var(--tree-branch-padding-left);
+        transition: all 0.5s;
+        display: inline-block;
+        vertical-align: top;
+        white-space: nowrap;
+        margin: 0 var(--tree-border-neg-px) 0 var(--tree-border-neg-px);
+    }
+
+    .tree li::before,
+    .tree li::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 50%;
+        border-top: var(--tree-thickness-line) solid var(--tree-color-line);
+        width: 50%;
+        height: var(--tree-branch-padding-top);
+    }
+
+    .tree li::after {
+        right: auto;
+        left: 50%;
+        border-left: var(--tree-thickness-line) solid var(--tree-color-line);
+    }
+
+    .tree li .new-relation::after {
+        right: auto;
+        left: 50%;
+        border-left: var(--tree-thickness-line) var(--tree-new-relation-line) var(--tree-color-line);
+    }
+
+    .tree li:only-child::after,
+    .tree li:only-child::before {
+        border-radius: 0 !important;
+        left: 0;
+    }
+
+    .tree li:first-child::before,
+    .tree li:last-child::after {
+        border: 0 none;
+    }
+
+    .tree li:last-child::before {
+        border-right: var(--tree-thickness-line) solid var(--tree-color-line);
+        border-radius: 0 var(--tree-radius) 0 0;
+    }
+
+    .tree li .new-relation:last-child::before {
+        border-right: var(--tree-thickness-line) var(--tree-new-relation-line) var(--tree-color-line);
+        border-radius: 0 var(--tree-radius) 0 0;
+    }
+
+    .tree li:first-child::after {
+        border-radius: var(--tree-radius) 0 0 0;
+    }
+
+    .tree ul ul::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: var(--tree-thickness-line) solid var(--tree-color-line);
+        width: 0;
+        height: var(--tree-branch-padding-top);
+    }
+
+    .tree li a {
+        border: var(--tree-thickness-line) solid var(--tree-color-line);
+        padding: var(--tree-cel-padding-top) var(--tree-cel-padding-right);
+        text-decoration: none;
+        color: var(--tree-text-color);
+        display: inline-block;
+        border-radius: var(--tree-radius);
+        transition: all 0.5s;
+    }
 }
