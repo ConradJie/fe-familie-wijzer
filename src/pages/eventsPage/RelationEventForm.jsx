@@ -49,7 +49,6 @@ function RelationEventForm({pid, rid, sid, id, method, preloadedValues}) {
                     },
                 signal: controller.signal
             });
-            console.log(response)
         } catch (e) {
             processed = false;
             if (e.response?.data) {
