@@ -40,10 +40,13 @@ function Relations() {
                                     onClick={() => navigate(`/relationevents/${pid}/${s.id}/${s.spouseId}`)}><BellSimple
                                     width={24}
                                     height={24}/></td>
-                                <td className="icon" onClick={() => navigate(`/children/${pid}/${s.id}/${s.spouseId}`)}>
-                                    <Baby width={24}
-                                          height={24}/>
-                                </td>
+                                {role === 'ADMIN' &&
+                                    <td className="icon"
+                                        onClick={() => navigate(`/children/${pid}/${s.id}/${s.spouseId}`)}>
+                                        <Baby width={24}
+                                              height={24}/>
+                                    </td>
+                                }
                                 {role === 'ADMIN' &&
                                     <td className="icon"
                                         onClick={() => navigate(`/relationUpdate/${pid}/${s.id}/${s.spouseId}`)}><Pencil

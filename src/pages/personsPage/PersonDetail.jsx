@@ -81,7 +81,7 @@ function PersonDetail() {
                                 <td>{e.dateText}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td className="icon" onClick={() => navigate(`/personDetailMedia/${id}/${e.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/personDetailMedia/${id}/${e.id}/${e.relationId}`)}>
                                     <ImagesSquare width={24} height={24}/>
                                 </td>
                             </tr>)
@@ -146,6 +146,9 @@ function PersonDetail() {
                                 <td>{e.dateText}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
+                                <td className="icon" onClick={() => navigate(`/personDetailMedia/${id}/${e.id}/${e.relationId}`)}>
+                                    <ImagesSquare width={24} height={24}/>
+                                </td>
                             </tr>)
                     })}
             />

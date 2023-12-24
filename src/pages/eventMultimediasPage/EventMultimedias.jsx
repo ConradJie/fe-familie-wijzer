@@ -6,13 +6,16 @@ import useGetData from "../../hooks/useGetData.js";
 import Table from "../../components/Table.jsx";
 
 function EventMultimedias() {
-    const {t, tid, eid} = useParams();
+    const {t, pid, eid, rid, sid} = useParams();
     const role = localStorage.getItem('role');
-    const urlGoBack = `/personEvents/${tid}`;
+    const urlGoBack = (t === 'person')
+        ? `/personEvents/${pid}`
+        : `/relationEvents/${pid}/${rid}/${sid}`;
     const navigate = useNavigate();
-    const urlEvent = (typeof tid === 'string') && (typeof eid === 'string') ? `/persons/${tid}/events/${eid}` : "";
-    const urlMultimedias = (typeof tid === 'string') ? `/events/${eid}/multimedias` : "";
-
+    const urlEvent = (t === 'person')
+        ? `/persons/${pid}/events/${eid}`
+        : `/relations/${rid}/events/${eid}`;
+    const urlMultimedias = `/events/${eid}/multimedias`;
     const {event, eventError, eventLoading} = useGetEvent(urlEvent);
     const {data, dataError, dataLoading} = useGetData(urlMultimedias);
 
@@ -25,7 +28,7 @@ function EventMultimedias() {
                     <tr>
                         <th>Omschrijving</th>
                         <th>Bestandsnaam</th>
-                        <th className="icon" onClick={() => navigate(`/EventMultimediaNew/${t}/${tid}/${eid}`)}>
+                        <th className="icon" onClick={() => navigate(`/EventMultimediaNew/${t}/${pid}/${eid}/${rid}/${sid}`)}>
                             <PlusCircle width={24}
                                         height={24}/>
                         </th>
@@ -37,17 +40,32 @@ function EventMultimedias() {
                                 <tr key={m.id}>
                                     <td>{m.description}</td>
                                     <td>{m.filename}</td>
-                                    {(role === 'ADMIN' || (role === 'USER' && `${m.filename}` === '')) &&
+                                    {(role === 'ADMIN' || (role === 'USER' && `${m.filename}` === '')) && (t === 'person') &&
                                         <td className="icon"
-                                            onClick={() => navigate(`/eventMultimediaUpdate/person/${tid}/${eid}/${m.id}`)}>
+                                            onClick={() => navigate(`/eventMultimediaUpdate/person/${pid}/${eid}/${m.id}/0/0`)}>
                                             <Image
                                                 width={24}
                                                 height={24}/>
                                         </td>
                                     }
-                                    {role === 'ADMIN' &&
+                                    {(role === 'ADMIN' || (role === 'USER' && `${m.filename}` === '')) && (t === 'relation') &&
                                         <td className="icon"
-                                            onClick={() => navigate(`/eventMultimediaDelete/person/${tid}/${eid}/${m.id}`)}>
+                                            onClick={() => navigate(`/eventMultimediaUpdate/relation/${pid}/${eid}/${m.id}/${rid}/${sid}`)}>
+                                            <Image
+                                                width={24}
+                                                height={24}/>
+                                        </td>
+                                    }
+                                    {role === 'ADMIN' && (t === 'person') &&
+                                        <td className="icon"
+                                            onClick={() => navigate(`/eventMultimediaDelete/person/${pid}/${eid}/${m.id}/${rid}/${sid}`)}>
+                                            <Trash
+                                                width={24}
+                                                height={24}/></td>
+                                    }
+                                    {role === 'ADMIN' && (t === 'relation') &&
+                                        <td className="icon"
+                                            onClick={() => navigate(`/eventMultimediaDelete/relation/${pid}/${eid}/${m.id}/${rid}/${sid}`)}>
                                             <Trash
                                                 width={24}
                                                 height={24}/></td>

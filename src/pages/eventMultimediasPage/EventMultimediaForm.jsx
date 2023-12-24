@@ -5,9 +5,9 @@ import {axiosAuth} from "../../helpers/axiosAuth.js";
 import Button from "../../components/Button.jsx";
 import translate from "../../helpers/translate.js";
 
-function EventMultimediaForm({t, tid, eid, id, method, description = "", filename = ""}) {
+function EventMultimediaForm({t, pid, eid, id, rid, sid, method, description = "", filename = ""}) {
     const role = localStorage.getItem('role');
-    const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
+    const urlGoBack = `/eventMultimedias/${t}/${pid}/${eid}/${rid}/${sid}`;
     const urlPost = `/events/${eid}/multimedias`;
     const urlPut = `/events/${eid}/multimedias/${id}`;
     const urlPutFile = `/multimedias/${id}/media`;

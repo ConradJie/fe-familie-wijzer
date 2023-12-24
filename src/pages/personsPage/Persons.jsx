@@ -71,12 +71,10 @@ function Persons() {
                                 <td className="icon" onClick={() => navigate(`/personEvents/${p.id}`)}><BellSimple
                                     width={24}
                                     height={24}/></td>
-                                {role === 'ADMIN' &&
-                                    <td className="icon" onClick={() => navigate(`/relations/${p.id}`)}><Circle
-                                        width={24}
-                                        height={24}/>
-                                    </td>
-                                }
+                                <td className="icon" onClick={() => navigate(`/relations/${p.id}`)}><Circle
+                                    width={24}
+                                    height={24}/>
+                                </td>
                                 <td className="icon" onClick={() => navigate(`/treeDescendants/${p.id}`)}><TreeStructure
                                     width={24}
                                     height={24}/>
