@@ -39,7 +39,7 @@ function PersonEvents() {
                                 <td>{localDateNumeric(e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td className="icon" onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}`)}>
+                                <td className="icon" onClick={() => navigate(`/eventMultimedias/person/${id}/${e.id}/0/0`)}>
                                     <Images width={24} height={24}/>
                                 </td>
                                 {role === 'ADMIN' &&

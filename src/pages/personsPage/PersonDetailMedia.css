@@ -15,7 +15,7 @@
 .media-figure img {
     max-width: 95%;
     height: auto;
-    padding: var(--size-padding-l) var(--size-padding-l) 0 var(--size-padding-l);
+    padding: var(--size-padding-m) var(--size-padding-m);
     margin: var(--size-margin-l) 0 0 var(--size-margin-l);
     border: 2px solid var(--color-primary);
 }

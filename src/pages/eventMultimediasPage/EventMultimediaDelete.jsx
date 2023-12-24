@@ -6,11 +6,10 @@ import {axiosAuth} from "../../helpers/axiosAuth.js";
 import {useState} from "react";
 
 function EventMultimediaDelete() {
-    const {t, tid, eid, id} = useParams();
-    const url = (t === 'person') ? `/events/${eid}/multimedias/${id}`
-        : `/multimedias/${id}`;
+    const {t, pid, eid, id, rid, sid} = useParams();
+    const url = `/events/${eid}/multimedias/${id}`;
     const urlDelete = `/events/${eid}/multimedias/${id}`;
-    const urlGoBack = `/eventMultimedias/${t}/${tid}/${eid}`;
+    const urlGoBack = `/eventMultimedias/${t}/${pid}/${eid}/${rid}/${sid}`;
     const {data, dataError, dataLoading} = useGetData(url);
     const [error, setError] = useState("");
     const [responseData, setResponseData] = useState([]);

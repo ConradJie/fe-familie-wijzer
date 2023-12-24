@@ -4,8 +4,7 @@ import EventMultimediaForm from "./EventMultimediaForm.jsx";
 import useGetData from "../../hooks/useGetData.js";
 
 function EventMultimediaUpdate() {
-    const {t, tid, eid, id} = useParams();
-
+    const {t, pid, eid, id,rid,sid} = useParams();
     const {data, dataError} = useGetData(`/events/${eid}/multimedias/${id}`)
 
     return (
@@ -14,9 +13,11 @@ function EventMultimediaUpdate() {
             {data?.id &&
                 <EventMultimediaForm
                     t={t}
-                    tid={tid}
+                    pid={pid}
                     eid={eid}
                     id={id}
+                    rid={rid}
+                    sid={sid}
                     method="put"
                     description={data.description}
                     filename={data.filename}

@@ -5,15 +5,16 @@ import useGetBlobData from "../../hooks/useGetBlobData.js";
 import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonDetailMedia() {
-    const {pid, id} = useParams();
-    const urlEvent = `/persons/${pid}/events/${id}`;
+    const {pid, id, rid} = useParams();
+    const urlGoBack = `/personDetail/${id}`;
+    const urlEvent = (rid === 'null') ? `/persons/${pid}/events/${id}` : `/relations/${rid}/events/${id}`;
     const urlEventMultimediablobs = `/events/${id}/multimediablobs`;
     const {event, eventError, eventLoading} = useGetEvent(urlEvent);
     const {blobData, blobDataError, blobDataLoading} = useGetBlobData(urlEventMultimediablobs);
 
     return (
         <main className="main-person-detail-media">
-            <Link to={`/personDetail/${id}`}><ArrowLeft width={24} height={24}/></Link>
+            <Link to={urlGoBack}><ArrowLeft width={24} height={24}/></Link>
             {event && <h3>{event.description}</h3>}
             {
                 Object.keys(blobData).length > 0 &&

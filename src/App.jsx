@@ -79,15 +79,15 @@ function App() {
                 <Route path="/personUpdate/:id" element={<PersonUpdate/>}/>
                 <Route path="/personDelete/:id" element={<PersonDelete/>}/>
                 <Route path="/personDetail/:id" element={<PersonDetail/>}/>
-                <Route path="/personDetailMedia/:pid/:id" element={<PersonDetailMedia/>}/>
+                <Route path="/personDetailMedia/:pid/:id/:rid" element={<PersonDetailMedia/>}/>
                 <Route path="/personEvents/:id" element={<PersonEvents/>}/>
                 <Route path="/personEventNew/:pid" element={<PersonEventNew/>}/>
                 <Route path="/personEventUpdate/:pid/:id" element={<PersonEventUpdate/>}/>
                 <Route path="/personEventDelete/:pid/:id" element={<PersonEventDelete/>}/>
-                <Route path="/eventMultimedias/:t/:tid/:eid" element={<EventMultimedias/>}/>
-                <Route path="/eventMultimediaNew/:t/:tid/:eid" element={<EventMultimediaNew/>}/>
-                <Route path="/eventMultimediaUpdate/:t/:tid/:eid/:id" element={<EventMultimediaUpdate/>}/>
-                <Route path="/eventMultimediaDelete/:t/:tid/:eid/:id" element={<EventMultimediaDelete/>}/>
+                <Route path="/eventMultimedias/:t/:pid/:eid/:rid/:sid" element={<EventMultimedias/>}/>
+                <Route path="/eventMultimediaNew/:t/:pid/:eid/:rid/:sid" element={<EventMultimediaNew/>}/>
+                <Route path="/eventMultimediaUpdate/:t/:pid/:eid/:id/:rid/:sid" element={<EventMultimediaUpdate/>}/>
+                <Route path="/eventMultimediaDelete/:t/:pid/:eid/:id/:rid/:sid" element={<EventMultimediaDelete/>}/>
                 <Route path="/relations/:pid" element={<Relations/>}/>
                 <Route path="/relationNew/:pid" element={<RelationNew/>}/>
                 <Route path="/relationUpdate/:pid/:rid/:sid" element={<RelationUpdate/>}/>

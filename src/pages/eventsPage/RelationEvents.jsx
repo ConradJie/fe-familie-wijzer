@@ -1,6 +1,6 @@
 import './RelationEvents.css';
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {ArrowLeft, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
+import {ArrowLeft, Images, Pencil, PlusCircle, Trash} from "@phosphor-icons/react";
 import localDateNumeric from "../../helpers/localDateNumeric.js";
 import useGetPerson from "../../hooks/useGetPerson.js";
 import useGetSpouse from "../../hooks/useGetSpouse.js";
@@ -10,14 +10,19 @@ import Table from "../../components/Table.jsx";
 
 function RelationEvents() {
     const {pid, rid, sid} = useParams();
+    const role = localStorage.getItem('role');
     const navigate = useNavigate();
-    const {person, personError, personLoading} = useGetPerson(`/persons/${pid}`);
-    const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, `/persons/${sid}`);
-    const {data, dataError, dataLoading} = useGetData(`/relations/${rid}/events`);
+    const urlGoBack = `/relations/${pid}`;
+    const urlPerson = `/persons/${pid}`;
+    const urlSpouse = (sid !== 'undefined') ? `/persons/${sid}` : 'null';
+    const urlRelationEvents = `/relations/${rid}/events`;
+    const {person, personError, personLoading} = useGetPerson(urlPerson);
+    const {spouse, spouseError, spouseLoading} = useGetSpouse(sid, urlSpouse);
+    const {data, dataError, dataLoading} = useGetData(urlRelationEvents);
 
     return (
         <main className="main-person-events">
-            <Link to="/persons"><ArrowLeft width={24} height={24}/></Link>
+            <Link to={urlGoBack}><ArrowLeft width={24} height={24}/></Link>
             {person?.id && spouse?.id && <h2>Gebeurtenissen
                 van {person.givenNames} {person.surname} en {spouse.givenNames} {spouse.surname}</h2>}
             {person?.id && sid === "null" && <h2>Gebeurtenissen van {person.givenNames} {person.surname}</h2>}
@@ -28,9 +33,12 @@ function RelationEvents() {
                         <th>Einddatum</th>
                         <th>Type</th>
                         <th>Omschrijving</th>
-                        <th className="icon" onClick={() => navigate(`/relationEventNew/${pid}/${rid}/${sid}`)}><PlusCircle width={24}
-                                                                                                           height={24}/>
-                        </th>
+                        {role === 'ADMIN' &&
+                            <th className="icon" onClick={() => navigate(`/relationEventNew/${pid}/${rid}/${sid}`)}>
+                                <PlusCircle width={24}
+                                            height={24}/>
+                            </th>
+                        }
                     </tr>
                 }
                 row={Object.keys(data).length > 0 &&
@@ -41,14 +49,25 @@ function RelationEvents() {
                                 <td>{localDateNumeric(e.endDate)}</td>
                                 <td>{getEventTypeLabel(e.eventType)}</td>
                                 <td>{e.description}</td>
-                                <td className="icon" onClick={() => navigate(`/relationEventUpdate/${pid}/${rid}/${sid}/${e.id}`)}>
-                                    <Pencil width={24}
+                                <td className="icon"
+                                    onClick={() => navigate(`/eventMultimedias/relation/${pid}/${e.id}/${rid}/${sid}`)}>
+                                    <Images width={24} height={24}/>
+                                </td>
+                                {role === 'ADMIN' &&
+                                    <td className="icon"
+                                        onClick={() => navigate(`/relationEventUpdate/${pid}/${rid}/${sid}/${e.id}`)}>
+                                        <Pencil width={24}
+                                                height={24}/>
+                                    </td>
+                                }
+                                {role === 'ADMIN' &&
+                                    <td className="icon"
+                                        onClick={() => navigate(`/relationEventDelete/${pid}/${rid}/${sid}/${e.id}`)}>
+                                        <Trash
+                                            width={24}
                                             height={24}/>
-                                </td>
-                                <td className="icon" onClick={() => navigate(`/relationEventDelete/${pid}/${rid}/${sid}/${e.id}`)}><Trash
-                                    width={24}
-                                    height={24}/>
-                                </td>
+                                    </td>
+                                }
                             </tr>)
                     })
                 }
