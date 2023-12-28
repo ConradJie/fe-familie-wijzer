@@ -6,7 +6,7 @@ import useGetEvent from "../../hooks/useGetEvent.js";
 
 function PersonDetailMedia() {
     const {pid, id, rid} = useParams();
-    const urlGoBack = `/personDetail/${id}`;
+    const urlGoBack = (rid === 'null') ? `/personDetail/${id}` : `/personDetail/${pid}`;
     const urlEvent = (rid === 'null') ? `/persons/${pid}/events/${id}` : `/relations/${rid}/events/${id}`;
     const urlEventMultimediablobs = `/events/${id}/multimediablobs`;
     const {event, eventError, eventLoading} = useGetEvent(urlEvent);
