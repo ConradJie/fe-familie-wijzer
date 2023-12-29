@@ -11,17 +11,20 @@ function Descendants({descendant}) {
             </ul>
         );
     }
+    const linkPerson = `/personDetail/${descendant.personId}`;
+    const linkSpouse = `/personDetail/${descendant.spouseId}`;
     return (
         <li key={descendant.id}
             className={descendant.surname === '"' ? "couple new-relation" : "couple"}>
-            <Link to="#" className="tree-person">{descendant.givenNames} {descendant.surname}
+            <Link to={linkPerson} className="tree-person">{descendant.givenNames} {descendant.surname}
                 <span className="tree-person-text">{descendant.lifePeriod}</span>
             </Link>
             {descendant.spouseGivenNames &&
                 <>
                     <div className="tree-couple">-<span className="tree-couple-text">{descendant.relationPeriod}</span>
                     </div>
-                    <Link to="#" className="tree-spouse">{descendant.spouseGivenNames} {descendant.spouseSurname}
+                    <Link to={linkSpouse}
+                          className="tree-spouse">{descendant.spouseGivenNames} {descendant.spouseSurname}
                         <span className="tree-spouse-text">{descendant.spouseLifePeriod}</span>
                     </Link>
                 </>}
