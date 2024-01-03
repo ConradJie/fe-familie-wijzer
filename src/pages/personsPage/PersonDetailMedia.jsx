@@ -20,7 +20,7 @@ function PersonDetailMedia() {
                 Object.keys(blobData).length > 0 &&
                 blobData.map((m) => {
                     return (
-                        <>
+                        <div key={m.id}>
                             {
                                 m.contentType === "application/pdf" &&
                                 <div key={m.id} className="media-document">
@@ -54,7 +54,7 @@ function PersonDetailMedia() {
                                     <p>{m.description}</p>
                                 </div>
                             }
-                        </>
+                        </div>
                     );
                 })
             }

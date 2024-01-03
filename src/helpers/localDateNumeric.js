@@ -1,4 +1,4 @@
-function localDateString(dateString) {
+function localDateNumeric(dateString) {
     return new Date(dateString).toLocaleDateString('nl-NL', {
         year: 'numeric',
         month: 'numeric',
@@ -6,4 +6,4 @@ function localDateString(dateString) {
     });
 }
 
-export default localDateString;
+export default localDateNumeric;

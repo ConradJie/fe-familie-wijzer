@@ -5,6 +5,7 @@
     --tree-coupletext-width: 13em;
     --tree-coupletext-width2: -6.5em;
     --tree-radius: var(--size-radius-m);
+    --tree-text-color: var(--color-text-primary);
     --tree-text-color-hover: var(--color-text-primary);
     --tree-thickness-line: 1px;
     --tree-length-ver-line: var(--size-xs);
@@ -60,8 +61,10 @@
     position: relative;
 }
 
-.tree li span {
-    color: var(--tree-color-line);
+.tree li span,
+.tree li a:link,
+.tree li a:visited {
+    color: var(--tree-text-color);
 }
 
 .tree li a:hover,
@@ -94,10 +97,6 @@
     .tree ul {
         list-style: none;
         padding-left: var(--tree-child-space);
-    }
-
-    .tree a:visited {
-        color: var(--color-border-primary);
     }
 
     .tree a:link {
@@ -145,7 +144,6 @@
     :root {
         --tree-thickness-line: 1px;
         --tree-border-neg-px: -1px;
-        --tree-text-color: var(--color-text-primary);
         --tree-cel-padding-top: var(--size-xxs);
         --tree-cel-padding-right: var(--size-s);
         --tree-branch-padding-top: var(--size-s);
