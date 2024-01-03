@@ -9,7 +9,6 @@ function InputForm({type, name, label, disabled, rows, cols,maxLength,
             {required && "*"}
             {type === 'select' ?
                 <select
-                    type={type}
                     id={name}
                     name={name}
                     disabled={disabled}

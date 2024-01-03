@@ -28,10 +28,7 @@ function RelationEventUpdate() {
                 id={id}
             />
             }
-            {/*{(personLoading || spouseLoading || eventLoading) && <p>Loading...</p>}*/}
-            {personLoading && <p>p Loading...</p>}
-            {spouseLoading && <p>s Loading...</p>}
-            {eventLoading && <p>e Loading...</p>}
+            {(personLoading || spouseLoading || eventLoading) && <p>Loading...</p>}
             {personError && <p>{personError}</p>}
             {spouseError && <p>{spouseError}</p>}
             {eventError && <p>{eventError}</p>}
