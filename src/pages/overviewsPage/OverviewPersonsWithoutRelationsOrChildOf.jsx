@@ -14,7 +14,7 @@ function OverviewPersonsWithoutRelationsOrChildOf(){
                     <tr>
                         <th>Voornamen</th>
                         <th>Achternaam</th>
-                        <th>Geslscht</th>
+                        <th>Geslacht</th>
                     </tr>
                 }
                 row={data &&

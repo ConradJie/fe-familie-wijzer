@@ -16,7 +16,7 @@ function OverviewMultimediaWithoutMedia() {
                     <tr>
                         <th>Voornamen</th>
                         <th>Achternaam</th>
-                        <th>Geslscht</th>
+                        <th>Geslacht</th>
                         <th>Type gebeurtenis</th>
                         <th>Omschrijving gebeurtenis</th>
                         <th>Omschrijving foto / document</th>

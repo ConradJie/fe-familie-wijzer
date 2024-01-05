@@ -27,7 +27,7 @@ function UserForm({method, username, preloadedValues}) {
             setError("");
             toggleSending(true);
             const url = (method === 'post') ? `/users` : `/users/${username}`;
-            const response = await axiosAuth({
+            await axiosAuth({
                 method: `${method}`,
                 url: `${url}`,
                 data: (method === 'delete') ? {} :

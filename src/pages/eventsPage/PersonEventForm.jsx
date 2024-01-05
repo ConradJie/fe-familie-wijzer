@@ -36,7 +36,7 @@ function PersonEventForm({pid, id, method, preloadedValues}) {
             setError("");
             toggleSending(true);
             const url = (method === 'post') ? `/persons/${pid}/events` : `/persons/${pid}/events/${id}`;
-            const response = await axiosAuth({
+            await axiosAuth({
                 method: `${method}`,
                 url: `${url}`,
                 data: (method === 'delete') ? {} :
