@@ -34,7 +34,7 @@ function RelationForm({pid, rid, sid, method}) {
                 setChoice(null);
             }
             const url = (method === 'post') ? `/relations` : `/relations/${rid}`;
-            const response = await axiosAuth({
+            await axiosAuth({
                 method: `${method}`,
                 url: `${url}`,
                 data: (method === 'delete') ? {} :

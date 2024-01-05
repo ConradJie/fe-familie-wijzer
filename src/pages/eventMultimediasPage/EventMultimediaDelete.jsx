@@ -12,7 +12,6 @@ function EventMultimediaDelete() {
     const urlGoBack = `/eventMultimedias/${t}/${pid}/${eid}/${rid}/${sid}`;
     const {data, dataError, dataLoading} = useGetData(url);
     const [error, setError] = useState("");
-    const [responseData, setResponseData] = useState([]);
     const navigate = useNavigate();
     const controller = new AbortController();
 
@@ -20,10 +19,9 @@ function EventMultimediaDelete() {
         e.preventDefault();
         try {
             setError("");
-            const response = await axiosAuth.delete(urlDelete, {
+            await axiosAuth.delete(urlDelete, {
                 signal: controller.signal
             });
-            setResponseData(response.data);
         } catch (e) {
             setError(e.message);
         }

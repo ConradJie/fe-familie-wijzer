@@ -24,7 +24,7 @@ function Children() {
             <Link to={urlGoBack}><ArrowLeft width={24} height={24}/></Link>
             {person?.id && spouse?.id &&
                 <h2>Kinderen van {person.givenNames} {person.surname} en {spouse.givenNames} {spouse.surname}</h2>}
-            {person?.id && sid == "null" &&
+            {person?.id && sid === "null" &&
                 <h2>Kinderen van {person.givenNames} {person.surname}</h2>}
             <Table
                 header={

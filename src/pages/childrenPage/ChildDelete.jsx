@@ -25,7 +25,7 @@ function ChildDelete() {
         try {
             setError("");
             const urlDelete = `/relations/${rid}/children/${id}`;
-            const response = await axiosAuth.delete(urlDelete, {});
+            await axiosAuth.delete(urlDelete, {});
         } catch (e) {
             if (axiosAuth.isCancel) {
                 console.error("Request is canceled");

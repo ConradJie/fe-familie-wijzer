@@ -117,7 +117,7 @@ function EventMultimediaForm({t, pid, eid, id, rid, sid, method, description = "
         try {
             setErrorFile("");
             toggleSendingFile(true);
-            const result = await axiosAuth.post(urlPutFile, formData,
+            await axiosAuth.post(urlPutFile, formData,
                 {signal: controller.signal}
             )
         } catch (e) {

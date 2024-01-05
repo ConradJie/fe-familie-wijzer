@@ -36,7 +36,7 @@ function ChildNew() {
         let processed = true;
         try {
             setError("");
-            const response = await axiosAuth.post(`/relations/${rid}/children`,
+            await axiosAuth.post(`/relations/${rid}/children`,
                 {
                     relationId: rid,
                     personId: choice

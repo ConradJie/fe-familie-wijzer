@@ -27,7 +27,7 @@ function PersonForm({pid, method, preloadedValues}) {
             setError("");
             toggleLoading(true);
             const url = (method === 'post') ? `/persons` : `/persons/${pid}`;
-            const response = await axiosAuth({
+            await axiosAuth({
                 method: `${method}`,
                 url: `${url}`,
                 data: (method === 'delete') ? {} :

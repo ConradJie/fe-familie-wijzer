@@ -26,7 +26,7 @@ function RelationDelete() {
             toggleSending(true);
             setError("");
             const urlDelete = (sid === 'null')? `/relations/${rid}` : `/relations/${rid}/${sid}`;
-            const response = await axiosAuth.delete(urlDelete,
+            await axiosAuth.delete(urlDelete,
                 {
                     signal: controller.signal
                 });
